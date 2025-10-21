@@ -1168,3 +1168,272 @@ body.menu-open::before {
         grid-template-columns: 1fr;
     }
 }
+/* =========================================
+   Company（運営者情報）ページ
+========================================= */
+.page-template-page-company .header {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.company-hero {
+    height: 40vh;
+    min-height: 300px;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    position: relative;
+}
+
+.company-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #ddd, transparent);
+}
+
+.company-hero h1 {
+    font-family: 'Questrial', sans-serif;
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: #333;
+    text-align: center;
+}
+
+.company-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px 50px;
+}
+
+.company-section {
+    margin-bottom: 80px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.company-section h2 {
+    font-family: 'Questrial', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    letter-spacing: 0.1em;
+    color: #333;
+}
+
+.company-section p {
+    font-size: 1rem;
+    line-height: 2;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.info-table-simple {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+}
+
+.info-table-simple tr {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.info-table-simple tr:last-child {
+    border-bottom: none;
+}
+
+.info-table-simple th {
+    padding: 20px 0;
+    padding-right: 30px;
+    text-align: left;
+    font-weight: 500;
+    color: #333;
+    width: 35%;
+    letter-spacing: 0.05em;
+    font-size: 0.95rem;
+}
+
+.info-table-simple td {
+    padding: 20px 0;
+    color: #555;
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+.contact-section {
+    background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+    border-radius: 12px;
+    padding: 50px;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.contact-section h2 {
+    border-bottom: none;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-section p {
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.contact-button {
+    display: inline-block;
+    background: #333;
+    color: #fff;
+    padding: 15px 50px;
+    border-radius: 30px;
+    font-family: 'Questrial', sans-serif;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.contact-button:hover {
+    background: #555;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+}
+
+.back-button {
+    text-align: center;
+    margin-top: 80px;
+}
+
+.back-button a {
+    display: inline-block;
+    padding: 12px 30px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    color: #666;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+}
+
+.back-button a:hover {
+    background: #f5f5f5;
+    border-color: #999;
+    opacity: 1;
+}
+
+/* PC表示時のBR非表示 */
+@media screen and (min-width: 769px) {
+    .pc-only {
+        display: inline;
+    }
+}
+
+/* Company ページ レスポンシブデザイン */
+@media screen and (max-width: 768px) {
+    .company-hero {
+        height: 30vh;
+        min-height: 250px;
+        margin-top: 80px;
+    }
+    
+    .company-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .company-content {
+        padding: 60px 30px;
+    }
+    
+    .company-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .info-table-simple th,
+    .info-table-simple td {
+        padding: 15px 0;
+        font-size: 0.9rem;
+    }
+    
+    .info-table-simple th {
+        width: 40%;
+        padding-right: 20px;
+    }
+    
+    .contact-section {
+        padding: 40px 30px;
+    }
+    
+    .contact-button {
+        padding: 12px 40px;
+        font-size: 0.95rem;
+    }
+    
+    .pc-only {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .company-hero h1 {
+        font-size: 1.75rem;
+        letter-spacing: 0.1em;
+    }
+    
+    .company-content {
+        padding: 50px 20px;
+    }
+    
+    .company-section {
+        margin-bottom: 60px;
+    }
+    
+    .info-table-simple {
+        border: none;
+    }
+    
+    .info-table-simple th,
+    .info-table-simple td {
+        display: block;
+        width: 100%;
+        padding: 12px 0;
+    }
+    
+    .info-table-simple th {
+        border-bottom: none;
+        font-size: 0.85rem;
+        padding-bottom: 8px;
+    }
+    
+    .info-table-simple td {
+        padding-top: 0;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .info-table-simple tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .contact-section {
+        padding: 35px 20px;
+        border-radius: 8px;
+    }
+}
