@@ -1170,10 +1170,11 @@ body.menu-open::before {
 }
 
 .event-info-box {
+    max-width: 800px;  /* 本文と同じ幅に */
+    margin: 0 auto 50px;  /* 中央揃え */
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
     padding: 35px 0;
-    margin-bottom: 50px;
 }
 
 .event-info-item {
