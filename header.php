@@ -1,6 +1,6 @@
 <?php
 /**
- * ヘッダーテンプレート（改良版）
+ * ヘッダーテンプレート（ドロップダウンメニュー対応版）
  *
  * @package Cavallian_Bros
  */
@@ -41,9 +41,36 @@ $home_url = home_url('/');
             <ul class="nav-list">
                 <li><a href="<?php echo $is_home ? '#about' : $home_url . '#about'; ?>">About</a></li>
                 <li><a href="<?php echo $is_home ? '#message' : $home_url . '#message'; ?>">Message</a></li>
+                
                 <?php if (class_exists('WooCommerce')) : ?>
-                    <li><a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>">Shop</a></li>
+                    <!-- Shopメニュー（ドロップダウン付き） -->
+                    <li class="menu-item-has-children">
+                        <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>">Shop</a>
+                        
+                        <?php
+                        // 商品カテゴリーを取得
+                        $product_categories = get_terms(array(
+                            'taxonomy'   => 'product_cat',
+                            'hide_empty' => false,
+                            'parent'     => 0, // 親カテゴリーのみ取得
+                        ));
+                        
+                        if (!empty($product_categories) && !is_wp_error($product_categories)) :
+                        ?>
+                            <ul class="sub-menu">
+                                <li><a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>">すべての商品</a></li>
+                                <?php foreach ($product_categories as $category) : ?>
+                                    <li>
+                                        <a href="<?php echo esc_url(get_term_link($category)); ?>">
+                                            <?php echo esc_html($category->name); ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </li>
                 <?php endif; ?>
+                
                 <li><a href="<?php echo esc_url(get_post_type_archive_link('events')); ?>">Events</a></li>
                 <li><a href="<?php echo esc_url(home_url('/company')); ?>">Company</a></li>
                 
@@ -115,9 +142,32 @@ $home_url = home_url('/');
         <li><a href="<?php echo esc_url(home_url('/')); ?>">Home</a></li>
         <li><a href="<?php echo $is_home ? '#about' : $home_url . '#about'; ?>">About</a></li>
         <li><a href="<?php echo $is_home ? '#message' : $home_url . '#message'; ?>">Message</a></li>
+        
         <?php if (class_exists('WooCommerce')) : ?>
             <li><a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>">Shop</a></li>
+            
+            <?php
+            // モバイルメニュー用のカテゴリー
+            $mobile_categories = get_terms(array(
+                'taxonomy'   => 'product_cat',
+                'hide_empty' => false,
+                'parent'     => 0,
+            ));
+            
+            if (!empty($mobile_categories) && !is_wp_error($mobile_categories)) :
+                foreach ($mobile_categories as $category) :
+            ?>
+                <li class="mobile-sub-item">
+                    <a href="<?php echo esc_url(get_term_link($category)); ?>">
+                        <?php echo esc_html($category->name); ?>
+                    </a>
+                </li>
+            <?php
+                endforeach;
+            endif;
+            ?>
         <?php endif; ?>
+        
         <li><a href="<?php echo esc_url(get_post_type_archive_link('events')); ?>">Events</a></li>
         <li><a href="<?php echo esc_url(home_url('/company')); ?>">Company</a></li>
     </ul>
