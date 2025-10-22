@@ -544,9 +544,15 @@ body.menu-open::before {
     font-weight: 400;
 }
 
-/* イベント */
+/* イベント（トップページ用） */
 .upcoming-events {
     margin-top: 80px;
+    background-color: #fafafa;
+    padding: 60px 0;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .events-title {
@@ -564,27 +570,85 @@ body.menu-open::before {
 }
 
 .event-item {
-    background: white;
-    padding: 30px;
+    background: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.event-item:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.event-item-image {
+    height: 200px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+
+.event-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.event-item:hover .event-item-image img {
+    transform: scale(1.05);
+}
+
+.event-item-content {
+    padding: 30px;
 }
 
 .event-date {
+    font-family: 'Questrial', sans-serif;
     color: #8f601e;
-    font-size: 14px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
 }
 
 .event-title {
     font-size: 18px;
     margin-bottom: 15px;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    color: #333;
+    font-weight: 400;
+}
+
+.event-title a {
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.event-title a:hover {
+    color: #8f601e;
+    opacity: 1;
 }
 
 .event-excerpt {
     font-size: 14px;
     color: #666;
-    line-height: 1.6;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+}
+
+.event-item-link {
+    display: inline-block;
+    color: #333;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.event-item-link:hover {
+    color: #8f601e;
+    opacity: 1;
 }
 
 .events-more {
@@ -942,51 +1006,70 @@ body.menu-open::before {
     margin: 30px 0;
 }
 
-/* =========================================
-   イベントアーカイブページ
-========================================= */
+/* イベントアーカイブページ */
 .post-type-archive-events .site-main {
-    padding-top: 120px;
+    padding-top: 0;
+}
+
+/* イベント用ヒーローセクション */
+.events-hero {
+    height: 20vh;
+    min-height: 150px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+    border-bottom: 1px solid #eee;
+}
+
+.events-hero h1 {
+    font-family: 'Questrial', sans-serif;
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: #333;
+    text-transform: uppercase;
 }
 
 .events-archive {
     padding: 80px 0;
-}
-
-.events-archive-title {
-    font-family: 'Questrial', sans-serif;
-    font-size: 48px;
-    text-align: center;
-    margin-bottom: 60px;
+    background-color: #fafafa;
 }
 
 .events-list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 40px;
+    margin-bottom: 60px;
 }
 
 .event-card {
     background: #fff;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .event-card:hover {
-    transform: translateY(-5px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 .event-card-image {
-    height: 250px;
+    height: 240px;
     overflow: hidden;
+    background-color: #f5f5f5;
 }
 
 .event-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover .event-card-image img {
+    transform: scale(1.05);
 }
 
 .event-card-content {
@@ -994,180 +1077,213 @@ body.menu-open::before {
 }
 
 .event-card-date {
+    font-family: 'Questrial', sans-serif;
     color: #8f601e;
-    font-size: 14px;
-    margin-bottom: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    letter-spacing: 0.08em;
+    font-weight: 400;
 }
 
 .event-card-title {
-    font-size: 22px;
+    font-size: 18px;
+    font-weight: 400;
     margin-bottom: 15px;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    color: #333;
 }
 
 .event-card-excerpt {
     color: #666;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+}
+
+.event-card-link {
+    display: inline-block;
+    color: #333;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.event-card-link:hover {
+    color: #8f601e;
+    opacity: 1;
 }
 
 /* =========================================
-   レスポンシブデザイン
+   イベント詳細ページ
 ========================================= */
-@media screen and (max-width: 768px) {
-    /* ヘッダー */
-    .header-inner {
-        padding: 15px 20px;
-    }
-
-    .logo {
-        width: 140px;
-    }
-
-    /* デスクトップナビを非表示 */
-    .desktop-nav {
-        display: none;
-    }
-    
-    /* モバイルナビアイコンを表示 */
-    .mobile-nav-icons {
-        display: flex;
-    }
-    
-    /* ハンバーガーメニューを表示 */
-    .menu-button {
-        display: flex;
-    }
-
-    /* ヒーロー */
-    .hero {
-        height: 70vh;
-    }
-
-    /* セクション共通 */
-    .section {
-        padding: 80px 0;
-    }
-
-    .section-title {
-        font-size: 32px;
-        margin-bottom: 40px;
-    }
-
-    /* アバウト */
-    .about-text .main-copy {
-        font-size: 18px;
-    }
-
-    /* メッセージ */
-    .message-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .message-text p,
-    .message-text-inner p {
-        font-size: 14px;
-    }
-
-    /* Coming Soon */
-    .coming-soon-text {
-        font-size: 14px;
-        line-height: 2;
-    }
-
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-
-    .events-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* フッター */
-    .footer-content {
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .footer-nav-list {
-        flex-direction: column;
-        text-align: center;
-        gap: 15px;
-    }
-
-    /* WooCommerce */
-    .woocommerce ul.products {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-
-    .woocommerce div.product {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    /* イベント */
-    .events-list {
-        grid-template-columns: 1fr;
-    }
+.event-single {
+    padding: 120px 0 80px;
 }
 
-/* 小画面対応 */
-@media screen and (max-width: 480px) {
-    /* モバイルアイコン調整 */
-    .mobile-nav-icons {
-        gap: 5px;
-    }
-    
-    .mobile-icon {
-        width: 32px;
-        height: 32px;
-    }
-    
-    .mobile-icon svg {
-        width: 20px;
-        height: 20px;
-    }
-    
-    .menu-button {
-        width: 28px;
-        height: 22px;
-    }
-
-    /* ヒーロー */
-    .hero {
-        height: 60vh;
-    }
-
-    /* アバウト */
-    .about-title {
-        max-width: 90%;
-        margin: 0 auto 30px;
-    }
-    
-    .about-text {
-        font-size: 16px;
-    }
-
-    .about-text .main-copy {
-        font-size: 16px;
-    }
-
-    .section-title {
-        font-size: 28px;
-    }
-
-    /* 商品グリッド */
-    .products-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* WooCommerce */
-    .woocommerce ul.products {
-        grid-template-columns: 1fr;
-    }
+.event-single .entry-header {
+    text-align: center;
+    margin-bottom: 50px;
 }
+
+.event-meta-top {
+    margin-bottom: 20px;
+}
+
+.event-date-large {
+    display: inline-block;
+    background-color: transparent;
+    color: #8f601e;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+}
+
+.event-single .entry-title {
+    font-family: 'Questrial', sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    margin-bottom: 30px;
+    letter-spacing: 0.05em;
+}
+
+.event-featured-image {
+    margin: 40px 0 50px;
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 400px;
+}
+
+.event-featured-image img {
+    width: 100%;
+    height: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+}
+
+.event-details {
+    margin: 50px 0;
+}
+
+.event-info-box {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 35px 0;
+    margin-bottom: 50px;
+}
+
+.event-info-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+}
+
+.event-info-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.event-info-item:first-child {
+    padding-top: 0;
+}
+
+.event-info-item strong {
+    display: inline-block;
+    min-width: 100px;
+    color: #555;
+    font-weight: 400;
+}
+
+.event-single .entry-content {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 2;
+    letter-spacing: 0.05em;
+}
+
+.event-navigation {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 12px 40px;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+}
+
+.btn-back:hover {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+    opacity: 1;
+}
+
+/* ページネーション */
+.pagination {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.pagination .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.pagination .page-numbers {
+    display: inline-block;
+    padding: 8px 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+}
+
+.pagination .page-numbers:hover,
+.pagination .page-numbers.current {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+    opacity: 1;
+}
+
+/* イベントがない場合 */
+.no-events {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.no-events p {
+    color: #999;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+}
+
 /* =========================================
    Company（運営者情報）ページ
 ========================================= */
@@ -1346,8 +1462,146 @@ body.menu-open::before {
     }
 }
 
-/* Company ページ レスポンシブデザイン */
+/* =========================================
+   レスポンシブデザイン
+========================================= */
 @media screen and (max-width: 768px) {
+    /* ヘッダー */
+    .header-inner {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        width: 140px;
+    }
+
+    /* デスクトップナビを非表示 */
+    .desktop-nav {
+        display: none;
+    }
+    
+    /* モバイルナビアイコンを表示 */
+    .mobile-nav-icons {
+        display: flex;
+    }
+    
+    /* ハンバーガーメニューを表示 */
+    .menu-button {
+        display: flex;
+    }
+
+    /* ヒーロー */
+    .hero {
+        height: 70vh;
+    }
+
+    /* セクション共通 */
+    .section {
+        padding: 80px 0;
+    }
+
+    .section-title {
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+
+    /* アバウト */
+    .about-text .main-copy {
+        font-size: 18px;
+    }
+
+    /* メッセージ */
+    .message-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .message-text p,
+    .message-text-inner p {
+        font-size: 14px;
+    }
+
+    /* Coming Soon */
+    .coming-soon-text {
+        font-size: 14px;
+        line-height: 2;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* フッター */
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .footer-nav-list {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    /* WooCommerce */
+    .woocommerce ul.products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+
+    .woocommerce div.product {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    /* イベント */
+    .events-hero {
+        height: 15vh;
+        min-height: 120px;
+        margin-top: 80px;
+    }
+    
+    .events-hero h1 {
+        font-size: 32px;
+    }
+    
+    .events-list {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .event-single {
+        padding: 100px 0 60px;
+    }
+    
+    .event-single .entry-title {
+        font-size: 28px;
+    }
+    
+    .event-featured-image {
+        max-height: 300px;
+    }
+    
+    .event-featured-image img {
+        max-height: 300px;
+    }
+    
+    .event-info-item strong {
+        display: block;
+        min-width: auto;
+        margin-bottom: 5px;
+    }
+    
+    .event-info-box {
+        padding: 25px 0;
+    }
+    
+    /* Company */
     .company-hero {
         height: 30vh;
         min-height: 250px;
@@ -1391,7 +1645,84 @@ body.menu-open::before {
     }
 }
 
+/* 小画面対応 */
 @media screen and (max-width: 480px) {
+    /* モバイルアイコン調整 */
+    .mobile-nav-icons {
+        gap: 5px;
+    }
+    
+    .mobile-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .mobile-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .menu-button {
+        width: 28px;
+        height: 22px;
+    }
+
+    /* ヒーロー */
+    .hero {
+        height: 60vh;
+    }
+
+    /* アバウト */
+    .about-title {
+        max-width: 90%;
+        margin: 0 auto 30px;
+    }
+    
+    .about-text {
+        font-size: 16px;
+    }
+
+    .about-text .main-copy {
+        font-size: 16px;
+    }
+
+    .section-title {
+        font-size: 28px;
+    }
+
+    /* 商品グリッド */
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* WooCommerce */
+    .woocommerce ul.products {
+        grid-template-columns: 1fr;
+    }
+    
+    /* イベント詳細ページ */
+    .events-hero h1 {
+        font-size: 28px;
+        letter-spacing: 0.1em;
+    }
+    
+    .event-card-content {
+        padding: 20px;
+    }
+    
+    .event-single .entry-title {
+        font-size: 24px;
+    }
+    
+    .event-featured-image {
+        max-height: 250px;
+    }
+    
+    .event-featured-image img {
+        max-height: 250px;
+    }
+    
+    /* Company */
     .company-hero h1 {
         font-size: 1.75rem;
         letter-spacing: 0.1em;
