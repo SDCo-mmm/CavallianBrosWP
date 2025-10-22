@@ -289,30 +289,31 @@ if ($debug_mode && current_user_can('administrator')) {
         $events = new WP_Query(array(
             'post_type'      => 'events',
             'posts_per_page' => 3,
-            'orderby'        => 'meta_value',
-            'meta_key'       => 'event_date',
-            'meta_type'      => 'DATE',
-            'order'          => 'ASC',
             'meta_query'     => array(
                 'relation' => 'OR',
-                array(
-                    'key'     => 'event_date',
-                    'value'   => date('Y-m-d'),
-                    'compare' => '>=',
-                    'type'    => 'DATE'
-                ),
-                array(
+                'event_date_start_clause' => array(
                     'key'     => 'event_date_start',
                     'value'   => date('Y-m-d'),
                     'compare' => '>=',
                     'type'    => 'DATE'
+                ),
+                'event_date_clause' => array(
+                    'key'     => 'event_date',
+                    'value'   => date('Y-m-d'),
+                    'compare' => '>=',
+                    'type'    => 'DATE'
                 )
-            )
+            ),
+            // 並び替え: event_date_startを優先、なければevent_date
+            'orderby' => array(
+                'event_date_start_clause' => 'ASC',
+                'event_date_clause'       => 'ASC',
+            ),
         ));
         
         if ($events->have_posts()) : ?>
             <div class="upcoming-events">
-                <h4 class="events-title">Upcoming Events</h4>
+                <h4 class="events-title">UPCOMING EVENTS!</h4>
                 <div class="events-grid">
                     <?php while ($events->have_posts()) : $events->the_post(); ?>
                         <div class="event-item">
@@ -327,16 +328,39 @@ if ($debug_mode && current_user_can('administrator')) {
                             <div class="event-item-content">
                                 <div class="event-date">
                                     <?php
-                                    // 複数日イベント優先
+                                    /* ===== 修正: トップページの日付表示（0000-00-00対応） ===== */
+                                    
+                                    // Podsフィールドを取得
                                     $event_date_start = get_post_meta(get_the_ID(), 'event_date_start', true);
+                                    $event_date_end = get_post_meta(get_the_ID(), 'event_date_end', true);
                                     $event_date = get_post_meta(get_the_ID(), 'event_date', true);
                                     
-                                    if ($event_date_start && !empty($event_date_start)) {
-                                        $date_timestamp = strtotime($event_date_start);
-                                        if ($date_timestamp !== false) {
-                                            echo date_i18n('Y.m.d', $date_timestamp);
+                                    // 無効な日付をチェックする関数
+                                    $is_valid_date = function($date) {
+                                        return !empty($date) && $date !== '0000-00-00' && $date !== '0000-00-00 00:00:00';
+                                    };
+                                    
+                                    // 「開催日:」ラベルを追加
+                                    echo '<strong>開催日: </strong>';
+                                    
+                                    // 複数日イベント（event_date_start + event_date_end）
+                                    if ($is_valid_date($event_date_start)) {
+                                        $start_timestamp = strtotime($event_date_start);
+                                        
+                                        if ($start_timestamp !== false) {
+                                            echo date_i18n('Y.m.d', $start_timestamp);
+                                            
+                                            // 終了日がある場合は範囲表示
+                                            if ($is_valid_date($event_date_end)) {
+                                                $end_timestamp = strtotime($event_date_end);
+                                                if ($end_timestamp !== false) {
+                                                    echo '〜' . date_i18n('Y.m.d', $end_timestamp);
+                                                }
+                                            }
                                         }
-                                    } elseif ($event_date && !empty($event_date)) {
+                                    }
+                                    // 単日イベント（event_dateのみ）
+                                    elseif ($is_valid_date($event_date)) {
                                         $date_timestamp = strtotime($event_date);
                                         if ($date_timestamp !== false) {
                                             echo date_i18n('Y.m.d', $date_timestamp);

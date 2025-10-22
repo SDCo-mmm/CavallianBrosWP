@@ -365,3 +365,88 @@ function cavallian_cart_count_fragments($fragments) {
     return $fragments;
 }
 add_filter('woocommerce_add_to_cart_fragments', 'cavallian_cart_count_fragments');
+
+// ========================================
+// イベントの抜粋文字数をカスタマイズ
+// ========================================
+function cavallian_custom_excerpt_length($length) {
+    global $post;
+    
+    // イベント投稿タイプの場合のみ50文字に
+    if (isset($post) && $post->post_type === 'events') {
+        return 50;
+    }
+    
+    // その他の投稿タイプはデフォルトのまま
+    return $length;
+}
+add_filter('excerpt_length', 'cavallian_custom_excerpt_length', 999);
+
+// 抜粋の末尾を [...] から ... に変更
+function cavallian_custom_excerpt_more($more) {
+    global $post;
+    
+    // イベント投稿タイプの場合
+    if (isset($post) && $post->post_type === 'events') {
+        return '...';
+    }
+    
+    return $more;
+}
+add_filter('excerpt_more', 'cavallian_custom_excerpt_more');
+
+// ========================================
+// イベントの並び順をカスタマイズ
+// ========================================
+function cavallian_events_query_order($query) {
+    // 管理画面やメインクエリ以外は除外
+    if (is_admin() || !$query->is_main_query()) {
+        return;
+    }
+    
+    // イベントアーカイブページの場合
+    if (is_post_type_archive('events')) {
+        // 無効な日付を除外しつつ並び替え
+        $query->set('meta_query', array(
+            'relation' => 'OR',
+            array(
+                'key'     => 'event_date_start',
+                'value'   => array('', '0000-00-00', '0000-00-00 00:00:00'),
+                'compare' => 'NOT IN',
+                'type'    => 'DATE'
+            ),
+            array(
+                'key'     => 'event_date',
+                'value'   => array('', '0000-00-00', '0000-00-00 00:00:00'),
+                'compare' => 'NOT IN',
+                'type'    => 'DATE'
+            ),
+        ));
+        
+        // メタキーの存在チェックと並び替え
+        $query->set('meta_key', 'event_date_start');
+        $query->set('orderby', 'meta_value');
+        $query->set('meta_type', 'DATE');
+        $query->set('order', 'ASC');
+    }
+}
+add_action('pre_get_posts', 'cavallian_events_query_order');
+
+// ========================================
+// イベントの並び順: event_dateとevent_date_startを統合
+// ========================================
+function cavallian_events_orderby_clause($orderby, $query) {
+    global $wpdb;
+    
+    // イベントアーカイブページのメインクエリのみ
+    if (!is_admin() && $query->is_main_query() && is_post_type_archive('events')) {
+        // COALESCEを使用してevent_date_startを優先、なければevent_dateを使用
+        $orderby = "COALESCE(
+            (SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = {$wpdb->posts}.ID AND meta_key = 'event_date_start' AND meta_value NOT IN ('', '0000-00-00', '0000-00-00 00:00:00') LIMIT 1),
+            (SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = {$wpdb->posts}.ID AND meta_key = 'event_date' AND meta_value NOT IN ('', '0000-00-00', '0000-00-00 00:00:00') LIMIT 1)
+        ) ASC";
+    }
+    
+    return $orderby;
+}
+add_filter('posts_orderby', 'cavallian_events_orderby_clause', 10, 2);
