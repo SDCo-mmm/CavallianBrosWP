@@ -294,8 +294,15 @@ if ($debug_mode && current_user_can('administrator')) {
             'meta_type'      => 'DATE',
             'order'          => 'ASC',
             'meta_query'     => array(
+                'relation' => 'OR',
                 array(
                     'key'     => 'event_date',
+                    'value'   => date('Y-m-d'),
+                    'compare' => '>=',
+                    'type'    => 'DATE'
+                ),
+                array(
+                    'key'     => 'event_date_start',
                     'value'   => date('Y-m-d'),
                     'compare' => '>=',
                     'type'    => 'DATE'
@@ -309,19 +316,41 @@ if ($debug_mode && current_user_can('administrator')) {
                 <div class="events-grid">
                     <?php while ($events->have_posts()) : $events->the_post(); ?>
                         <div class="event-item">
-                            <div class="event-date">
-                                <?php
-                                $event_date = get_post_meta(get_the_ID(), 'event_date', true);
-                                if ($event_date) {
-                                    echo date_i18n('Y.m.d', strtotime($event_date));
-                                }
-                                ?>
-                            </div>
-                            <h5 class="event-title">
-                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                            </h5>
-                            <div class="event-excerpt">
-                                <?php the_excerpt(); ?>
+                            <?php if (has_post_thumbnail()) : ?>
+                                <div class="event-item-image">
+                                    <a href="<?php the_permalink(); ?>">
+                                        <?php the_post_thumbnail('medium'); ?>
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <div class="event-item-content">
+                                <div class="event-date">
+                                    <?php
+                                    // 複数日イベント優先
+                                    $event_date_start = get_post_meta(get_the_ID(), 'event_date_start', true);
+                                    $event_date = get_post_meta(get_the_ID(), 'event_date', true);
+                                    
+                                    if ($event_date_start && !empty($event_date_start)) {
+                                        $date_timestamp = strtotime($event_date_start);
+                                        if ($date_timestamp !== false) {
+                                            echo date_i18n('Y.m.d', $date_timestamp);
+                                        }
+                                    } elseif ($event_date && !empty($event_date)) {
+                                        $date_timestamp = strtotime($event_date);
+                                        if ($date_timestamp !== false) {
+                                            echo date_i18n('Y.m.d', $date_timestamp);
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                                <h5 class="event-title">
+                                    <?php the_title(); ?>
+                                </h5>
+                                <div class="event-excerpt">
+                                    <?php the_excerpt(); ?>
+                                </div>
+                                <a href="<?php the_permalink(); ?>" class="event-item-link">詳細はこちら</a>
                             </div>
                         </div>
                     <?php endwhile; ?>
