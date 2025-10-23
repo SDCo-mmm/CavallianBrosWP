@@ -1052,7 +1052,7 @@ body.menu-open::before {
 }
 
 /* =========================================
-   メガメニュー
+   メガメニュー（修正版）
 ========================================= */
 
 /* メガメニューを持つ親項目 */
@@ -1062,24 +1062,30 @@ body.menu-open::before {
 
 /* メガメニュー本体 */
 .mega-menu {
-    position: fixed; /* 画面全体に表示 */
+    position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw; /* ビューポート全幅 */
+    max-width: none;
     background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 999;
+    pointer-events: none; /* 非表示時はクリックイベントを無効化 */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 9999; /* 最前面に表示 */
     padding: 40px 0;
+    margin-top: 0;
 }
 
-/* メガメニューを表示 */
-.menu-item-has-megamenu:hover .mega-menu {
+/* メガメニューを表示（ホバー時） */
+.menu-item-has-megamenu:hover .mega-menu,
+.mega-menu:hover {
     opacity: 1;
     visibility: visible;
+    pointer-events: auto; /* 表示時はクリックイベントを有効化 */
 }
 
 /* メガメニューの内側 */
@@ -1102,7 +1108,7 @@ body.menu-open::before {
     display: block;
     padding: 15px 20px;
     background: #8f601e;
-    color: #fff;
+    color: #fff !important; /* 色を強制 */
     border-radius: 4px;
     text-align: center;
     font-size: 15px;
@@ -1112,6 +1118,7 @@ body.menu-open::before {
 
 .mega-menu-all:hover {
     background: #333;
+    opacity: 1 !important; /* 透明度を固定 */
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -1134,6 +1141,7 @@ body.menu-open::before {
 
 .mega-menu-title a:hover {
     color: #8f601e;
+    opacity: 1 !important; /* 透明度を固定 */
 }
 
 /* 子カテゴリーリスト */
@@ -1160,7 +1168,13 @@ body.menu-open::before {
 .mega-menu-sub a:hover {
     background: #f5f5f5;
     color: #333;
+    opacity: 1 !important; /* 透明度を固定 */
     padding-left: 15px;
+}
+
+/* メガメニュー内のリンクのアンダーラインを無効化 */
+.mega-menu a::after {
+    display: none !important;
 }
 
 /* モバイルメニューの子・孫カテゴリー */
@@ -1193,7 +1207,7 @@ body.menu-open::before {
 @media screen and (max-width: 1024px) {
     /* メガメニューを無効化 */
     .mega-menu {
-        display: none;
+        display: none !important;
     }
     
     .mega-menu-inner {
@@ -1289,6 +1303,43 @@ body.menu-open::before {
     color: #666;
     margin-bottom: 20px;
 }
+
+/* =========================================
+   デバッグ用（動作確認用 - 本番では削除可）
+========================================= */
+/*
+.menu-item-has-megamenu {
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.mega-menu {
+    background: rgba(255, 255, 0, 0.9) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+*/
+
+/* =========================================
+   メガメニュー表示制御用（追加CSS）
+========================================= */
+
+/* JavaScriptでshowクラスが追加されたときの表示 */
+.mega-menu.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+/* デバッグモード（動作確認用 - 問題が解決したらコメントアウト） */
+/*
+.menu-item-has-megamenu {
+    outline: 2px solid red;
+}
+
+.mega-menu {
+    outline: 2px solid blue;
+}
+*/
 
 /* =========================================
    ブログ・投稿ページ
