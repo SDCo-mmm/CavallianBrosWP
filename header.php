@@ -1,6 +1,6 @@
 <?php
 /**
- * ヘッダーテンプレート（ドロップダウンメニュー対応版）
+ * ヘッダーテンプレート（uncategorized除外版）
  *
  * @package Cavallian_Bros
  */
@@ -48,11 +48,12 @@ $home_url = home_url('/');
                         <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>">Shop</a>
                         
                         <?php
-                        // 商品カテゴリーを取得
+                        // 商品カテゴリーを取得（uncategorizedを除外）
                         $product_categories = get_terms(array(
                             'taxonomy'   => 'product_cat',
                             'hide_empty' => false,
                             'parent'     => 0, // 親カテゴリーのみ取得
+                            'exclude'    => array(get_option('default_product_cat')), // uncategorizedを除外
                         ));
                         
                         if (!empty($product_categories) && !is_wp_error($product_categories)) :
@@ -147,11 +148,12 @@ $home_url = home_url('/');
             <li><a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>">Shop</a></li>
             
             <?php
-            // モバイルメニュー用のカテゴリー
+            // モバイルメニュー用のカテゴリー（uncategorizedを除外）
             $mobile_categories = get_terms(array(
                 'taxonomy'   => 'product_cat',
                 'hide_empty' => false,
                 'parent'     => 0,
+                'exclude'    => array(get_option('default_product_cat')), // uncategorizedを除外
             ));
             
             if (!empty($mobile_categories) && !is_wp_error($mobile_categories)) :
