@@ -450,3 +450,20 @@ function cavallian_events_orderby_clause($orderby, $query) {
     return $orderby;
 }
 add_filter('posts_orderby', 'cavallian_events_orderby_clause', 10, 2);
+
+/**
+ * ショップ絞り込み用JavaScriptの読み込み
+ */
+function cavallian_enqueue_shop_filters() {
+    // 商品一覧ページでのみ読み込み
+    if (is_shop() || is_product_category()) {
+        wp_enqueue_script(
+            'cavallian-shop-filters',
+            get_template_directory_uri() . '/assets/js/shop-filters.js',
+            array('jquery'),
+            '1.0.0',
+            true
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'cavallian_enqueue_shop_filters');

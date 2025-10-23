@@ -1,6 +1,6 @@
 <?php
 /**
- * ヘッダーテンプレート（uncategorized除外版）
+ * ヘッダーテンプレート（メガメニュー対応版）
  *
  * @package Cavallian_Bros
  */
@@ -43,31 +43,61 @@ $home_url = home_url('/');
                 <li><a href="<?php echo $is_home ? '#message' : $home_url . '#message'; ?>">Message</a></li>
                 
                 <?php if (class_exists('WooCommerce')) : ?>
-                    <!-- Shopメニュー（ドロップダウン付き） -->
-                    <li class="menu-item-has-children">
+                    <!-- Shopメニュー（メガメニュー） -->
+                    <li class="menu-item-has-megamenu">
                         <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>">Shop</a>
                         
                         <?php
-                        // 商品カテゴリーを取得（uncategorizedを除外）
-                        $product_categories = get_terms(array(
+                        // 親カテゴリーを取得（uncategorized除外）
+                        $parent_categories = get_terms(array(
                             'taxonomy'   => 'product_cat',
                             'hide_empty' => false,
-                            'parent'     => 0, // 親カテゴリーのみ取得
-                            'exclude'    => array(get_option('default_product_cat')), // uncategorizedを除外
+                            'parent'     => 0,
+                            'exclude'    => array(get_option('default_product_cat')),
                         ));
                         
-                        if (!empty($product_categories) && !is_wp_error($product_categories)) :
+                        if (!empty($parent_categories) && !is_wp_error($parent_categories)) :
                         ?>
-                            <ul class="sub-menu">
-                                <li><a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>">すべての商品</a></li>
-                                <?php foreach ($product_categories as $category) : ?>
-                                    <li>
-                                        <a href="<?php echo esc_url(get_term_link($category)); ?>">
-                                            <?php echo esc_html($category->name); ?>
+                            <div class="mega-menu">
+                                <div class="mega-menu-inner">
+                                    <div class="mega-menu-item">
+                                        <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>" class="mega-menu-all">
+                                            すべての商品
                                         </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
+                                    </div>
+                                    
+                                    <?php foreach ($parent_categories as $parent_cat) : ?>
+                                        <div class="mega-menu-item">
+                                            <h3 class="mega-menu-title">
+                                                <a href="<?php echo esc_url(get_term_link($parent_cat)); ?>">
+                                                    <?php echo esc_html($parent_cat->name); ?>
+                                                </a>
+                                            </h3>
+                                            
+                                            <?php
+                                            // 子カテゴリーを取得
+                                            $child_categories = get_terms(array(
+                                                'taxonomy'   => 'product_cat',
+                                                'hide_empty' => false,
+                                                'parent'     => $parent_cat->term_id,
+                                            ));
+                                            
+                                            if (!empty($child_categories) && !is_wp_error($child_categories)) :
+                                            ?>
+                                                <ul class="mega-menu-sub">
+                                                    <?php foreach ($child_categories as $child_cat) : ?>
+                                                        <li>
+                                                            <a href="<?php echo esc_url(get_term_link($child_cat)); ?>">
+                                                                <?php echo esc_html($child_cat->name); ?>
+                                                            </a>
+                                                        </li>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
                         <?php endif; ?>
                     </li>
                 <?php endif; ?>
@@ -148,23 +178,42 @@ $home_url = home_url('/');
             <li><a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>">Shop</a></li>
             
             <?php
-            // モバイルメニュー用のカテゴリー（uncategorizedを除外）
-            $mobile_categories = get_terms(array(
+            // モバイルメニュー用のカテゴリー（親のみ）
+            $mobile_parent_cats = get_terms(array(
                 'taxonomy'   => 'product_cat',
                 'hide_empty' => false,
                 'parent'     => 0,
-                'exclude'    => array(get_option('default_product_cat')), // uncategorizedを除外
+                'exclude'    => array(get_option('default_product_cat')),
             ));
             
-            if (!empty($mobile_categories) && !is_wp_error($mobile_categories)) :
-                foreach ($mobile_categories as $category) :
+            if (!empty($mobile_parent_cats) && !is_wp_error($mobile_parent_cats)) :
+                foreach ($mobile_parent_cats as $parent_cat) :
             ?>
                 <li class="mobile-sub-item">
-                    <a href="<?php echo esc_url(get_term_link($category)); ?>">
-                        <?php echo esc_html($category->name); ?>
+                    <a href="<?php echo esc_url(get_term_link($parent_cat)); ?>">
+                        <?php echo esc_html($parent_cat->name); ?>
                     </a>
                 </li>
-            <?php
+                
+                <?php
+                // 子カテゴリーも表示
+                $mobile_child_cats = get_terms(array(
+                    'taxonomy'   => 'product_cat',
+                    'hide_empty' => false,
+                    'parent'     => $parent_cat->term_id,
+                ));
+                
+                if (!empty($mobile_child_cats) && !is_wp_error($mobile_child_cats)) :
+                    foreach ($mobile_child_cats as $child_cat) :
+                ?>
+                    <li class="mobile-sub-sub-item">
+                        <a href="<?php echo esc_url(get_term_link($child_cat)); ?>">
+                            <?php echo esc_html($child_cat->name); ?>
+                        </a>
+                    </li>
+                <?php
+                    endforeach;
+                endif;
                 endforeach;
             endif;
             ?>
