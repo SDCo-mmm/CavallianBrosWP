@@ -1,5 +1,5 @@
 /**
- * ショップページ絞り込み機能 + メガメニュー制御
+ * ショップページ絞り込み機能 + メガメニュー制御 + モバイルメニュー全画面表示
  */
 
 jQuery(document).ready(function($) {
@@ -15,10 +15,8 @@ jQuery(document).ready(function($) {
         var $itemOptions = $itemFilter.find('option');
         
         if (selectedCategory === '') {
-            // すべて選択時は全アイテムを表示
             $itemOptions.show();
         } else {
-            // 選択されたカテゴリーの子カテゴリーのみ表示
             $itemOptions.each(function() {
                 var $option = $(this);
                 var parentCategory = $option.data('parent');
@@ -30,7 +28,6 @@ jQuery(document).ready(function($) {
                 }
             });
             
-            // 最初のオプション（すべて）を選択
             $itemFilter.val('');
         }
     });
@@ -64,7 +61,7 @@ jQuery(document).ready(function($) {
         var $menu = $(this).find('.mega-menu');
         megaMenuTimer = setTimeout(function() {
             $menu.removeClass('show');
-        }, 300);
+        }, 200);
     });
     
     // メガメニュー内にマウスが入ったら非表示タイマーをクリア
@@ -77,7 +74,7 @@ jQuery(document).ready(function($) {
         var $menu = $(this);
         megaMenuTimer = setTimeout(function() {
             $menu.removeClass('show');
-        }, 300);
+        }, 200);
     });
     
     // タッチデバイス対応
@@ -85,7 +82,6 @@ jQuery(document).ready(function($) {
         $megaMenuItem.on('click', function(e) {
             var $menu = $(this).find('.mega-menu');
             
-            // メガメニューが非表示なら表示、表示中なら通常のリンク動作
             if (!$menu.hasClass('show')) {
                 e.preventDefault();
                 $('.mega-menu').removeClass('show');
@@ -101,8 +97,57 @@ jQuery(document).ready(function($) {
         });
     }
     
-    // デバッグ用（動作確認用 - 本番では削除可）
-    console.log('Mega menu items found:', $megaMenuItem.length);
-    console.log('Mega menus found:', $megaMenu.length);
+    // ========================================
+    // モバイルメニュー全画面表示制御
+    // ========================================
+    
+    var $mobileMenu = $('#mobile-menu');
+    var $mobileMenuToggle = $('.mobile-menu-toggle');
+    var $body = $('body');
+    
+    // ハンバーガーメニューをクリック
+    $mobileMenuToggle.on('click', function() {
+        $(this).toggleClass('active');
+        $mobileMenu.toggleClass('active');
+        
+        // スクロールを制御
+        if ($mobileMenu.hasClass('active')) {
+            $body.css('overflow', 'hidden'); // スクロール無効化
+        } else {
+            $body.css('overflow', ''); // スクロール有効化
+        }
+    });
+    
+    // メニュー内のリンクをクリックしたらメニューを閉じる
+    $mobileMenu.find('a').on('click', function(e) {
+        // ハッシュリンク（#で始まる）以外の場合のみ閉じる
+        var href = $(this).attr('href');
+        if (href && !href.startsWith('#')) {
+            $mobileMenuToggle.removeClass('active');
+            $mobileMenu.removeClass('active');
+            $body.css('overflow', '');
+        }
+    });
+    
+    // メニュー外をクリックしたら閉じる
+    $(document).on('click', function(e) {
+        if ($mobileMenu.hasClass('active') && 
+            !$(e.target).closest('#mobile-menu').length && 
+            !$(e.target).closest('.mobile-menu-toggle').length) {
+            $mobileMenuToggle.removeClass('active');
+            $mobileMenu.removeClass('active');
+            $body.css('overflow', '');
+        }
+    });
+    
+    // ウィンドウリサイズ時の処理
+    $(window).on('resize', function() {
+        if ($(window).width() > 768) {
+            // デスクトップサイズになったらモバイルメニューを閉じる
+            $mobileMenuToggle.removeClass('active');
+            $mobileMenu.removeClass('active');
+            $body.css('overflow', '');
+        }
+    });
     
 });
