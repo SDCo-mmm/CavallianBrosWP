@@ -450,3 +450,106 @@ function cavallian_events_orderby_clause($orderby, $query) {
     return $orderby;
 }
 add_filter('posts_orderby', 'cavallian_events_orderby_clause', 10, 2);
+
+// ========================================
+// カスタムフィルター機能
+// ========================================
+
+/**
+ * 商品クエリをカスタムフィルターに対応させる
+ */
+function cavallian_custom_product_query($q) {
+    if (!is_admin() && $q->is_main_query() && is_shop()) {
+        
+        // カテゴリーフィルター
+        if (isset($_GET['product_cat']) && !empty($_GET['product_cat'])) {
+            $tax_query = array(
+                array(
+                    'taxonomy' => 'product_cat',
+                    'field' => 'slug',
+                    'terms' => sanitize_text_field($_GET['product_cat']),
+                ),
+            );
+            $q->set('tax_query', $tax_query);
+        }
+        
+        // アイテム（子カテゴリー）フィルター
+        if (isset($_GET['product_item']) && !empty($_GET['product_item'])) {
+            $tax_query = array(
+                array(
+                    'taxonomy' => 'product_cat',
+                    'field' => 'slug',
+                    'terms' => sanitize_text_field($_GET['product_item']),
+                ),
+            );
+            $q->set('tax_query', $tax_query);
+        }
+        
+        // 並び替え
+        if (isset($_GET['orderby'])) {
+            $orderby = sanitize_text_field($_GET['orderby']);
+            
+            switch ($orderby) {
+                case 'date':
+                    $q->set('orderby', 'date');
+                    $q->set('order', 'DESC');
+                    break;
+                case 'price':
+                    $q->set('orderby', 'meta_value_num');
+                    $q->set('meta_key', '_price');
+                    $q->set('order', 'ASC');
+                    break;
+                case 'price-desc':
+                    $q->set('orderby', 'meta_value_num');
+                    $q->set('meta_key', '_price');
+                    $q->set('order', 'DESC');
+                    break;
+                case 'popularity':
+                    $q->set('orderby', 'meta_value_num');
+                    $q->set('meta_key', 'total_sales');
+                    $q->set('order', 'DESC');
+                    break;
+            }
+        }
+    }
+}
+add_action('pre_get_posts', 'cavallian_custom_product_query');
+
+/**
+ * AJAXで子カテゴリーを取得
+ */
+function cavallian_get_child_categories() {
+    check_ajax_referer('cavallian_filter_nonce', 'nonce');
+    
+    $parent_slug = isset($_POST['parent']) ? sanitize_text_field($_POST['parent']) : '';
+    
+    if (empty($parent_slug)) {
+        wp_send_json_success(array('categories' => array()));
+        return;
+    }
+    
+    $parent_cat = get_term_by('slug', $parent_slug, 'product_cat');
+    
+    if (!$parent_cat) {
+        wp_send_json_error('親カテゴリーが見つかりません');
+        return;
+    }
+    
+    $child_categories = get_terms(array(
+        'taxonomy' => 'product_cat',
+        'parent' => $parent_cat->term_id,
+        'hide_empty' => true,
+    ));
+    
+    $categories = array();
+    foreach ($child_categories as $child) {
+        $categories[] = array(
+            'slug' => $child->slug,
+            'name' => $child->name,
+        );
+    }
+    
+    wp_send_json_success(array('categories' => $categories));
+}
+add_action('wp_ajax_get_child_categories', 'cavallian_get_child_categories');
+add_action('wp_ajax_nopriv_get_child_categories', 'cavallian_get_child_categories');

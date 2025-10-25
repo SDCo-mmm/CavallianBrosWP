@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 100px;
+    margin-top: 140px;  /* ヘッダーの高さ分 */
     border-bottom: 1px solid #eee;
 }
 
@@ -120,7 +120,7 @@
    イベント詳細ページ
 ========================================= */
 .event-single {
-    padding: 120px 0 80px;
+    padding: 180px 0 80px;  /* 140px(ヘッダー) + 40px(余白) */
 }
 
 .event-single .entry-header {
@@ -307,6 +307,7 @@
     .events-hero {
         height: 20vh;
         min-height: 120px;
+        margin-top: 80px;  /* モバイルヘッダー分 */
     }
     
     .events-hero h1 {
@@ -315,7 +316,7 @@
     
     /* イベント詳細 */
     .event-single {
-        padding: 100px 0 60px;
+        padding: 120px 0 60px;  /* 80px(モバイルヘッダー) + 40px(余白) */
     }
     
     .event-single .entry-title {
