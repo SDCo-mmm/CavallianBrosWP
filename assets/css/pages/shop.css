@@ -1,0 +1,592 @@
+/* =========================================
+   Shop（WooCommerce）専用スタイル
+========================================= */
+
+/* =========================================
+   Shop Header
+========================================= */
+.shop-header {
+    padding: 140px 0 60px;
+    text-align: center;
+    background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+}
+
+.shop-title {
+    font-family: 'Questrial', sans-serif;
+    font-size: 48px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+}
+
+.shop-description {
+    font-size: 16px;
+    color: #666;
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+}
+
+.shop-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+/* =========================================
+   商品一覧
+========================================= */
+.woocommerce ul.products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.woocommerce ul.products li.product {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin: 0;
+}
+
+.woocommerce ul.products li.product:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-5px);
+}
+
+.woocommerce ul.products li.product a {
+    display: block;
+}
+
+.woocommerce ul.products li.product img {
+    width: 100%;
+    height: auto;
+}
+
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+    font-size: 18px;
+    font-weight: 400;
+    margin: 20px 0 10px;
+    padding: 0 20px;
+    letter-spacing: 0.05em;
+    color: #333;
+}
+
+.woocommerce ul.products li.product .price {
+    font-family: 'Questrial', sans-serif;
+    font-size: 20px;
+    color: #8f601e;
+    padding: 0 20px 20px;
+    font-weight: 400;
+}
+
+.woocommerce ul.products li.product .button {
+    margin-top: 15px;
+    padding: 10px 30px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease;
+}
+
+.woocommerce ul.products li.product .button:hover {
+    background-color: #8f601e;
+    opacity: 1;
+}
+
+/* 商品が見つからない場合 */
+.no-products-message {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.no-products-message p {
+    font-size: 16px;
+    color: #666;
+    letter-spacing: 0.05em;
+}
+
+/* 並び替え・表示件数 */
+.woocommerce-ordering,
+.woocommerce-result-count {
+    margin-bottom: 30px;
+}
+
+.woocommerce-ordering select {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+}
+
+/* =========================================
+   商品詳細ページ
+========================================= */
+.woocommerce div.product {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 140px 20px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+.woocommerce div.product .woocommerce-product-gallery {
+    margin-bottom: 0;
+    position: relative;
+}
+
+.woocommerce div.product .woocommerce-product-gallery__image {
+    margin-bottom: 20px;
+}
+
+.woocommerce div.product .woocommerce-product-gallery__image img {
+    border-radius: 8px;
+    width: 100%;
+    height: auto;
+}
+
+/* サムネイル画像 */
+.woocommerce div.product .flex-control-thumbs {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.woocommerce div.product .flex-control-thumbs li {
+    width: calc(25% - 7.5px);
+    margin: 0;
+}
+
+.woocommerce div.product .flex-control-thumbs li img {
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.woocommerce div.product .flex-control-thumbs li img:hover {
+    opacity: 0.7;
+}
+
+/* 商品情報 */
+.woocommerce div.product .summary {
+    padding-top: 20px;
+    position: relative;
+}
+
+.woocommerce div.product .product_title {
+    font-family: 'Questrial', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+    color: #333;
+}
+
+.woocommerce div.product .price {
+    font-family: 'Questrial', sans-serif;
+    font-size: 28px;
+    color: #8f601e;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+.woocommerce div.product .woocommerce-product-details__short-description {
+    font-size: 16px;
+    line-height: 2;
+    color: #666;
+    margin-bottom: 30px;
+    letter-spacing: 0.05em;
+}
+
+/* 在庫表示 */
+.woocommerce div.product .stock {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.woocommerce div.product .stock.in-stock {
+    color: #2e7d32;
+}
+
+.woocommerce div.product .stock.out-of-stock {
+    color: #c62828;
+}
+
+/* カートフォーム */
+.woocommerce div.product form.cart {
+    margin-bottom: 30px;
+}
+
+.woocommerce div.product form.cart .quantity {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.woocommerce div.product form.cart .quantity input {
+    width: 60px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.woocommerce div.product form.cart button.single_add_to_cart_button {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.woocommerce div.product form.cart button.single_add_to_cart_button:hover {
+    background-color: #555;
+    opacity: 1;
+}
+
+.woocommerce div.product form.cart button.single_add_to_cart_button.disabled {
+    background-color: #999;
+    cursor: not-allowed;
+}
+
+/* 商品メタ情報 */
+.woocommerce div.product .product_meta {
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+    color: #666;
+}
+
+.woocommerce div.product .product_meta > span {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.woocommerce div.product .product_meta a {
+    color: #8f601e;
+    transition: opacity 0.3s ease;
+}
+
+.woocommerce div.product .product_meta a:hover {
+    opacity: 0.7;
+}
+
+/* 商品説明タブ */
+.woocommerce div.product .woocommerce-tabs {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs {
+    display: flex;
+    gap: 30px;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 40px;
+    padding: 0;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li a {
+    display: block;
+    padding: 15px 0;
+    color: #666;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a,
+.woocommerce div.product .woocommerce-tabs ul.tabs li a:hover {
+    color: #333;
+    border-bottom-color: #8f601e;
+}
+
+.woocommerce div.product .woocommerce-tabs .woocommerce-Tabs-panel {
+    padding: 0;
+}
+
+.woocommerce div.product .woocommerce-tabs .woocommerce-Tabs-panel h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.woocommerce div.product .woocommerce-tabs .woocommerce-Tabs-panel p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* 関連商品 */
+.woocommerce .related.products {
+    margin-top: 80px;
+    padding-top: 80px;
+    border-top: 1px solid #eee;
+}
+
+.woocommerce .related.products > h2 {
+    font-family: 'Questrial', sans-serif;
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 40px;
+    letter-spacing: 0.05em;
+}
+
+/* =========================================
+   カート・チェックアウトページ
+========================================= */
+.woocommerce-cart .woocommerce,
+.woocommerce-checkout .woocommerce {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 140px 20px 80px;
+}
+
+.woocommerce table.cart,
+.woocommerce table.shop_table {
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.woocommerce table.shop_table th {
+    background-color: #f5f5f5;
+    padding: 20px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+.woocommerce table.shop_table td {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.woocommerce .woocommerce-Button,
+.woocommerce button.button {
+    padding: 15px 40px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.woocommerce .woocommerce-Button:hover,
+.woocommerce button.button:hover {
+    background-color: #8f601e;
+    opacity: 1;
+}
+
+/* =========================================
+   メッセージ・通知
+========================================= */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    border: none;
+}
+
+.woocommerce-message {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.woocommerce-info {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.woocommerce-error {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* =========================================
+   ページネーション
+========================================= */
+.woocommerce nav.woocommerce-pagination {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.woocommerce nav.woocommerce-pagination ul {
+    display: inline-flex;
+    gap: 10px;
+    border: none;
+}
+
+.woocommerce nav.woocommerce-pagination ul li {
+    border: 1px solid #ddd;
+    border-radius: 0;
+    margin: 0;
+}
+
+.woocommerce nav.woocommerce-pagination ul li a,
+.woocommerce nav.woocommerce-pagination ul li span {
+    padding: 8px 15px;
+    color: #333;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+}
+
+.woocommerce nav.woocommerce-pagination ul li a:hover,
+.woocommerce nav.woocommerce-pagination ul li span.current {
+    background-color: #333;
+    color: #fff;
+}
+
+/* =========================================
+   会員限定バッジ
+========================================= */
+.premium-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    background: linear-gradient(135deg, #8f601e 0%, #b8873e 100%);
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+/* =========================================
+   Shop用レスポンシブデザイン
+========================================= */
+
+/* タブレット（1024px以下） */
+@media screen and (max-width: 1024px) {
+    .shop-title {
+        font-size: 40px;
+    }
+    
+    .woocommerce ul.products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .woocommerce div.product {
+        gap: 40px;
+    }
+}
+
+/* タブレット・モバイル（768px以下） */
+@media screen and (max-width: 768px) {
+    .shop-header {
+        padding: 100px 0 40px;
+    }
+    
+    .shop-title {
+        font-size: 32px;
+    }
+    
+    .shop-description {
+        font-size: 14px;
+    }
+    
+    .shop-container {
+        padding: 40px 0 60px;
+    }
+    
+    /* 商品一覧 */
+    .woocommerce ul.products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    /* 商品詳細 */
+    .woocommerce div.product {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 100px 20px 60px;
+    }
+    
+    .woocommerce div.product .product_title {
+        font-size: 24px;
+    }
+    
+    .woocommerce div.product .price {
+        font-size: 22px;
+    }
+}
+
+/* 小画面（480px以下） */
+@media screen and (max-width: 480px) {
+    /* 商品一覧を1列に */
+    .woocommerce ul.products {
+        grid-template-columns: 1fr;
+    }
+    
+    .woocommerce ul.products li.product img {
+        height: 250px;
+        object-fit: cover;
+    }
+    
+    /* 商品詳細 */
+    .woocommerce div.product .product_title {
+        font-size: 20px;
+    }
+    
+    .woocommerce div.product .price {
+        font-size: 20px;
+    }
+    
+    /* カートボタン */
+    .woocommerce div.product form.cart button.single_add_to_cart_button {
+        width: 100%;
+        padding: 12px 20px;
+    }
+}
+
+/* タブレット以上での改善 */
+@media screen and (min-width: 769px) {
+    /* 商品詳細画像をスティッキーに */
+    .woocommerce div.product .woocommerce-product-gallery__wrapper {
+        position: sticky;
+        top: 120px;
+    }
+    
+    /* 関連商品 */
+    .woocommerce .related.products {
+        margin-top: 60px;
+        padding-top: 60px;
+    }
+    
+    .woocommerce .related.products > h2 {
+        font-size: 26px;
+    }
+}
