@@ -32,7 +32,7 @@ function cavallian_setup() {
     
     // WooCommerceサポート
     add_theme_support('woocommerce');
-    add_theme_support('wc-product-gallery-zoom');
+    // add_theme_support('wc-product-gallery-zoom');  // ホバー拡大を無効化
     add_theme_support('wc-product-gallery-lightbox');
     add_theme_support('wc-product-gallery-slider');
     
@@ -553,3 +553,15 @@ function cavallian_get_child_categories() {
 }
 add_action('wp_ajax_get_child_categories', 'cavallian_get_child_categories');
 add_action('wp_ajax_nopriv_get_child_categories', 'cavallian_get_child_categories');
+
+/* =========================================
+   functions.php に追加するコード
+   
+   商品詳細ページの画像ギャラリーカスタマイズ
+========================================= */
+
+// WooCommerceのギャラリーズーム機能を無効化（優先度20で実行）
+add_action('after_setup_theme', 'cavallian_disable_wc_gallery_zoom', 20);
+function cavallian_disable_wc_gallery_zoom() {
+    remove_theme_support('wc-product-gallery-zoom');
+}

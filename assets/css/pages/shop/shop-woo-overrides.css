@@ -1,0 +1,181 @@
+/* =========================================
+   WooCommerce 共通上書きスタイル
+   
+   このファイルは全てのWooCommerceページで共通して使用される
+   基本スタイルの上書きを定義します
+   
+   対象: 商品一覧、商品詳細、カート、チェックアウト等すべて
+========================================= */
+
+/* =========================================
+   リセット・基本スタイル
+========================================= */
+
+/* リストスタイルのリセット */
+.woocommerce ul.products {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 商品リンクの基本スタイル */
+.woocommerce ul.products li.product a {
+    display: block;
+    text-decoration: none;
+}
+
+/* 商品画像の基本スタイル */
+.woocommerce ul.products li.product img {
+    width: 100%;
+    height: auto;
+}
+
+/* =========================================
+   タイポグラフィ
+========================================= */
+
+/* 価格表示の共通フォント設定 */
+.woocommerce .price {
+    font-family: 'Questrial', sans-serif;
+}
+
+/* =========================================
+   ボタン共通スタイル
+========================================= */
+
+/* WooCommerceボタンの共通スタイル */
+.woocommerce .woocommerce-Button,
+.woocommerce button.button {
+    padding: 15px 40px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.woocommerce .woocommerce-Button:hover,
+.woocommerce button.button:hover {
+    background-color: #8f601e;
+    opacity: 1;
+}
+
+/* =========================================
+   メッセージ・通知の共通スタイル
+========================================= */
+
+/* 成功・情報・エラーメッセージの基本スタイル */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    border: none;
+}
+
+/* 成功メッセージ（カート追加等） */
+.woocommerce-message {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+/* 情報メッセージ */
+.woocommerce-info {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+/* エラーメッセージ */
+.woocommerce-error {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+/* =========================================
+   ページネーション共通スタイル
+========================================= */
+
+/* ページネーション全体 */
+.woocommerce nav.woocommerce-pagination {
+    margin-top: 60px;
+    text-align: center;
+}
+
+/* ページネーションリスト */
+.woocommerce nav.woocommerce-pagination ul {
+    display: inline-flex;
+    gap: 10px;
+    border: none;
+}
+
+/* ページ番号のリストアイテム */
+.woocommerce nav.woocommerce-pagination ul li {
+    border: 1px solid #ddd;
+    border-radius: 0;
+    margin: 0;
+}
+
+/* ページ番号のリンク・テキスト */
+.woocommerce nav.woocommerce-pagination ul li a,
+.woocommerce nav.woocommerce-pagination ul li span {
+    padding: 8px 15px;
+    color: #333;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+}
+
+/* ホバー時・現在のページ */
+.woocommerce nav.woocommerce-pagination ul li a:hover,
+.woocommerce nav.woocommerce-pagination ul li span.current {
+    background-color: #333;
+    color: #fff;
+}
+
+/* =========================================
+   会員限定バッジ
+========================================= */
+
+.premium-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    background: linear-gradient(135deg, #8f601e 0%, #b8873e 100%);
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+/* =========================================
+   テーブル共通スタイル
+========================================= */
+
+/* テーブルの基本スタイル */
+.woocommerce table.shop_table {
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* テーブルヘッダー */
+.woocommerce table.shop_table th {
+    background-color: #f5f5f5;
+    padding: 20px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+/* テーブルセル */
+.woocommerce table.shop_table td {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}

@@ -1,0 +1,168 @@
+/* =========================================
+   商品一覧ページ専用スタイル
+   
+   商品アーカイブページのレイアウトとスタイル
+   
+   対象: archive-product.php（商品一覧ページ）
+========================================= */
+
+/* =========================================
+   Shop Header
+========================================= */
+.shop-header {
+    padding: 200px 0 60px;  /* 140px(ヘッダー) + 60px(余白) */
+    text-align: center;
+    background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+}
+
+.shop-title {
+    font-family: 'Questrial', sans-serif;
+    font-size: 48px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+}
+
+.shop-description {
+    font-size: 16px;
+    color: #666;
+    letter-spacing: 0.08em;
+    line-height: 1.8;
+}
+
+.shop-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+/* =========================================
+   商品グリッド
+========================================= */
+.woocommerce ul.products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+/* =========================================
+   商品ブロック
+========================================= */
+.woocommerce ul.products li.product {
+    background: transparent;  /* 背景なし */
+    border: none;  /* 囲みなし */
+    border-radius: 0;
+    overflow: visible;
+    transition: none;  /* トランジションなし */
+    margin: 0;
+    text-align: center;  /* すべての文字をセンター合わせ */
+}
+
+/* ホバー時の影・移動を削除 */
+.woocommerce ul.products li.product:hover {
+    box-shadow: none;
+    transform: none;
+}
+
+/* =========================================
+   商品タイトル
+========================================= */
+/* 商品名: Noto Sans JP - 300, 16px */
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    margin: 20px 0 10px;
+    padding: 0 20px;
+    letter-spacing: 0.05em;
+    color: #333;
+    text-align: center;
+}
+
+/* =========================================
+   価格表示
+========================================= */
+/* 価格: Questrial - 300, 16px, #333 */
+.woocommerce ul.products li.product .price {
+    font-size: 16px;
+    font-weight: 300;
+    color: #333;
+    padding: 0 20px 20px;
+    text-align: center;
+}
+
+/* =========================================
+   カートボタン
+========================================= */
+/* カートボタンを非表示 */
+.woocommerce ul.products li.product .button {
+    display: none;
+}
+
+/* =========================================
+   商品が見つからない場合
+========================================= */
+.no-products-message {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.no-products-message p {
+    font-size: 16px;
+    color: #666;
+    letter-spacing: 0.05em;
+}
+
+/* =========================================
+   レスポンシブ対応
+========================================= */
+
+/* タブレット（1024px以下） */
+@media screen and (max-width: 1024px) {
+    .shop-title {
+        font-size: 40px;
+    }
+    
+    .woocommerce ul.products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+/* タブレット・モバイル（768px以下） */
+@media screen and (max-width: 768px) {
+    .shop-header {
+        padding: 120px 0 40px;  /* 80px(モバイルヘッダー) + 40px(余白) */
+    }
+    
+    .shop-title {
+        font-size: 32px;
+    }
+    
+    .shop-description {
+        font-size: 14px;
+    }
+    
+    .shop-container {
+        padding: 40px 0 60px;
+    }
+    
+    /* 商品一覧 */
+    .woocommerce ul.products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+/* 小画面（480px以下） */
+@media screen and (max-width: 480px) {
+    /* 商品一覧を1列に */
+    .woocommerce ul.products {
+        grid-template-columns: 1fr;
+    }
+    
+    .woocommerce ul.products li.product img {
+        height: 250px;
+        object-fit: cover;
+    }
+}

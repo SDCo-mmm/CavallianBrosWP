@@ -1,0 +1,103 @@
+/* =========================================
+   カスタムフィルター専用スタイル
+   
+   商品一覧ページのカスタム絞り込み機能
+   CATEGORY / ITEM / SORT の3つのドロップダウン
+   
+   対象: archive-product.php（商品一覧ページ）
+========================================= */
+
+/* =========================================
+   フィルターコンテナ
+========================================= */
+.product-filters {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 60px;
+    padding-bottom: 20px;
+}
+
+/* =========================================
+   フィルターアイテム（各ドロップダウン）
+========================================= */
+.filter-item {
+    position: relative;
+    flex: 1;
+}
+
+/* ラベル（CATEGORY / ITEM / SORT） */
+.filter-item label {
+    display: block;
+    font-family: 'Questrial', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: #666;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+/* セレクトボックス */
+.filter-item select {
+    width: 100%;
+    padding: 12px 35px 12px 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: #333;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+/* ホバー・フォーカス時 */
+.filter-item select:hover,
+.filter-item select:focus {
+    border-bottom-color: #333;
+    outline: none;
+}
+
+/* カスタムドロップダウンアイコン（▼） */
+.filter-item::after {
+    content: '▼';
+    position: absolute;
+    right: 10px;
+    bottom: 12px;
+    font-size: 10px;
+    color: #666;
+    pointer-events: none;
+}
+
+/* =========================================
+   WooCommerce既存機能の非表示
+========================================= */
+
+/* 並び替え・表示件数（カスタムフィルターに統合したため非表示） */
+.woocommerce-ordering,
+.woocommerce-result-count {
+    display: none;
+}
+
+/* =========================================
+   レスポンシブ対応
+========================================= */
+
+/* タブレット・モバイル（768px以下） */
+@media screen and (max-width: 768px) {
+    /* カスタムフィルター（モバイル） */
+    .product-filters {
+        flex-direction: column;
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+    
+    .filter-item {
+        width: 100%;
+    }
+}

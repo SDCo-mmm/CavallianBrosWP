@@ -1,0 +1,94 @@
+/* =========================================
+   フッター
+========================================= */
+.footer {
+    background-color: #222;
+    color: #fff;
+    padding: 60px 0 30px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.footer-logo {
+    width: 160px;
+}
+
+.footer-logo img {
+    width: 100%;
+    height: auto;
+}
+
+.footer-social {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+    background-color: #fff;
+    color: #222;
+    opacity: 1;
+}
+
+.footer-nav-list {
+    display: flex;
+    gap: 30px;
+}
+
+.footer-nav-list a {
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+}
+
+.footer-nav-list a:hover {
+    color: #fff;
+    opacity: 1;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copyright {
+    font-family: 'Questrial', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+}
+
+/* =========================================
+   レスポンシブ対応
+========================================= */
+
+/* モバイル */
+@media screen and (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .footer-nav-list {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+}

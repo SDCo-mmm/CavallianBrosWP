@@ -1,0 +1,38 @@
+/* =========================================
+   カート・チェックアウトページ専用スタイル
+   
+   カートページとチェックアウトページのスタイル
+   
+   対象: cart.php, checkout.php
+========================================= */
+
+/* =========================================
+   カート・チェックアウト 共通レイアウト
+========================================= */
+.woocommerce-cart .woocommerce,
+.woocommerce-checkout .woocommerce {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 180px 20px 80px;  /* 140px(ヘッダー) + 40px(余白) */
+}
+
+/* =========================================
+   カートテーブル
+========================================= */
+.woocommerce table.cart {
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* =========================================
+   レスポンシブ対応
+========================================= */
+
+/* タブレット・モバイル（768px以下） */
+@media screen and (max-width: 768px) {
+    .woocommerce-cart .woocommerce,
+    .woocommerce-checkout .woocommerce {
+        padding: 120px 20px 60px;  /* 80px(モバイルヘッダー) + 40px(余白) */
+    }
+}

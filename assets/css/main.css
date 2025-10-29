@@ -1,0 +1,45 @@
+/* =========================================
+   Cavallian Bros. WordPress Theme Styles
+   ========================================= */
+
+/* =========================================
+   基礎スタイル（Phase 1で分離）
+========================================= */
+@import url('base/reset.css');
+@import url('base/typography.css');
+@import url('base/wordpress.css');
+
+/* =========================================
+   レイアウト（Phase 2で分離）
+========================================= */
+@import url('layout/header.css');
+@import url('layout/footer.css');
+@import url('layout/mobile-menu.css');
+
+/* =========================================
+   ページ（Phase 3で分離）
+========================================= */
+@import url('pages/home.css');
+
+/* ========== Shop（WooCommerce） - Phase 3完了 ========== */
+@import url('pages/shop/shop-woo-overrides.css');  /* 共通スタイル */
+@import url('pages/shop/shop-filter.css');          /* カスタムフィルター */
+@import url('pages/shop/shop-archive.css');         /* 商品一覧ページ */
+@import url('pages/shop/shop-single.css');          /* 商品詳細ページ */
+@import url('pages/shop/shop-cart-checkout.css');   /* カート・チェックアウト */
+
+/* 注意: shop.css は読み込み不要になりました（全て分離済み） */
+
+@import url('pages/events.css');
+@import url('pages/company.css');
+
+/* =========================================
+   CSS分離プロジェクト完了
+   
+   全てのスタイルが機能別ファイルに分離されました
+   - Phase 1: 基礎スタイル（reset, typography, wordpress）
+   - Phase 2: レイアウト（header, footer, mobile-menu）
+   - Phase 3: ページ（home, shop, events, company）
+   
+   元の1,348行から24行に削減（98%削減）
+========================================= */

@@ -1,0 +1,42 @@
+/* =========================================
+   WordPress固有のスタイル調整
+========================================= */
+
+/* ブロックエディタ - 区切り線 */
+.wp-block-separator {
+    margin: 40px 0;
+}
+
+/* 画像の配置 */
+.aligncenter {
+    display: block;
+    margin: 0 auto;
+}
+
+.alignleft {
+    float: left;
+    margin-right: 20px;
+}
+
+.alignright {
+    float: right;
+    margin-left: 20px;
+}
+
+/* キャプション */
+.wp-caption {
+    max-width: 100%;
+}
+
+.wp-caption-text {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* スクリーンリーダー用テキスト（アクセシビリティ） */
+.screen-reader-text {
+    position: absolute;
+    left: -9999px;
+}
