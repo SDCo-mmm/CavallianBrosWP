@@ -37,14 +37,14 @@
 
 /* メイン画像コンテナ */
 .woocommerce div.product .woocommerce-product-gallery__image {
-    margin: 0 0 20px 0;
+    margin: 0 0 44px 0;  /* サムネイルとの間隔を44pxに */
     padding: 0;
     position: relative;
 }
 
 /* メイン画像 */
 .woocommerce div.product .woocommerce-product-gallery__image img {
-    border-radius: 8px;
+    border-radius: 0;
     width: 100%;
     height: auto;
     display: block;
@@ -54,7 +54,7 @@
 
 /* FlexSlider のデフォルトスタイルをリセット */
 .woocommerce div.product .flex-viewport {
-    margin: 0 !important;
+    margin: 0 0 44px 0 !important;  /* 下に44pxの余白 */
     padding: 0 !important;
 }
 
@@ -81,8 +81,8 @@
 /* サムネイルコンテナ */
 .woocommerce div.product .flex-control-thumbs {
     display: flex;
-    gap: 10px;
-    margin-top: 15px;
+    gap: 44px;  /* 間隔を44pxに */
+    margin-top: 0;
     overflow: visible;  /* スクロールを無効化 */
     position: relative;
     padding: 0;
@@ -92,13 +92,13 @@
 
 /* サムネイル画像 */
 .woocommerce div.product .flex-control-thumbs li {
-    flex: 0 0 calc(16.666% - 8.33px);  /* 6列表示 (100% / 6) */
+    flex: 0 0 80px;  /* 80px固定 */
     margin: 0;
     list-style: none;
 }
 
 .woocommerce div.product .flex-control-thumbs li img {
-    border-radius: 4px;
+    border-radius: 0;
     cursor: pointer;
     transition: opacity 0.3s ease;
     width: 100%;
@@ -130,7 +130,7 @@
 
 /* 商品タイトル */
 .woocommerce div.product .product_title {
-    font-family: 'Questrial', sans-serif;
+    font-family: 'Noto Sans JP', sans-serif;
     font-size: 32px;
     font-weight: 400;
     margin-bottom: 20px;
@@ -142,9 +142,9 @@
 /* 価格 */
 .woocommerce div.product .price {
     font-size: 28px;
-    color: #8f601e;
+    color: #333;
     margin-bottom: 30px;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 /* 商品説明（短い説明） */
@@ -154,6 +154,7 @@
     color: #666;
     margin-bottom: 30px;
     letter-spacing: 0.05em;
+    font-weight: 300;
 }
 
 /* =========================================
@@ -166,11 +167,11 @@
 }
 
 .woocommerce div.product .stock.in-stock {
-    color: #2e7d32;
+    color: #333;
 }
 
 .woocommerce div.product .stock.out-of-stock {
-    color: #c62828;
+    color: #666;
 }
 
 /* =========================================
@@ -190,7 +191,7 @@
     width: 60px;
     padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 0;
     text-align: center;
     font-size: 16px;
 }
@@ -201,7 +202,7 @@
     color: #fff;
     padding: 15px 40px;
     border: none;
-    border-radius: 4px;
+    border-radius: 0;
     font-size: 16px;
     letter-spacing: 0.08em;
     cursor: pointer;
@@ -216,6 +217,11 @@
 .woocommerce div.product form.cart button.single_add_to_cart_button.disabled {
     background-color: #999;
     cursor: not-allowed;
+}
+
+/* Express Checkout（Apple Pay、Google Pay、LINE Pay）を非表示 */
+#wc-stripe-express-checkout-element {
+    display: none !important;
 }
 
 /* =========================================
@@ -235,7 +241,7 @@
 }
 
 .woocommerce div.product .product_meta a {
-    color: #8f601e;
+    color: #333;
     transition: opacity 0.3s ease;
 }
 
@@ -281,7 +287,7 @@
 .woocommerce div.product .woocommerce-tabs ul.tabs li.active a,
 .woocommerce div.product .woocommerce-tabs ul.tabs li a:hover {
     color: #333;
-    border-bottom-color: #8f601e;
+    border-bottom-color: #333;
 }
 
 /* タブコンテンツ */
@@ -290,8 +296,7 @@
 }
 
 .woocommerce div.product .woocommerce-tabs .woocommerce-Tabs-panel h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
+    display: none;
 }
 
 .woocommerce div.product .woocommerce-tabs .woocommerce-Tabs-panel p {
@@ -301,21 +306,210 @@
     margin-bottom: 20px;
 }
 
+/* 追加情報テーブル */
+.woocommerce div.product .woocommerce-tabs table.shop_attributes {
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.woocommerce div.product .woocommerce-tabs table.shop_attributes th,
+.woocommerce div.product .woocommerce-tabs table.shop_attributes td {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+    font-weight: 300;
+    text-align: left;
+}
+
+.woocommerce div.product .woocommerce-tabs table.shop_attributes th {
+    color: #333;
+    width: 150px;
+}
+
+.woocommerce div.product .woocommerce-tabs table.shop_attributes td {
+    color: #666;
+}
+
+.woocommerce div.product .woocommerce-tabs table.shop_attributes td p {
+    margin: 0;
+}
+
 /* =========================================
    関連商品
 ========================================= */
 .woocommerce .related.products {
-    margin-top: 80px;
-    padding-top: 80px;
+    margin-top: 60px;
+    padding-top: 40px;
     border-top: 1px solid #eee;
 }
 
 .woocommerce .related.products > h2 {
-    font-family: 'Questrial', sans-serif;
+    font-family: 'Noto Sans JP', sans-serif;
     font-size: 32px;
     text-align: center;
     margin-bottom: 40px;
     letter-spacing: 0.05em;
+}
+
+/* 関連商品の商品一覧 */
+.woocommerce .related.products ul.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.woocommerce .related.products ul.products li.product {
+    margin: 0;
+    padding: 0;
+}
+
+/* 関連商品の画像 */
+.woocommerce .related.products ul.products li.product img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0;
+    display: block;
+}
+
+.woocommerce .related.products ul.products li.product a {
+    text-decoration: none;
+}
+
+.woocommerce .related.products ul.products li.product a:hover img {
+    opacity: 0.7;
+}
+
+/* 関連商品の商品名 */
+.woocommerce .related.products ul.products li.product h2,
+.woocommerce .related.products ul.products li.product .woocommerce-loop-product__title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #333;
+    letter-spacing: 0.05em;
+}
+
+/* 関連商品の価格 */
+.woocommerce .related.products ul.products li.product .price {
+    font-family: 'Questrial', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #333;
+}
+
+/* タイトルテキスト変更用 */
+.woocommerce .upsells.products > h2 {
+    position: relative;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    text-indent: -9999px;
+    overflow: hidden;
+    height: 20px;  /* ::afterの高さを確保 */
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.woocommerce .upsells.products > h2::after {
+    content: 'RECOMMEND';
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    line-height: 20px;
+    text-indent: 0;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+.woocommerce .related.products > h2 {
+    position: relative;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    text-indent: -9999px;
+    overflow: hidden;
+    height: 20px;  /* ::afterの高さを確保 */
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.woocommerce .related.products > h2::after {
+    content: 'RELATED';
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    line-height: 20px;
+    text-indent: 0;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+/* アップセル商品（RECOMMENDと同じスタイル） */
+.woocommerce .upsells.products {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid #eee;
+}
+
+.woocommerce .upsells.products ul.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.woocommerce .upsells.products ul.products li.product {
+    margin: 0;
+    padding: 0;
+}
+
+.woocommerce .upsells.products ul.products li.product img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0;
+    display: block;
+}
+
+.woocommerce .upsells.products ul.products li.product a {
+    text-decoration: none;
+}
+
+.woocommerce .upsells.products ul.products li.product a:hover img {
+    opacity: 0.7;
+}
+
+.woocommerce .upsells.products ul.products li.product h2,
+.woocommerce .upsells.products ul.products li.product .woocommerce-loop-product__title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #333;
+    letter-spacing: 0.05em;
+}
+
+.woocommerce .upsells.products ul.products li.product .price {
+    font-family: 'Questrial', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: #333;
 }
 
 /* =========================================
@@ -354,6 +548,36 @@
     .woocommerce div.product .price {
         font-size: 22px;
     }
+    
+    /* ギャラリーサムネイルを4列表示に */
+    .woocommerce div.product .flex-control-thumbs {
+        gap: 15px;  /* 間隔を狭く */
+    }
+    
+    .woocommerce div.product .flex-control-thumbs li {
+        flex: 0 0 calc(25% - 11.25px);  /* 4列表示 */
+    }
+    
+    /* RELATED・RECOMMENDを2列表示に */
+    .woocommerce .related.products ul.products,
+    .woocommerce .upsells.products ul.products {
+        grid-template-columns: repeat(2, 130px) !important;
+        gap: 20px !important;
+        justify-content: center;
+    }
+    
+    .woocommerce .related.products ul.products li.product,
+    .woocommerce .upsells.products ul.products li.product {
+        width: 130px !important;
+    }
+    
+    .woocommerce .related.products ul.products li.product img,
+    .woocommerce .upsells.products ul.products li.product img {
+        width: 130px !important;
+        height: 130px !important;
+        object-fit: cover !important;
+        max-width: 130px !important;
+    }
 }
 
 /* 小画面（480px以下） */
@@ -379,7 +603,7 @@
     /* 関連商品 */
     .woocommerce .related.products {
         margin-top: 60px;
-        padding-top: 60px;
+        padding-top: 40px;
     }
     
     .woocommerce .related.products > h2 {
