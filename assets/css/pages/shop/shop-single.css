@@ -75,6 +75,39 @@
 }
 
 /* =========================================
+   ライトボックス（拡大表示）背景
+========================================= */
+/* PhotoSwipeの背景を黒の半透明に変更 */
+.pswp__bg {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* WooCommerceのライトボックス背景（代替） */
+.woocommerce-product-gallery__wrapper .zoomImg,
+.woocommerce-product-gallery__image--placeholder {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* PhotoSwipe: 背景タップで閉じるためのCSS設定 */
+/* 画像以外の要素をクリック可能に */
+.pswp__scroll-wrap,
+.pswp__container,
+.pswp__zoom-wrap {
+    pointer-events: auto !important;
+}
+
+/* 画像自体はクリックイベントを通過させない */
+.pswp__img {
+    pointer-events: auto !important;
+}
+
+/* 背景レイヤーをクリック可能に */
+.pswp__bg {
+    pointer-events: auto !important;
+    cursor: pointer;
+}
+
+/* =========================================
    サムネイル画像
 ========================================= */
 
@@ -100,14 +133,23 @@
 .woocommerce div.product .flex-control-thumbs li img {
     border-radius: 0;
     cursor: pointer;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;  /* opacity と border のトランジション */
     width: 100%;
     height: auto;
     display: block;
+    opacity: 0.5;  /* 非選択時: 透明度50% */
+    border: none;  /* 非選択時: ボーダーなし */
 }
 
+/* ホバー時 */
 .woocommerce div.product .flex-control-thumbs li img:hover {
     opacity: 0.7;
+}
+
+/* 選択中のサムネイル */
+.woocommerce div.product .flex-control-thumbs li img.flex-active {
+    opacity: 1 !important;  /* 選択中: 透明度100% */
+    border: 2px solid #8f601e !important;  /* 選択中: ブランドカラーのボーダー */
 }
 
 /* サムネイルの数字を非表示 */
