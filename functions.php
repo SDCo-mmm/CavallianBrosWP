@@ -565,3 +565,18 @@ add_action('after_setup_theme', 'cavallian_disable_wc_gallery_zoom', 20);
 function cavallian_disable_wc_gallery_zoom() {
     remove_theme_support('wc-product-gallery-zoom');
 }
+
+// 商品ギャラリーカスタマイズのJavaScriptを読み込む
+function cavallian_enqueue_gallery_scripts() {
+    // 商品詳細ページのみで読み込む
+    if (is_product()) {
+        wp_enqueue_script(
+            'cavallian-product-gallery',
+            get_template_directory_uri() . '/assets/js/product-gallery.js',
+            array('jquery', 'photoswipe-ui-default'), // PhotoSwipeの後に読み込む
+            '1.0.0',
+            true
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'cavallian_enqueue_gallery_scripts', 20);
