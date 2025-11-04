@@ -638,6 +638,18 @@
         width: 100%;
         padding: 12px 20px;
     }
+    
+    /* 数量入力を縦並びにしてボタンとの間隔を空ける */
+    .woocommerce div.product form.cart .quantity {
+        display: block;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    
+    .woocommerce div.product form.cart .quantity input {
+        width: 100%;
+        max-width: 150px;
+    }
 }
 
 /* デスクトップ以上での改善 */
