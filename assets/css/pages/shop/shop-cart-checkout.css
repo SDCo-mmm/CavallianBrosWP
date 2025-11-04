@@ -176,18 +176,37 @@ h2.wp-block-heading.has-text-align-left::after {
     color: #333;
 }
 
+/* クロスセル商品リスト全体をセンター揃え */
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) ul.wp-block-post-template {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+}
+
 /* クロスセル商品全体をセンター揃え */
-.wc-block-grid__product,
-li.wc-block-grid__product {
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) li.wp-block-post {
     text-align: center !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    width: 100% !important;
+    max-width: 250px !important;
+}
+
+/* クロスセル商品画像コンテナ */
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-components-product-image,
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) div[data-block-name="woocommerce/product-image"] {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-bottom: 10px !important;
 }
 
 /* クロスセル商品画像 - 150px正方形 */
-.wc-block-product-image img,
-.wc-block-grid__product-image img {
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-product-image img,
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-grid__product-image img,
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-components-product-image img {
     width: 150px !important;
     height: 150px !important;
     object-fit: cover !important;
@@ -195,8 +214,9 @@ li.wc-block-grid__product {
 }
 
 /* クロスセル商品名 - Noto Sans JP 300, 14px */
-.wc-block-grid__product-title,
-.wc-block-components-product-name {
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-grid__product-title,
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-components-product-name,
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) h2.has-text-align-center.wp-block-post-title {
     font-family: 'Noto Sans JP', sans-serif !important;
     font-size: 14px !important;
     font-weight: 300 !important;
@@ -207,8 +227,9 @@ li.wc-block-grid__product {
 }
 
 /* クロスセル商品価格 - Questrial 300, 14px */
-.wc-block-grid__product-price,
-.wc-block-components-product-price {
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-grid__product-price,
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-components-product-price,
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wp-block-woocommerce-product-price {
     font-family: 'Questrial', sans-serif !important;
     font-size: 14px !important;
     font-weight: 300 !important;
@@ -217,9 +238,18 @@ li.wc-block-grid__product {
     margin-bottom: 10px !important;
 }
 
+/* 価格内のspan要素にも適用 */
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wp-block-woocommerce-product-price .wc-block-components-product-price,
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wp-block-woocommerce-product-price .woocommerce-Price-amount {
+    font-family: 'Questrial', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 300 !important;
+}
+
 /* クロスセル「お買い物カゴに追加」ボタン - 角丸なし */
-.wc-block-grid__product .wc-block-components-product-button button,
-.wc-block-components-product-button .wp-element-button {
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-grid__product .wc-block-components-product-button button,
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-components-product-button .wp-element-button,
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wp-block-button .wp-block-button__link {
     border-radius: 0 !important;
     background-color: #333 !important;
     color: #fff !important;
