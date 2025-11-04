@@ -9,11 +9,41 @@
 /* =========================================
    カート・チェックアウト 共通レイアウト
 ========================================= */
+
+/* WooCommerceのメインコンテナ */
 .woocommerce-cart .woocommerce,
 .woocommerce-checkout .woocommerce {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 180px 20px 80px;  /* 140px(ヘッダー) + 40px(余白) */
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 220px 20px 80px !important;  /* 140px(ヘッダー) + 80px(余白) */
+}
+
+/* 代替セレクタ（テーマによって異なる場合） */
+.woocommerce-cart .entry-content,
+.woocommerce-checkout .entry-content {
+    padding-top: 220px !important;
+}
+
+/* article要素への適用 */
+.woocommerce-cart article,
+.woocommerce-checkout article {
+    padding-top: 60px !important;
+}
+
+/* ページタイトル */
+.woocommerce-cart .entry-header,
+.woocommerce-checkout .entry-header {
+    margin-bottom: 40px;
+}
+
+.woocommerce-cart .entry-title,
+.woocommerce-checkout .entry-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #333;
+    margin-bottom: 20px;
 }
 
 /* =========================================
@@ -21,8 +51,292 @@
 ========================================= */
 .woocommerce table.cart {
     border: 1px solid #f0f0f0;
-    border-radius: 8px;
+    border-radius: 0;
     overflow: hidden;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.woocommerce table.cart thead th {
+    background-color: #fafafa;
+    padding: 20px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: #333;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.woocommerce table.cart tbody td {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+/* 商品画像 */
+.woocommerce table.cart .product-thumbnail img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 0;
+}
+
+/* 商品名 */
+.woocommerce table.cart .product-name a {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: #333;
+    letter-spacing: 0.05em;
+}
+
+/* 価格 */
+.woocommerce table.cart .product-price,
+.woocommerce table.cart .product-subtotal {
+    font-family: 'Questrial', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: #333;
+}
+
+/* 数量入力 */
+.woocommerce table.cart .product-quantity .quantity input {
+    width: 60px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* 削除ボタン */
+.woocommerce table.cart .product-remove a {
+    color: #999 !important;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.woocommerce table.cart .product-remove a:hover {
+    color: #333 !important;
+}
+
+/* カート更新ボタン */
+.woocommerce table.cart .actions {
+    padding: 20px;
+    background-color: #fafafa;
+    border-top: 1px solid #eee;
+}
+
+.woocommerce table.cart .actions button[name="update_cart"] {
+    background-color: #333;
+    color: #fff;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.woocommerce table.cart .actions button[name="update_cart"]:hover {
+    background-color: #555;
+}
+
+/* =========================================
+   カート合計
+========================================= */
+.cart-collaterals {
+    margin-top: 40px;
+}
+
+.cart-collaterals .cart_totals {
+    float: right;
+    width: 100%;
+    max-width: 500px;
+}
+
+.cart-collaterals .cart_totals h2 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.cart-collaterals .cart_totals table {
+    border: 1px solid #f0f0f0;
+    border-radius: 0;
+    width: 100%;
+}
+
+.cart-collaterals .cart_totals table th,
+.cart-collaterals .cart_totals table td {
+    padding: 15px 20px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-collaterals .cart_totals table th {
+    text-align: left;
+    color: #666;
+}
+
+.cart-collaterals .cart_totals table td {
+    text-align: right;
+    color: #333;
+}
+
+/* 合計金額 */
+.cart-collaterals .cart_totals .order-total th,
+.cart-collaterals .cart_totals .order-total td {
+    font-size: 20px;
+    font-weight: 400;
+    border-bottom: none;
+    padding-top: 20px;
+}
+
+/* チェックアウトボタン */
+.wc-proceed-to-checkout {
+    margin-top: 20px;
+}
+
+.wc-proceed-to-checkout .checkout-button {
+    display: block;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 18px 40px;
+    border: none;
+    border-radius: 0;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.wc-proceed-to-checkout .checkout-button:hover {
+    background-color: #555;
+    opacity: 1;
+}
+
+/* =========================================
+   チェックアウトページ
+========================================= */
+
+/* 2カラムレイアウト */
+.woocommerce-checkout .col2-set {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 40px;
+}
+
+/* フォームフィールド */
+.woocommerce-checkout .form-row {
+    margin-bottom: 20px;
+}
+
+.woocommerce-checkout .form-row label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.woocommerce-checkout .form-row input[type="text"],
+.woocommerce-checkout .form-row input[type="email"],
+.woocommerce-checkout .form-row input[type="tel"],
+.woocommerce-checkout .form-row textarea,
+.woocommerce-checkout .form-row select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+}
+
+.woocommerce-checkout .form-row input:focus,
+.woocommerce-checkout .form-row textarea:focus,
+.woocommerce-checkout .form-row select:focus {
+    outline: none;
+    border-color: #333;
+}
+
+/* 注文概要 */
+.woocommerce-checkout-review-order {
+    background-color: #fafafa;
+    padding: 30px;
+    border: 1px solid #f0f0f0;
+    border-radius: 0;
+}
+
+.woocommerce-checkout-review-order h3 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.woocommerce-checkout-review-order table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.woocommerce-checkout-review-order table th,
+.woocommerce-checkout-review-order table td {
+    padding: 12px 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    border-bottom: 1px solid #eee;
+}
+
+.woocommerce-checkout-review-order table th {
+    text-align: left;
+    color: #666;
+}
+
+.woocommerce-checkout-review-order table td {
+    text-align: right;
+    color: #333;
+}
+
+/* 注文ボタン */
+#place_order {
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 18px 40px;
+    border: none;
+    border-radius: 0;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+#place_order:hover {
+    background-color: #555;
+}
+
+/* エクスプレスチェックアウト（Apple Pay等）を非表示 */
+#wc-stripe-express-checkout-element {
+    display: none !important;
 }
 
 /* =========================================
@@ -33,6 +347,50 @@
 @media screen and (max-width: 768px) {
     .woocommerce-cart .woocommerce,
     .woocommerce-checkout .woocommerce {
-        padding: 120px 20px 60px;  /* 80px(モバイルヘッダー) + 40px(余白) */
+        padding: 160px 20px 60px;  /* 80px(モバイルヘッダー) + 80px(余白) */
+    }
+    
+    .woocommerce-cart .entry-title,
+    .woocommerce-checkout .entry-title {
+        font-size: 24px;
+    }
+    
+    /* カートテーブル - スマホ対応 */
+    .woocommerce table.cart {
+        font-size: 14px;
+    }
+    
+    .woocommerce table.cart .product-thumbnail img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .woocommerce table.cart tbody td {
+        padding: 15px 10px;
+    }
+    
+    /* カート合計 */
+    .cart-collaterals .cart_totals {
+        float: none;
+        max-width: 100%;
+    }
+    
+    /* チェックアウト - 1カラムに */
+    .woocommerce-checkout .col2-set {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+/* 小画面（480px以下） */
+@media screen and (max-width: 480px) {
+    .woocommerce-cart .woocommerce,
+    .woocommerce-checkout .woocommerce {
+        padding: 140px 15px 40px;
+    }
+    
+    .woocommerce-cart .entry-title,
+    .woocommerce-checkout .entry-title {
+        font-size: 20px;
     }
 }
