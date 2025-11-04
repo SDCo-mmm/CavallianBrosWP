@@ -580,3 +580,68 @@ function cavallian_enqueue_gallery_scripts() {
     }
 }
 add_action('wp_enqueue_scripts', 'cavallian_enqueue_gallery_scripts', 20);
+
+/* =========================================
+   関連商品を確実に表示する（強制版）
+   
+   functions.php に追加
+========================================= */
+
+// 既存の関連商品表示を削除
+remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
+
+// 新しい関連商品表示を追加
+add_action('woocommerce_after_single_product_summary', 'custom_output_related_products', 20);
+
+function custom_output_related_products() {
+    global $product;
+    
+    if (!$product) {
+        return;
+    }
+    
+    // Custom Related Products プラグインから関連商品IDを取得
+    $related_ids = get_post_meta($product->get_id(), '_related_ids', true);
+    
+    // デバッグ出力
+    echo '<!-- Custom Related Function: ';
+    echo 'Product ID: ' . $product->get_id() . ' | ';
+    echo 'Related IDs: ' . print_r($related_ids, true);
+    echo ' -->';
+    
+    if (empty($related_ids) || !is_array($related_ids)) {
+        // プラグインで設定されていない場合は通常の関連商品を表示
+        woocommerce_related_products(array(
+            'posts_per_page' => 4,
+            'columns' => 4,
+            'orderby' => 'rand'
+        ));
+        return;
+    }
+    
+    // プラグインで設定された商品のみ表示
+    $args = array(
+        'post_type' => 'product',
+        'post__in' => $related_ids,
+        'posts_per_page' => count($related_ids), // 設定したすべてを表示
+        'orderby' => 'post__in', // 設定した順番を保持
+        'ignore_sticky_posts' => 1
+    );
+    
+    $related_query = new WP_Query($args);
+    
+    if ($related_query->have_posts()) {
+        ?>
+        <section class="related products">
+            <h2><?php esc_html_e('Related products', 'woocommerce'); ?></h2>
+            <ul class="products columns-4">
+                <?php while ($related_query->have_posts()) : $related_query->the_post(); ?>
+                    <?php wc_get_template_part('content', 'product'); ?>
+                <?php endwhile; ?>
+            </ul>
+        </section>
+        <?php
+    }
+    
+    wp_reset_postdata();
+}
