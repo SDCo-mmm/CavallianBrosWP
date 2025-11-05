@@ -757,6 +757,23 @@
         border-bottom: none;
     }
     
+    /* ドロップダウン矢印（セレクトボックス時は非表示にする） */
+    .woocommerce-MyAccount-navigation ul li.is-active::after {
+        content: '▼';
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 12px;
+        color: #666;
+        pointer-events: none;
+    }
+    
+    /* セレクトボックスが追加されたら元のリストを非表示 */
+    .woocommerce-MyAccount-navigation:has(.mobile-account-select) ul {
+        display: none !important;
+    }
+    
     /* ドロップダウン矢印 */
     .woocommerce-MyAccount-navigation ul li.is-active::after {
         content: '▼';
@@ -769,29 +786,18 @@
         pointer-events: none;
     }
     
-    /* ホバー/タップ時にすべてのメニューを表示 */
-    .woocommerce-MyAccount-navigation:hover ul li,
-    .woocommerce-MyAccount-navigation:focus-within ul li {
-        display: block;
-    }
-    
-    /* メニューが開いた時の矢印を上向きに */
-    .woocommerce-MyAccount-navigation:hover ul li.is-active::after,
-    .woocommerce-MyAccount-navigation:focus-within ul li.is-active::after {
-        content: '▲';
-    }
-    
-    /* 開いた時のメニュー項目 */
-    .woocommerce-MyAccount-navigation:hover ul li a,
-    .woocommerce-MyAccount-navigation:focus-within ul li a {
-        background-color: #fff;
+    /* 非アクティブな項目を非表示 */
+    .woocommerce-MyAccount-navigation ul li {
+        display: none;
         border-bottom: 1px solid #e0e0e0;
     }
     
-    /* アクティブ項目は背景色を保持 */
-    .woocommerce-MyAccount-navigation:hover ul li.is-active a,
-    .woocommerce-MyAccount-navigation:focus-within ul li.is-active a {
+    /* アクティブな項目のみ表示 */
+    .woocommerce-MyAccount-navigation ul li.is-active {
+        display: block;
         background-color: #fafafa;
+        border: 1px solid #e0e0e0;
+        position: relative;
     }
     
     /* 最後の項目の下線を削除 */
@@ -829,6 +835,45 @@
     
     .woocommerce-Address {
         padding-bottom: 40px;
+    }
+    
+    /* =========================================
+       モバイルセレクトボックス
+    ========================================= */
+    
+    /* モバイルセレクトボックス */
+    .mobile-account-select {
+        width: 100%;
+        padding: 15px 40px 15px 15px;
+        background-color: #fafafa;
+        border: 1px solid #e0e0e0;
+        border-radius: 0;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        color: #333;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 12px;
+        margin-bottom: 30px;
+    }
+    
+    .mobile-account-select:focus {
+        outline: none;
+        border-color: #333;
+    }
+    
+    /* セレクトボックスのオプション */
+    .mobile-account-select option {
+        padding: 15px;
+        font-size: 15px;
+        color: #333;
     }
 }
 
