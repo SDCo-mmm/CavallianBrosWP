@@ -645,3 +645,18 @@ function custom_output_related_products() {
     
     wp_reset_postdata();
 }
+
+// マイページでのみJavaScriptを読み込む
+function cavallian_myaccount_mobile_select_script() {
+    // マイページのみで読み込む
+    if (is_account_page()) {
+        wp_enqueue_script(
+            'cavallian-myaccount-mobile-select',
+            get_template_directory_uri() . '/assets/js/myaccount-mobile-select.js',
+            array('jquery'),
+            '1.0.0',
+            true
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'cavallian_myaccount_mobile_select_script', 20);
