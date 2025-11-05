@@ -27,7 +27,6 @@
 @import url('pages/shop/shop-archive.css');         /* 商品一覧ページ */
 @import url('pages/shop/shop-single.css');          /* 商品詳細ページ */
 @import url('pages/shop/shop-cart-checkout.css');   /* カート・チェックアウト */
-@import url('pages/shop/shop-myaccount.css');       /* マイページ */
 
 /* 注意: shop.css は読み込み不要になりました（全て分離済み） */
 
@@ -35,13 +34,12 @@
 @import url('pages/company.css');
 
 /* =========================================
-   CSS分離プロジェクト完了 + マイページ追加
+   CSS分離プロジェクト完了
    
    全てのスタイルが機能別ファイルに分離されました
    - Phase 1: 基礎スタイル（reset, typography, wordpress）
    - Phase 2: レイアウト（header, footer, mobile-menu）
    - Phase 3: ページ（home, shop, events, company）
-   - Phase 4: マイページ（shop-myaccount）
    
-   元の1,348行から25行に削減（98%削減）
+   元の1,348行から24行に削減（98%削減）
 ========================================= */

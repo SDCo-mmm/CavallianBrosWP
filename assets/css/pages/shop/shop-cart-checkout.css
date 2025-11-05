@@ -504,6 +504,22 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
         padding: 160px 20px 60px;  /* 80px(モバイルヘッダー) + 80px(余白) */
     }
     
+    /* モバイルではデスクトップ用のpadding-topをリセット */
+    .woocommerce-cart .entry-content,
+    .woocommerce-checkout .entry-content {
+        padding-top: 120px !important;  /* モバイルヘッダー80px + 余白40px */
+    }
+    
+    .woocommerce-cart article,
+    .woocommerce-checkout article {
+        padding-top: 0 !important;  /* モバイルではリセット */
+    }
+    
+    .woocommerce-cart .entry-header,
+    .woocommerce-checkout .entry-header {
+        margin-bottom: 30px;  /* モバイルでは余白を減らす */
+    }
+    
     .woocommerce-cart .entry-title,
     .woocommerce-checkout .entry-title {
         font-size: 24px;
@@ -553,6 +569,22 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
     .woocommerce-cart .woocommerce,
     .woocommerce-checkout .woocommerce {
         padding: 140px 15px 40px;
+    }
+    
+    /* 小画面でもpadding-topを調整 */
+    .woocommerce-cart .entry-content,
+    .woocommerce-checkout .entry-content {
+        padding-top: 100px !important;  /* モバイルヘッダー80px + 余白20px */
+    }
+    
+    .woocommerce-cart article,
+    .woocommerce-checkout article {
+        padding-top: 0 !important;
+    }
+    
+    .woocommerce-cart .entry-header,
+    .woocommerce-checkout .entry-header {
+        margin-bottom: 20px;  /* 小画面ではさらに余白を減らす */
     }
     
     .woocommerce-cart .entry-title,

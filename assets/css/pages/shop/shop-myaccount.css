@@ -1,0 +1,875 @@
+/* =========================================
+   マイページ（My Account）専用スタイル
+   
+   WooCommerceマイページのスタイル
+   
+   対象: my-account.php（マイページ）
+========================================= */
+
+/* =========================================
+   マイページ 基本レイアウト
+========================================= */
+
+/* マイページ全体のコンテナ */
+.woocommerce-account .woocommerce {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px 80px;  /* 140px(ヘッダー) + 100px(余白) - 余白を増やしてタイトルがヘッダーに食い込まないように */
+}
+
+/* 代替セレクタ（テーマによって異なる場合） */
+.woocommerce-account .entry-content {
+    padding-top: 220px !important;
+}
+
+/* article要素への適用 */
+.woocommerce-account article {
+    padding-top: 60px !important;
+}
+
+/* ページタイトル */
+.woocommerce-account .entry-header {
+    margin-bottom: 60px;  /* 余白を増やす */
+}
+
+.woocommerce-account .entry-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   マイページナビゲーション
+========================================= */
+
+/* ナビゲーション全体 */
+.woocommerce-MyAccount-navigation {
+    float: left;
+    width: 250px;
+    margin-right: 40px;
+}
+
+.woocommerce-MyAccount-navigation ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;  /* 背景色を透明に */
+    border: none;  /* 外枠のボーダーを削除 */
+    border-radius: 0;
+}
+
+.woocommerce-MyAccount-navigation ul li {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #e0e0e0;  /* 横線のみ */
+}
+
+.woocommerce-MyAccount-navigation ul li:last-child {
+    border-bottom: none;
+}
+
+.woocommerce-MyAccount-navigation ul li a {
+    display: block;
+    padding: 15px 0;  /* 左右のパディングを削除 */
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: #666;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.woocommerce-MyAccount-navigation ul li a:hover {
+    background-color: transparent;  /* ホバー時の背景色を削除 */
+    color: #333;
+}
+
+/* アクティブなメニュー項目 */
+.woocommerce-MyAccount-navigation ul li.is-active a {
+    background-color: transparent;  /* 背景色なし */
+    color: #333;
+    font-weight: 500;  /* 太字で選択を表現 */
+    border-left: none;  /* 縦線を削除 */
+    padding-left: 0;  /* 左パディングをリセット */
+}
+
+/* ログアウトリンク */
+.woocommerce-MyAccount-navigation ul li.woocommerce-MyAccount-navigation-link--customer-logout a {
+    color: #999;
+}
+
+/* =========================================
+   マイページコンテンツ
+========================================= */
+
+/* コンテンツエリア */
+.woocommerce-MyAccount-content {
+    float: right;
+    width: calc(100% - 290px);  /* ナビ幅250px + マージン40px */
+}
+
+/* セクションタイトル */
+.woocommerce-MyAccount-content h2,
+.woocommerce-MyAccount-content h3 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #333;
+    margin-bottom: 0px;
+}
+
+/* =========================================
+   ダッシュボード
+========================================= */
+
+.woocommerce-MyAccount-content .woocommerce-Message {
+    margin-bottom: 30px;
+}
+
+.woocommerce-MyAccount-content p {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.woocommerce-MyAccount-content a {
+    color: #333;
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+}
+
+.woocommerce-MyAccount-content a:hover {
+    opacity: 0.7;
+}
+
+/* =========================================
+   注文履歴
+========================================= */
+
+/* 注文テーブル */
+.woocommerce-orders-table {
+    width: 100%;
+    border: none;  /* 外枠のボーダーを削除 */
+    border-radius: 0;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.woocommerce-orders-table thead th {
+    background-color: transparent;  /* 背景色を削除 */
+    padding: 15px 0;  /* 左右のパディングを削除 */
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: #333;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;  /* 下線のみ */
+}
+
+.woocommerce-orders-table tbody td {
+    padding: 15px 0;  /* 左右のパディングを削除 */
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: #666;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.woocommerce-orders-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* 注文番号リンク */
+.woocommerce-orders-table .woocommerce-orders-table__cell-order-number a {
+    color: #333;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.woocommerce-orders-table .woocommerce-orders-table__cell-order-number a:hover {
+    text-decoration: underline;
+}
+
+/* 注文ステータス */
+.woocommerce-orders-table .woocommerce-orders-table__cell-order-status {
+    font-weight: 400;
+}
+
+/* ボタン */
+.woocommerce-orders-table .button {
+    padding: 8px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.woocommerce-orders-table .button:hover {
+    background-color: #555;
+    opacity: 1;
+}
+
+/* 注文が見つからない場合 */
+.woocommerce-Message--info {
+    padding: 20px;
+    background-color: #F5F5F5;  /* 背景色を変更 */
+    color: #666;  /* 文字色を変更 */
+    border-radius: 0;  /* 角丸を削除 */
+    margin-bottom: 30px;
+    border: none;  /* ボーダーを削除 */
+}
+
+/* WooCommerceの情報メッセージ全般 */
+.woocommerce-account .woocommerce-info {
+    padding: 20px;
+    background-color: #F5F5F5;  /* 背景色を変更 */
+    color: #666;  /* 文字色を変更 */
+    border-radius: 0;  /* 角丸を削除 */
+    margin-bottom: 30px;
+    border: none;  /* ボーダーを削除 */
+}
+
+/* リンクの色も調整 */
+.woocommerce-Message--info a,
+.woocommerce-account .woocommerce-info a {
+    color: #333;
+    text-decoration: underline;
+}
+
+.woocommerce-Message--info a:hover,
+.woocommerce-account .woocommerce-info a:hover {
+    opacity: 0.7;
+}
+
+/* =========================================
+   アカウント詳細（編集フォーム）
+========================================= */
+
+.woocommerce-EditAccountForm {
+    max-width: 600px;
+}
+
+/* フォームフィールド */
+.woocommerce-EditAccountForm .form-row {
+    margin-bottom: 20px;
+}
+
+.woocommerce-EditAccountForm .form-row label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.woocommerce-EditAccountForm .form-row input[type="text"],
+.woocommerce-EditAccountForm .form-row input[type="email"],
+.woocommerce-EditAccountForm .form-row input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+}
+
+.woocommerce-EditAccountForm .form-row input:focus {
+    outline: none;
+    border-color: #333;
+}
+
+/* 必須マーク */
+.woocommerce-EditAccountForm .required {
+    color: #c62828;
+}
+
+/* パスワード変更セクション */
+.woocommerce-EditAccountForm fieldset {
+    border: 1px solid #f0f0f0;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 0;
+}
+
+.woocommerce-EditAccountForm fieldset legend {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    letter-spacing: 0.05em;
+    padding: 0 10px;
+}
+
+/* 保存ボタン */
+.woocommerce-EditAccountForm button[type="submit"] {
+    padding: 15px 40px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.woocommerce-EditAccountForm button[type="submit"]:hover {
+    background-color: #555;
+}
+
+/* =========================================
+   住所編集フォーム
+========================================= */
+
+/* 住所編集ページ全体 */
+.woocommerce-account .woocommerce-address-fields {
+    max-width: 600px;
+}
+
+/* フォームのタイトル */
+.woocommerce-account .woocommerce-address-fields h3 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #333;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* フォームフィールド全体 */
+.woocommerce-account .woocommerce-address-fields__field-wrapper {
+    display: grid;
+    gap: 20px;
+}
+
+/* 各フォーム行 */
+.woocommerce-account .form-row {
+    margin-bottom: 0;  /* gridのgapで制御 */
+}
+
+/* ラベル */
+.woocommerce-account .form-row label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #666;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* 必須マーク */
+.woocommerce-account .form-row .required {
+    color: #c62828;
+    margin-left: 2px;
+}
+
+/* 入力フィールド */
+.woocommerce-account .form-row input[type="text"],
+.woocommerce-account .form-row input[type="email"],
+.woocommerce-account .form-row input[type="tel"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    font-size: 15px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    color: #333;
+    transition: border-color 0.3s ease;
+    background-color: #fff;
+}
+
+/* セレクトボックス */
+.woocommerce-account .form-row select {
+    width: 100%;
+    padding: 10px 12px;  /* 他の入力欄と同じpadding */
+    border: 1px solid #ddd;
+    border-radius: 0 !important;  /* 角丸を強制的に削除 */
+    font-size: 15px;  /* 他の入力欄と同じサイズ */
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    color: #333 !important;  /* 他の入力欄と同じ色 */
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    line-height: 1.5;  /* 行の高さを指定 */
+    height: auto;  /* 自動調整 */
+    appearance: none;  /* ブラウザデフォルトのスタイルを削除 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;  /* 矢印を右側に配置 */
+    padding-right: 32px;  /* 矢印のスペースを確保 */
+}
+
+/* Select2プラグインが使われている場合の対応 */
+.woocommerce-account .select2-container--default .select2-selection--single {
+    border: 1px solid #ddd !important;
+    border-radius: 0 !important;  /* 角丸を削除 */
+    height: auto !important;  /* 高さを自動調整 */
+    padding: 10px 12px !important;  /* 他の入力欄と同じpadding */
+}
+
+.woocommerce-account .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #333 !important;  /* テキスト色を他と統一 */
+    font-size: 15px !important;  /* フォントサイズを統一 */
+    line-height: 1.5 !important;
+    padding: 0 !important;
+    font-weight: 300;
+}
+
+.woocommerce-account .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100% !important;
+    top: 0 !important;
+}
+
+/* Select2のドロップダウン */
+.woocommerce-account .select2-container--default .select2-results__option {
+    padding: 10px 12px;
+    font-size: 15px;
+    color: #333;
+}
+
+/* フォーカス時 */
+.woocommerce-account .form-row input:focus,
+.woocommerce-account .form-row select:focus {
+    outline: none;
+    border-color: #333;
+    background-color: #fafafa;
+}
+
+/* 入力補助テキスト */
+.woocommerce-account .form-row .woocommerce-input-wrapper span {
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+    display: block;
+}
+
+/* 2カラムレイアウト（姓・名など） */
+.woocommerce-account .form-row-first,
+.woocommerce-account .form-row-last {
+    width: 100%;
+}
+
+@media screen and (min-width: 769px) {
+    /* デスクトップでは2カラム */
+    .woocommerce-account .form-row-first {
+        float: left;
+        width: calc(50% - 10px);
+        margin-right: 20px;
+    }
+    
+    .woocommerce-account .form-row-last {
+        float: right;
+        width: calc(50% - 10px);
+    }
+    
+    /* クリアフィックス */
+    .woocommerce-account .form-row-first::after,
+    .woocommerce-account .form-row-last::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+/* 保存ボタン */
+.woocommerce-account .woocommerce-address-fields button[type="submit"] {
+    padding: 12px 36px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    margin-top: 30px;
+}
+
+.woocommerce-account .woocommerce-address-fields button[type="submit"]:hover {
+    background-color: #555;
+}
+
+/* =========================================
+   住所（配送先・請求先）
+========================================= */
+
+.woocommerce-Addresses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;  /* 間隔を広げる */
+}
+
+.woocommerce-Address {
+    background-color: transparent;  /* 背景色を削除 */
+    padding: 0;  /* パディングを削除 */
+    border: none;  /* 外枠のボーダーを削除 */
+    border-radius: 0;
+    border-bottom: 1px solid #e0e0e0;  /* 下に横線を追加 */
+    padding-bottom: 60px;  /* 下部余白を調整（ボタン用のスペース） */
+    position: relative;  /* 絶対配置の基準にする */
+}
+
+.woocommerce-Address-title {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;  /* タイトル下に横線 */
+}
+
+.woocommerce-Address-title h3 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #333;
+    margin: 0;
+}
+
+/* 編集リンクを住所の下部に配置（絶対配置を使用） */
+.woocommerce-Address-title .edit {
+    /* タイトル横の位置から移動 */
+    position: absolute;
+    bottom: 15px;  /* 罫線から少し上に配置 */
+    left: 0;
+    /* ボタンスタイル - よりコンパクトに */
+    display: inline-block !important;
+    padding: 8px 24px;  /* パディングを小さく */
+    background-color: #333;
+    color: #fff !important;
+    border: none;
+    border-radius: 0;
+    font-size: 13px;  /* フォントサイズを小さく */
+    letter-spacing: 0.05em;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+}
+
+.woocommerce-Address-title .edit:hover {
+    background-color: #555;
+    opacity: 1;
+}
+
+.woocommerce-Address address {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #666;
+    font-style: normal;
+    margin-bottom: 20px;  /* 余白を調整 */
+}
+
+/* footerタグは実際には存在しないが、念のため定義を残す */
+.woocommerce-Address footer {
+    margin-top: 20px;
+}
+
+.woocommerce-Address footer .edit {
+    display: inline-block !important;
+    padding: 8px 24px;  /* 同じサイズに */
+    background-color: #333;
+    color: #fff !important;
+    border: none;
+    border-radius: 0;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+}
+
+.woocommerce-Address footer .edit:hover {
+    background-color: #555;
+    opacity: 1;
+}
+
+/* =========================================
+   アカウント詳細表示
+========================================= */
+
+.woocommerce-customer-details {
+    margin-top: 40px;
+}
+
+.woocommerce-customer-details address {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #666;
+    font-style: normal;
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   決済方法テーブル
+========================================= */
+
+/* 決済方法テーブル */
+.woocommerce-account table.shop_table,
+.woocommerce-account .woocommerce-table {
+    width: 100%;
+    border: none;  /* 外枠のボーダーを削除 */
+    border-radius: 0;
+    margin-bottom: 30px;
+}
+
+.woocommerce-account table.shop_table thead th,
+.woocommerce-account .woocommerce-table thead th {
+    background-color: transparent;  /* 背景色を削除 */
+    padding: 15px 0;  /* 左右のパディングを削除 */
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: #333;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;  /* 下線のみ */
+}
+
+.woocommerce-account table.shop_table tbody td,
+.woocommerce-account .woocommerce-table tbody td {
+    padding: 15px 0;  /* 左右のパディングを削除 */
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: #666;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.woocommerce-account table.shop_table tbody tr:last-child td,
+.woocommerce-account .woocommerce-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* テーブル内のボタン */
+.woocommerce-account table.shop_table .button,
+.woocommerce-account .woocommerce-table .button {
+    padding: 8px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.woocommerce-account table.shop_table .button:hover,
+.woocommerce-account .woocommerce-table .button:hover {
+    background-color: #555;
+    opacity: 1;
+}
+
+/* =========================================
+   レスポンシブ対応
+========================================= */
+
+/* タブレット・モバイル（768px以下） */
+@media screen and (max-width: 768px) {
+    .woocommerce-account .woocommerce {
+        padding: 30px 20px 60px;
+    }
+    
+    /* モバイルではデスクトップ用のpadding-topをリセット */
+    .woocommerce-account .entry-content {
+        padding-top: 120px !important;
+    }
+    
+    .woocommerce-account article {
+        padding-top: 0 !important;
+    }
+    
+    .woocommerce-account .entry-header {
+        margin-bottom: 40px;
+    }
+    
+    .woocommerce-account .entry-title {
+        font-size: 24px;
+    }
+    
+    /* ナビゲーションをドロップダウン形式に */
+    .woocommerce-MyAccount-navigation {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 30px;
+        position: relative;
+    }
+    
+    /* アクティブな項目のみを表示（ドロップダウンのトリガー） */
+    .woocommerce-MyAccount-navigation ul {
+        position: relative;
+    }
+    
+    /* 非アクティブな項目を非表示 */
+    .woocommerce-MyAccount-navigation ul li {
+        display: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    /* アクティブな項目のみ表示 */
+    .woocommerce-MyAccount-navigation ul li.is-active {
+        display: block;
+        background-color: #fafafa;
+        border: 1px solid #e0e0e0;
+        position: relative;
+    }
+    
+    .woocommerce-MyAccount-navigation ul li.is-active a {
+        padding: 15px 40px 15px 15px;  /* 右側に矢印用のスペース */
+        font-weight: 500;
+        border-left: none;
+        padding-left: 15px;
+        border-bottom: none;
+    }
+    
+    /* ドロップダウン矢印 */
+    .woocommerce-MyAccount-navigation ul li.is-active::after {
+        content: '▼';
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 12px;
+        color: #666;
+        pointer-events: none;
+    }
+    
+    /* ホバー/タップ時にすべてのメニューを表示 */
+    .woocommerce-MyAccount-navigation:hover ul li,
+    .woocommerce-MyAccount-navigation:focus-within ul li {
+        display: block;
+    }
+    
+    /* メニューが開いた時の矢印を上向きに */
+    .woocommerce-MyAccount-navigation:hover ul li.is-active::after,
+    .woocommerce-MyAccount-navigation:focus-within ul li.is-active::after {
+        content: '▲';
+    }
+    
+    /* 開いた時のメニュー項目 */
+    .woocommerce-MyAccount-navigation:hover ul li a,
+    .woocommerce-MyAccount-navigation:focus-within ul li a {
+        background-color: #fff;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    /* アクティブ項目は背景色を保持 */
+    .woocommerce-MyAccount-navigation:hover ul li.is-active a,
+    .woocommerce-MyAccount-navigation:focus-within ul li.is-active a {
+        background-color: #fafafa;
+    }
+    
+    /* 最後の項目の下線を削除 */
+    .woocommerce-MyAccount-navigation ul li:last-child {
+        border-bottom: none;
+    }
+    
+    /* メニュー項目のパディング調整 */
+    .woocommerce-MyAccount-navigation ul li a {
+        padding: 15px;
+        font-size: 15px;
+    }
+    
+    /* コンテンツを全幅に */
+    .woocommerce-MyAccount-content {
+        float: none;
+        width: 100%;
+    }
+    
+    /* 注文テーブル - スマホ対応 */
+    .woocommerce-orders-table {
+        font-size: 14px;
+    }
+    
+    .woocommerce-orders-table thead th,
+    .woocommerce-orders-table tbody td {
+        padding: 10px 0;
+    }
+    
+    /* 住所を1カラムに */
+    .woocommerce-Addresses {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .woocommerce-Address {
+        padding-bottom: 40px;
+    }
+}
+
+/* 小画面（480px以下） */
+@media screen and (max-width: 480px) {
+    .woocommerce-account .woocommerce {
+        padding: 30px 15px 40px;  /* さらに余白を調整 */
+    }
+    
+    /* 小画面でもpadding-topを調整 */
+    .woocommerce-account .entry-content {
+        padding-top: 100px !important;  /* モバイルヘッダー80px + 余白20px */
+    }
+    
+    .woocommerce-account article {
+        padding-top: 0 !important;
+    }
+    
+    .woocommerce-account .entry-header {
+        margin-bottom: 30px;  /* 小画面ではさらに余白を減らす */
+    }
+    
+    .woocommerce-account .entry-title {
+        font-size: 20px;
+    }
+    
+    /* ナビゲーションボタン風に */
+    .woocommerce-MyAccount-navigation ul li a {
+        padding: 12px 0;
+        font-size: 14px;
+    }
+    
+    .woocommerce-MyAccount-content h2,
+    .woocommerce-MyAccount-content h3 {
+        font-size: 16px;
+    }
+    
+    /* 住所編集ボタンを全幅に */
+    .woocommerce-Address footer .edit {
+        display: block !important;
+        text-align: center;
+        width: 100%;
+    }
+}
