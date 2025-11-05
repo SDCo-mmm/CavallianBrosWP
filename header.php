@@ -148,3 +148,6 @@ $home_url = home_url('/');
 <?php wp_footer(); ?>
 </body>
 </html>
+
+<!-- ここに main タグを追加 -->
+<main id="main" class="site-main">
