@@ -157,6 +157,24 @@ jQuery(document).ready(function($) {
                     $body.removeClass('menu-open');
                 }
             });
+// Shopアコーディオン処理（モバイル）
+$('.mobile-menu-list .menu-item-has-children > a.accordion-trigger').on('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const $parent = $(this).parent('.menu-item-has-children');
+    $parent.toggleClass('active');
+    
+    console.log('Accordion toggled:', $parent.hasClass('active'));
+});
+
+// サブメニュー内のリンクは通常動作
+$('.mobile-sub-menu a').on('click', function(e) {
+    e.stopPropagation();
+    // ページ遷移は許可
+});
+
+console.log('Shop accordion initialized');
         }
     }
     
