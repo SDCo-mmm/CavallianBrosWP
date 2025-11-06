@@ -660,3 +660,15 @@ function cavallian_myaccount_mobile_select_script() {
     }
 }
 add_action('wp_enqueue_scripts', 'cavallian_myaccount_mobile_select_script', 20);
+
+// モバイルアコーディオンJavaScript読み込み
+function cavallian_mobile_accordion_script() {
+    wp_enqueue_script(
+        'cavallian-mobile-accordion',
+        get_template_directory_uri() . '/assets/js/mobile-accordion.js',
+        array('jquery'),
+        '1.0.0',
+        true
+    );
+}
+add_action('wp_enqueue_scripts', 'cavallian_mobile_accordion_script', 20);

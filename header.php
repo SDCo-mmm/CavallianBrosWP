@@ -1,6 +1,6 @@
 <?php
 /**
- * ヘッダーテンプレート（2行レイアウト版）
+ * ヘッダーテンプレート（2行レイアウト + メガメニュー対応版）
  *
  * @package Cavallian_Bros
  */
@@ -67,11 +67,72 @@ $home_url = home_url('/');
                 <?php endif; ?>
             </div>
             
-            <!-- 下段: メニュー行（HOMEを追加） -->
+            <!-- 下段: メニュー行（メガメニュー対応） -->
             <ul class="nav-list">
                 <li><a href="<?php echo esc_url(home_url('/')); ?>">Home</a></li>
                 <li><a href="<?php echo $is_home ? '#about' : $home_url . '#about'; ?>">About</a></li>
-                <li><a href="<?php echo esc_url(get_post_type_archive_link('product')); ?>">Shop</a></li>
+                
+                <!-- Shopメニュー（メガメニュー） -->
+                <li class="menu-item-has-children">
+                    <a href="<?php echo esc_url(get_post_type_archive_link('product')); ?>">Shop</a>
+                    
+                    <!-- メガメニュー -->
+                    <div class="mega-menu">
+                        <div class="mega-menu-inner">
+                            <?php
+                            // 親カテゴリーを取得（親なしのトップレベルカテゴリーのみ）
+                            // uncategorized を除外
+                            $parent_categories = get_terms(array(
+                                'taxonomy' => 'product_cat',
+                                'parent' => 0,
+                                'hide_empty' => false,
+                                'orderby' => 'term_id',
+                                'order' => 'ASC',
+                                'exclude' => array(get_option('default_product_cat'))  // uncategorized を除外
+                            ));
+                            
+                            if (!empty($parent_categories) && !is_wp_error($parent_categories)) :
+                                foreach ($parent_categories as $parent_cat) :
+                                    // uncategorized スラッグもチェック（念のため）
+                                    if ($parent_cat->slug === 'uncategorized') {
+                                        continue;
+                                    }
+                                    
+                                    // 子カテゴリーを取得
+                                    $child_categories = get_terms(array(
+                                        'taxonomy' => 'product_cat',
+                                        'parent' => $parent_cat->term_id,
+                                        'hide_empty' => false,
+                                        'orderby' => 'term_id',
+                                        'order' => 'ASC'
+                                    ));
+                            ?>
+                                <!-- 親カテゴリー列 -->
+                                <div class="mega-menu-column">
+                                    <a href="<?php echo esc_url(get_term_link($parent_cat)); ?>">
+                                        <?php echo esc_html($parent_cat->name); ?>
+                                    </a>
+                                    
+                                    <?php if (!empty($child_categories) && !is_wp_error($child_categories)) : ?>
+                                        <ul>
+                                            <?php foreach ($child_categories as $child_cat) : ?>
+                                                <li>
+                                                    <a href="<?php echo esc_url(get_term_link($child_cat)); ?>">
+                                                        <?php echo esc_html($child_cat->name); ?>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </div>
+                            <?php
+                                endforeach;
+                            endif;
+                            ?>
+                        </div>
+                    </div>
+                </li>
+                
                 <li><a href="<?php echo esc_url(get_post_type_archive_link('events')); ?>">Events</a></li>
                 <li><a href="<?php echo esc_url(home_url('/company')); ?>">Company</a></li>
             </ul>
@@ -111,16 +172,73 @@ $home_url = home_url('/');
     </div>
 </header>
 
-<!-- モバイルスライドメニュー（Messageを削除） -->
+<!-- モバイルスライドメニュー（全画面 + アコーディオン対応） -->
 <nav class="mobile-slide-menu" id="mobile-menu">
     <ul class="mobile-menu-list">
         <li><a href="<?php echo esc_url(home_url('/')); ?>">Home</a></li>
         <li><a href="<?php echo $is_home ? '#about' : $home_url . '#about'; ?>">About</a></li>
-        <li><a href="<?php echo esc_url(get_post_type_archive_link('product')); ?>">Shop</a></li>
+        
+        <!-- Shopメニュー（アコーディオン） -->
+        <li class="menu-item-has-children">
+            <a href="#" class="accordion-trigger">Shop</a>
+            
+            <!-- サブメニュー -->
+            <ul class="mobile-sub-menu">
+                <?php
+                // モバイル用：親カテゴリーを取得
+                // uncategorized を除外
+                $parent_categories_mobile = get_terms(array(
+                    'taxonomy' => 'product_cat',
+                    'parent' => 0,
+                    'hide_empty' => false,
+                    'orderby' => 'term_id',
+                    'order' => 'ASC',
+                    'exclude' => array(get_option('default_product_cat'))  // uncategorized を除外
+                ));
+                
+                if (!empty($parent_categories_mobile) && !is_wp_error($parent_categories_mobile)) :
+                    foreach ($parent_categories_mobile as $parent_cat_mobile) :
+                        // uncategorized スラッグもチェック（念のため）
+                        if ($parent_cat_mobile->slug === 'uncategorized') {
+                            continue;
+                        }
+                        
+                        // 子カテゴリーを取得
+                        $child_categories_mobile = get_terms(array(
+                            'taxonomy' => 'product_cat',
+                            'parent' => $parent_cat_mobile->term_id,
+                            'hide_empty' => false,
+                            'orderby' => 'term_id',
+                            'order' => 'ASC'
+                        ));
+                ?>
+                    <!-- 親カテゴリー -->
+                    <li class="parent-category">
+                        <a href="<?php echo esc_url(get_term_link($parent_cat_mobile)); ?>">
+                            <?php echo esc_html($parent_cat_mobile->name); ?>
+                        </a>
+                        
+                        <?php if (!empty($child_categories_mobile) && !is_wp_error($child_categories_mobile)) : ?>
+                            <ul>
+                                <?php foreach ($child_categories_mobile as $child_cat_mobile) : ?>
+                                    <li class="child-category">
+                                        <a href="<?php echo esc_url(get_term_link($child_cat_mobile)); ?>">
+                                            <?php echo esc_html($child_cat_mobile->name); ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </li>
+                <?php
+                    endforeach;
+                endif;
+                ?>
+            </ul>
+        </li>
+        
         <li><a href="<?php echo esc_url(get_post_type_archive_link('events')); ?>">Events</a></li>
         <li><a href="<?php echo esc_url(home_url('/company')); ?>">Company</a></li>
-        
-        <!-- マイページ・カートはモバイルアイコンとして上部に配置 -->
     </ul>
     
     <!-- SNSリンク -->
@@ -144,10 +262,6 @@ $home_url = home_url('/');
         </div>
     <?php endif; ?>
 </nav>
-
-<?php wp_footer(); ?>
-</body>
-</html>
 
 <!-- ここに main タグを追加 -->
 <main id="main" class="site-main">
