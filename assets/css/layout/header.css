@@ -123,84 +123,107 @@
 }
 
 /* =========================================
-   ドロップダウンメニュー
+   メガメニュー（全幅デザイン）
 ========================================= */
 
-/* 親メニュー項目（子メニューを持つ） */
+/* Shopメニュー項目に子メニューがある場合 */
 .nav-list .menu-item-has-children {
-    position: relative;
+    position: static;  /* 全幅表示のため */
 }
 
-/* サブメニュー（ドロップダウン） */
-.nav-list .sub-menu {
+/* メガメニューコンテナ */
+.nav-list .mega-menu {
     position: absolute;
     top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(10px);
-    min-width: 200px;
-    padding: 15px 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    z-index: 1000;
-    margin-top: 10px;
+    z-index: 999;
+    padding: 60px 0;
 }
 
-/* ドロップダウンを表示 */
-.nav-list .menu-item-has-children:hover .sub-menu {
+/* ホバー時に表示 */
+.nav-list .menu-item-has-children:hover .mega-menu {
     opacity: 1;
     visibility: visible;
-    margin-top: 15px;
 }
 
-/* サブメニューのリンク */
-.nav-list .sub-menu li {
-    margin: 0;
+/* メガメニュー内のコンテンツコンテナ */
+.mega-menu-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 60px;
 }
 
-.nav-list .sub-menu a {
-    display: block;
-    padding: 10px 25px;
-    font-size: 14px;
-    letter-spacing: 0.05em;
+/* 親カテゴリー列 */
+.mega-menu-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 親カテゴリータイトル */
+.mega-menu-column > a {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
     color: #333;
-    transition: all 0.3s ease;
-    white-space: nowrap;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+    text-decoration: none;
+    display: block;
 }
 
-.nav-list .sub-menu a:hover {
-    background: #f5f5f5;
-    padding-left: 30px;
+.mega-menu-column > a:hover {
+    opacity: 0.7;
 }
 
-/* サブメニューのアンダーラインを無効化 */
-.nav-list .sub-menu a::after {
-    display: none;
+/* 子カテゴリーリスト */
+.mega-menu-column ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-/* スクロール時のヘッダーでのドロップダウン調整 */
-.header.scrolled .sub-menu {
-    background: rgba(255, 255, 255, 0.98);
+/* 子カテゴリーリンク */
+.mega-menu-column ul li a {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: #666;
+    letter-spacing: 0.05em;
+    padding-left: 15px;  /* インデント */
+    text-decoration: none;
+    display: block;
+    transition: color 0.3s ease;
 }
 
-/* モバイルメニューのサブアイテム */
-.mobile-sub-item a {
-    padding-left: 40px;
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.7);
+.mega-menu-column ul li a:hover {
+    color: #333;
+}
+
+/* アンダーラインを削除 */
+.mega-menu-column a::after {
+    display: none !important;
 }
 
 /* =========================================
    レスポンシブ対応
 ========================================= */
 
-/* タブレット以下ではドロップダウンを無効化 */
+/* タブレット以下ではメガメニューを無効化 */
 @media screen and (max-width: 1024px) {
-    .nav-list .sub-menu {
+    .nav-list .mega-menu {
         display: none;
     }
 }
