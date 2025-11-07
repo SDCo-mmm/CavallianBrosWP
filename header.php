@@ -30,6 +30,13 @@ $home_url = home_url('/');
 <!-- ヘッダー -->
 <header class="header" id="header">
     <div class="header-inner">
+        <!-- ハンバーガーメニューボタン（モバイル専用・左端） -->
+        <button class="menu-button mobile-menu-toggle" aria-label="メニュー">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
         <h1 class="logo">
             <a href="<?php echo esc_url(home_url('/')); ?>">
                 <?php echo cavallian_get_logo(); ?>
@@ -138,7 +145,7 @@ $home_url = home_url('/');
             </ul>
         </nav>
         
-        <!-- モバイルナビゲーション（アイコンとハンバーガー） -->
+        <!-- モバイルナビゲーション（マイページ・カートのみ） -->
         <div class="mobile-nav-icons">
             <?php if (class_exists('WooCommerce')) : ?>
                 <!-- モバイル用マイページアイコン -->
@@ -161,13 +168,6 @@ $home_url = home_url('/');
                     <?php endif; ?>
                 </a>
             <?php endif; ?>
-            
-            <!-- ハンバーガーメニューボタン -->
-            <button class="menu-button mobile-menu-toggle" aria-label="メニュー">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
         </div>
     </div>
 </header>
