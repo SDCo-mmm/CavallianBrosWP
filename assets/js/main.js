@@ -115,7 +115,7 @@ jQuery(document).ready(function($) {
     }
     
     // =========================================
-    // モバイルメニュー（改良版）
+    // モバイルメニュー（改良版 + Shopアコーディオン）
     // =========================================
     function initMobileMenu() {
         const $menuButton = $('.menu-button, .mobile-menu-toggle');
@@ -131,10 +131,12 @@ jQuery(document).ready(function($) {
                 $(this).toggleClass('active');
                 $mobileMenu.toggleClass('active');
                 $body.toggleClass('menu-open');
+                
+                console.log('Mobile menu toggled:', $mobileMenu.hasClass('active'));
             });
             
-            // メニューリンククリックで閉じる
-            $mobileMenu.find('a').on('click', function() {
+            // メニューリンククリックで閉じる（アコーディオントリガーを除く）
+            $mobileMenu.find('a:not(.accordion-trigger)').on('click', function() {
                 $menuButton.removeClass('active');
                 $mobileMenu.removeClass('active');
                 $body.removeClass('menu-open');
@@ -157,24 +159,35 @@ jQuery(document).ready(function($) {
                     $body.removeClass('menu-open');
                 }
             });
-// Shopアコーディオン処理（モバイル）
-$('.mobile-menu-list .menu-item-has-children > a.accordion-trigger').on('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    const $parent = $(this).parent('.menu-item-has-children');
-    $parent.toggleClass('active');
-    
-    console.log('Accordion toggled:', $parent.hasClass('active'));
-});
-
-// サブメニュー内のリンクは通常動作
-$('.mobile-sub-menu a').on('click', function(e) {
-    e.stopPropagation();
-    // ページ遷移は許可
-});
-
-console.log('Shop accordion initialized');
+            
+            // Shopアコーディオン処理（モバイル）
+            console.log('=== Mobile Menu Debug ===');
+            console.log('Accordion triggers found:', $('.mobile-menu-list .menu-item-has-children > a.accordion-trigger').length);
+            console.log('Sub menus found:', $('.mobile-sub-menu').length);
+            
+            $('.mobile-menu-list .menu-item-has-children > a.accordion-trigger').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                console.log('Accordion clicked!');
+                
+                const $parent = $(this).parent('.menu-item-has-children');
+                $parent.toggleClass('active');
+                
+                console.log('Accordion toggled:', $parent.hasClass('active'));
+            });
+            
+            // サブメニュー内のリンクは通常動作
+            $('.mobile-sub-menu a').on('click', function(e) {
+                console.log('Sub menu link clicked');
+                e.stopPropagation();
+                // ページ遷移は許可（メニューは閉じる）
+                $menuButton.removeClass('active');
+                $mobileMenu.removeClass('active');
+                $body.removeClass('menu-open');
+            });
+            
+            console.log('Shop accordion initialized');
         }
     }
     
