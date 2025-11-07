@@ -9,6 +9,22 @@
     gap: 10px;
 }
 
+/* ハンバーガーメニューボタン（左端に配置） */
+.menu-button {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+    position: relative;
+    order: -1;  /* 常に最初に配置 */
+}
+
 .mobile-icon {
     display: flex;
     align-items: center;
@@ -27,7 +43,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    background-color: #8f601e;
+    background-color: #333;
     color: white;
     font-size: 11px;
     min-width: 16px;
@@ -37,21 +53,6 @@
     align-items: center;
     justify-content: center;
     padding: 0 3px;
-}
-
-/* ハンバーガーメニューボタン */
-.menu-button {
-    display: none;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 30px;
-    height: 24px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1001;
-    position: relative;
 }
 
 .menu-button span {
@@ -79,11 +80,11 @@
     top: -100%;
     left: 0;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(15px);
     transition: top 0.3s ease;
     z-index: 998;
-    padding: 100px 30px 40px;
+    padding: 100px 30px 60px;  /* 下部の余白を60pxに変更 */
     max-height: 100vh;
     overflow-y: auto;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -105,25 +106,144 @@
 .mobile-menu-list a {
     font-size: 18px;
     display: block;
-    padding: 12px 0;
+    padding: 12px 20px;  /* 左右にパディングを追加 */
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     color: #333;
     font-weight: 400;
     transition: all 0.3s ease;
-    text-align: center;
+    text-align: left;  /* 左揃えに変更 */
 }
 
 .mobile-menu-list a:hover {
-    opacity: 0.7;
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: transparent;  /* 背景色を削除 */
 }
 
-/* モバイルメニューSNSリンク */
+/* =========================================
+   Shopアコーディオン
+========================================= */
+
+/* Shopメニュー項目（親） */
+.mobile-menu-list .menu-item-has-children {
+    position: relative;
+}
+
+/* アコーディオントリガー（Shopリンク） */
+.mobile-menu-list .menu-item-has-children > a.accordion-trigger {
+    position: relative;
+    padding-right: 40px;  /* 矢印のスペースを確保 */
+    text-align: left;  /* 左揃えに変更 */
+    background-color: transparent !important;  /* 背景グレーを削除 */
+    color: #333 !important;  /* 常に#333を維持 */
+    opacity: 1 !important;  /* 常に不透明 */
+}
+
+/* ホバー時も色を維持 */
+.mobile-menu-list .menu-item-has-children > a.accordion-trigger:hover {
+    color: #333 !important;
+    opacity: 1 !important;
+}
+
+/* タップ時（:active）も色を維持 */
+.mobile-menu-list .menu-item-has-children > a.accordion-trigger:active {
+    color: #333 !important;
+    opacity: 1 !important;
+}
+
+/* アクティブクラス付与時も色を維持 */
+.mobile-menu-list .menu-item-has-children.active > a.accordion-trigger {
+    color: #333 !important;
+    opacity: 1 !important;
+}
+
+/* アクティブクラス付与時のホバー */
+.mobile-menu-list .menu-item-has-children.active > a.accordion-trigger:hover {
+    color: #333 !important;
+    opacity: 1 !important;
+}
+
+/* アクティブクラス付与時のタップ */
+.mobile-menu-list .menu-item-has-children.active > a.accordion-trigger:active {
+    color: #333 !important;
+    opacity: 1 !important;
+}
+
+/* アコーディオン矢印 */
+.mobile-menu-list .menu-item-has-children > a.accordion-trigger::after {
+    content: '▼';
+    position: absolute;
+    right: 10px;  /* 右端から10px */
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+/* アクティブ時に矢印を回転 */
+.mobile-menu-list .menu-item-has-children.active > a.accordion-trigger::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* サブメニュー（初期状態で非表示） */
+.mobile-menu-list .mobile-sub-menu {
+    display: none;
+    padding: 10px 0 10px 20px;
+    margin: 0;
+    list-style: none;
+    background-color: transparent;  /* 背景グレーを削除 */
+}
+
+/* アクティブ時にサブメニューを表示 */
+.mobile-menu-list .menu-item-has-children.active .mobile-sub-menu {
+    display: block;
+}
+
+/* サブメニュー内のリンク */
+.mobile-sub-menu li {
+    margin-bottom: 0;
+}
+
+.mobile-sub-menu a {
+    font-size: 12px;  /* サイズを12pxに統一 */
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    text-align: left;
+    background-color: transparent;  /* 背景色を削除 */
+}
+
+.mobile-sub-menu a:hover {
+    background-color: transparent;  /* ホバー時も背景色なし */
+}
+
+/* 親カテゴリー */
+.mobile-sub-menu .parent-category > a {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;  /* ウェイト400 */
+    font-size: 12px;   /* サイズ12px */
+    color: #333;
+}
+
+/* 子カテゴリー */
+.mobile-sub-menu .child-category {
+    padding-left: 15px;
+}
+
+.mobile-sub-menu .child-category a {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;  /* ウェイト300 */
+    font-size: 12px;   /* サイズ12px */
+    color: #666;
+}
+
+/* =========================================
+   モバイルメニューSNSリンク
+========================================= */
+
 .mobile-menu-social {
     display: flex;
     gap: 20px;
     justify-content: center;
     padding-top: 20px;
+    padding-bottom: 60px;  /* 60pxに変更 */
     border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -190,7 +310,7 @@ body.menu-open::before {
     
     /* モバイルメニューのサブアイテム調整 */
     .mobile-sub-item {
-        border-left: 2px solid #8f601e;
+        border-left: 2px solid #333;
         margin-left: 20px;
     }
     
@@ -220,5 +340,14 @@ body.menu-open::before {
     .menu-button {
         width: 28px;
         height: 22px;
+    }
+    
+    /* スマホでも60pxに統一 */
+    .mobile-slide-menu {
+        padding-bottom: 60px;
+    }
+    
+    .mobile-menu-social {
+        padding-bottom: 60px;
     }
 }

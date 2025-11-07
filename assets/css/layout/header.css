@@ -1,5 +1,5 @@
 /* =========================================
-   ヘッダー
+   ヘッダー - モバイル配置調整版
 ========================================= */
 .header {
     position: fixed;
@@ -25,6 +25,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 30px 40px;
+}
+
+/* デスクトップではハンバーガーメニューを非表示 */
+.menu-button {
+    display: none;
 }
 
 .logo {
@@ -110,7 +115,7 @@
     position: absolute;
     top: -4px;
     right: -4px;
-    background-color: #8f601e;
+    background-color: #333;
     color: white;
     font-size: 11px;
     min-width: 18px;
@@ -120,6 +125,11 @@
     align-items: center;
     justify-content: center;
     padding: 0 4px;
+}
+
+/* モバイルナビアイコンをデスクトップで非表示 */
+.mobile-nav-icons {
+    display: none;
 }
 
 /* =========================================
@@ -167,80 +177,135 @@
 .mega-menu-column {
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
-/* 親カテゴリータイトル */
-.mega-menu-column > a {
+/* 親カテゴリー名 */
+.mega-menu-column .parent-category-name {
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
+    letter-spacing: 0.08em;
     color: #333;
-    letter-spacing: 0.05em;
-    margin-bottom: 20px;
-    text-decoration: none;
-    display: block;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.mega-menu-column > a:hover {
-    opacity: 0.7;
+/* 親カテゴリーリンク */
+.mega-menu-column .parent-category-link {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.mega-menu-column .parent-category-link:hover {
+    opacity: 0.6;
 }
 
 /* 子カテゴリーリスト */
-.mega-menu-column ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.mega-menu-column .child-categories {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 /* 子カテゴリーリンク */
-.mega-menu-column ul li a {
+.mega-menu-column .child-categories a {
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 300;
-    color: #666;
     letter-spacing: 0.05em;
-    padding-left: 15px;  /* インデント */
-    text-decoration: none;
-    display: block;
-    transition: color 0.3s ease;
+    color: #666;
+    transition: all 0.3s ease;
+    padding-left: 12px;
+    position: relative;
 }
 
-.mega-menu-column ul li a:hover {
+.mega-menu-column .child-categories a::before {
+    content: '−';
+    position: absolute;
+    left: 0;
+    color: #999;
+}
+
+.mega-menu-column .child-categories a:hover {
     color: #333;
-}
-
-/* アンダーラインを削除 */
-.mega-menu-column a::after {
-    display: none !important;
+    padding-left: 16px;
 }
 
 /* =========================================
    レスポンシブ対応
 ========================================= */
 
-/* タブレット以下ではメガメニューを無効化 */
-@media screen and (max-width: 1024px) {
-    .nav-list .mega-menu {
-        display: none;
-    }
-}
-
-/* モバイル */
+/* タブレット（768px以下） */
 @media screen and (max-width: 768px) {
-    /* ヘッダー */
-    .header-inner {
-        padding: 15px 20px;
-    }
-
-    .logo {
-        width: 140px;
-    }
-
     /* デスクトップナビを非表示 */
     .desktop-nav {
         display: none;
+    }
+    
+    /* モバイルヘッダー配置 */
+    .header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        position: relative;
+    }
+    
+    /* ハンバーガーメニューを左端に表示 */
+    .menu-button {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 24px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1001;
+        order: 1;
+    }
+    
+    /* ロゴを中央に配置（絶対配置） */
+    .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 140px;
+        margin: 0;
+        order: 2;
+    }
+    
+    /* モバイルアイコン群を右側に配置 */
+    .mobile-nav-icons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        order: 3;
+        margin-left: auto;
+    }
+}
+
+/* スマホ（480px以下） */
+@media screen and (max-width: 480px) {
+    .header-inner {
+        padding: 15px;
+    }
+    
+    .logo {
+        width: 120px;
+    }
+    
+    .mobile-nav-icons {
+        gap: 5px;
     }
 }
