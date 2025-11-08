@@ -918,3 +918,319 @@
         width: 100%;
     }
 }
+
+/* =========================================
+   ログインフォーム専用スタイル
+========================================= */
+
+/* ログインフォーム全体 */
+.woocommerce-form-login {
+    max-width: 500px;
+}
+
+/* フォームフィールド */
+.woocommerce-form-login .form-row {
+    margin-bottom: 20px;
+}
+
+/* ラベル */
+.woocommerce-form-login .form-row label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* 必須マーク */
+.woocommerce-form-login .required {
+    color: #c62828;
+}
+
+/* ユーザー名入力欄 */
+.woocommerce-form-login input[type="text"],
+.woocommerce-form-login input[type="email"] {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    color: #333;
+    transition: border-color 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+/* パスワード入力エリア全体 */
+.woocommerce-form-login .password-input {
+    position: relative;
+    display: block;
+}
+
+/* パスワード入力欄 */
+.woocommerce-form-login input[type="password"] {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 50px 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+/* パスワード表示ボタン */
+.woocommerce-form-login .show-password-input {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    font-size: 0;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+/* シンプルなSVGアイコン */
+.woocommerce-form-login .show-password-input::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.woocommerce-form-login .show-password-input:hover::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+}
+
+/* フォーカス時 */
+.woocommerce-form-login input:focus {
+    outline: none;
+    border-color: #333;
+    background-color: #fff;
+}
+
+/* ログイン状態を保存チェックボックス */
+.woocommerce-form-login .woocommerce-form__label-for-checkbox {
+    font-size: 14px;
+    color: #666;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+/* ログインボタン */
+.woocommerce-form-login button[type="submit"] {
+    width: 100%;
+    max-width: 250px;
+    padding: 15px 40px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+    margin-top: 10px;
+}
+
+.woocommerce-form-login button[type="submit"]:hover {
+    background-color: #555;
+}
+
+/* パスワードをお忘れですか? */
+.woocommerce-form-login .woocommerce-LostPassword {
+    margin-top: 15px;
+}
+
+.woocommerce-form-login .woocommerce-LostPassword a {
+    font-size: 14px;
+    color: #666;
+    text-decoration: underline;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.woocommerce-form-login .woocommerce-LostPassword a:hover {
+    color: #333;
+}
+
+/* =========================================
+   登録フォーム専用スタイル
+========================================= */
+
+/* 登録フォーム全体 */
+.woocommerce-form-register {
+    max-width: 500px;
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid #e0e0e0;
+    position: relative;
+}
+
+/* 登録フォームの前に説明文を追加 */
+.woocommerce-form-register::before {
+    content: 'アカウントをお持ちでないですか? 新規登録はこちらから';
+    display: block;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+}
+
+/* 元の見出し「登録」を非表示 */
+.woocommerce-form-register > h2 {
+    display: none;
+}
+
+/* フォームフィールド */
+.woocommerce-form-register .form-row {
+    margin-bottom: 20px;
+}
+
+/* ラベル */
+.woocommerce-form-register .form-row label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* 必須マーク */
+.woocommerce-form-register .required {
+    color: #c62828;
+}
+
+/* メールアドレス入力欄 */
+.woocommerce-form-register input[type="email"],
+.woocommerce-form-register input[type="text"] {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    color: #333;
+    transition: border-color 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+/* パスワード入力エリア全体 */
+.woocommerce-form-register .password-input {
+    position: relative;
+    display: block;
+}
+
+/* パスワード入力欄 */
+.woocommerce-form-register input[type="password"] {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 50px 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+/* パスワード表示ボタン（登録フォーム） */
+.woocommerce-form-register .show-password-input {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    font-size: 0;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+/* シンプルなSVGアイコン（登録フォーム） */
+.woocommerce-form-register .show-password-input::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.woocommerce-form-register .show-password-input:hover::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+}
+
+/* フォーカス時 */
+.woocommerce-form-register input:focus {
+    outline: none;
+    border-color: #333;
+    background-color: #fff;
+}
+
+/* プライバシーポリシーのテキスト */
+.woocommerce-form-register .woocommerce-privacy-policy-text {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.woocommerce-form-register .woocommerce-privacy-policy-text a {
+    color: #333;
+    text-decoration: underline;
+}
+
+/* 登録ボタン */
+.woocommerce-form-register button[type="submit"] {
+    width: 100%;
+    max-width: 250px;
+    padding: 15px 40px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+    margin-top: 10px;
+}
+
+.woocommerce-form-register button[type="submit"]:hover {
+    background-color: #555;
+}

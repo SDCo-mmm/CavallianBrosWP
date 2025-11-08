@@ -11,9 +11,10 @@
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
+    height: 140px;
 }
 
-/* スクロール時（全ページ共通） */
+/* スクロール時(全ページ共通） */
 .header.scrolled {
     background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -24,7 +25,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 40px;
+    height: 100%;
+    padding: 0 40px;
 }
 
 /* デスクトップではハンバーガーメニューを非表示 */
@@ -180,34 +182,30 @@
     gap: 20px;
 }
 
-/* 親カテゴリー名 */
-.mega-menu-column .parent-category-name {
+/* 親カテゴリーリンク（mega-menu-columnの直下のaタグ） */
+.mega-menu-column > a {
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: #333;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-/* 親カテゴリーリンク */
-.mega-menu-column .parent-category-link {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     letter-spacing: 0.08em;
     color: #333;
     transition: all 0.3s ease;
+    display: block;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
 }
 
-.mega-menu-column .parent-category-link:hover {
-    opacity: 0.6;
+.mega-menu-column > a:hover {
+    color: #666;
 }
 
-/* 子カテゴリーリスト */
-.mega-menu-column .child-categories {
+.mega-menu-column > a::after {
+    display: none;
+}
+
+/* 子カテゴリーリスト（mega-menu-columnの直下のulタグ） */
+.mega-menu-column > ul {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -217,27 +215,28 @@
 }
 
 /* 子カテゴリーリンク */
-.mega-menu-column .child-categories a {
+.mega-menu-column > ul > li > a {
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 300;
     letter-spacing: 0.05em;
     color: #666;
     transition: all 0.3s ease;
-    padding-left: 12px;
+    padding-left: 20px;
     position: relative;
+    display: block;
 }
 
-.mega-menu-column .child-categories a::before {
+.mega-menu-column > ul > li > a::before {
     content: '−';
     position: absolute;
     left: 0;
     color: #999;
 }
 
-.mega-menu-column .child-categories a:hover {
+.mega-menu-column > ul > li > a:hover {
     color: #333;
-    padding-left: 16px;
+    padding-left: 24px;
 }
 
 /* =========================================
@@ -246,6 +245,10 @@
 
 /* タブレット（768px以下） */
 @media screen and (max-width: 768px) {
+    .header {
+        height: 60px;
+    }
+    
     /* デスクトップナビを非表示 */
     .desktop-nav {
         display: none;
@@ -256,7 +259,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px;
+        height: 100%;
+        padding: 0 20px;
         position: relative;
     }
     
@@ -298,7 +302,7 @@
 /* スマホ（480px以下） */
 @media screen and (max-width: 480px) {
     .header-inner {
-        padding: 15px;
+        padding: 0 15px;
     }
     
     .logo {

@@ -144,25 +144,72 @@
     }
     
     .shop-container {
-        padding: 40px 0 60px;
+        padding: 40px 20px 60px;
     }
     
-    /* 商品一覧 */
+    /* 商品一覧 - 2列表示 */
     .woocommerce ul.products {
         grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
+        gap: 20px;
+    }
+    
+    /* WooCommerceのデフォルトwidth:48%とfloatを上書き */
+    .woocommerce ul.products li.product,
+    .woocommerce-page ul.products li.product {
+        width: 100% !important;
+        float: none !important;
+        margin: 0 !important;
+    }
+    
+    /* 商品画像を正方形に */
+    .woocommerce ul.products li.product img {
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
     }
 }
 
 /* 小画面（480px以下） */
 @media screen and (max-width: 480px) {
-    /* 商品一覧を1列に */
-    .woocommerce ul.products {
-        grid-template-columns: 1fr;
+    .shop-container {
+        padding: 40px 20px 60px;
     }
     
+    /* 商品一覧を2列のまま維持 */
+    .woocommerce ul.products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    /* WooCommerceのデフォルトwidth:48%とfloatを上書き */
+    .woocommerce ul.products li.product,
+    .woocommerce-page ul.products li.product {
+        width: 100% !important;
+        float: none !important;
+        margin: 0 !important;
+    }
+    
+    /* 商品画像を正方形に */
     .woocommerce ul.products li.product img {
-        height: 250px;
+        aspect-ratio: 1 / 1;
         object-fit: cover;
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
+    }
+    
+    /* 商品名のフォントサイズ */
+    .woocommerce ul.products li.product .woocommerce-loop-product__title {
+        font-size: 13px;
+        margin: 10px 0 5px;
+        padding: 0 5px;
+    }
+    
+    /* 価格のフォントサイズ */
+    .woocommerce ul.products li.product .price {
+        font-size: 14px;
+        padding: 0 5px 10px;
     }
 }
