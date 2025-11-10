@@ -149,6 +149,38 @@
    クロスセル（おすすめ商品）- Gutenbergブロック対応
 ========================================= */
 
+/* カートが空の時の「NEW ARRIVAL」見出し - 商品セクションのみ */
+.wp-block-woocommerce-empty-cart-block h2.wp-block-heading.has-text-align-center:not(.wc-block-cart__empty-cart__title) {
+    position: relative;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    text-indent: -9999px;
+    overflow: hidden;
+    height: 20px;
+    margin-bottom: 30px;
+}
+
+.wp-block-woocommerce-empty-cart-block h2.wp-block-heading.has-text-align-center:not(.wc-block-cart__empty-cart__title)::after {
+    content: 'NEW ARRIVAL';
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    line-height: 20px;
+    text-indent: 0;
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    color: #333;
+}
+
+/* カート空メッセージの上に余白を追加 */
+.wp-block-woocommerce-empty-cart-block h2.wc-block-cart__empty-cart__title {
+    margin-top: 20px !important;
+}
+
 /* タイトルを「How about this?」に変更 */
 h2.wp-block-heading.has-text-align-left {
     position: relative;
@@ -206,7 +238,9 @@ div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="car
 /* クロスセル商品画像 - 150px正方形 */
 div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-product-image img,
 div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-grid__product-image img,
-div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-components-product-image img {
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-components-product-image img,
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product-image img,
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product img {
     width: 150px !important;
     height: 150px !important;
     object-fit: cover !important;
@@ -216,7 +250,9 @@ div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="car
 /* クロスセル商品名 - Noto Sans JP 300, 14px */
 div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-grid__product-title,
 div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-components-product-name,
-div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) h2.has-text-align-center.wp-block-post-title {
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) h2.has-text-align-center.wp-block-post-title,
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product-title,
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product h2 {
     font-family: 'Noto Sans JP', sans-serif !important;
     font-size: 14px !important;
     font-weight: 300 !important;
@@ -229,7 +265,9 @@ div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="car
 /* クロスセル商品価格 - Questrial 300, 14px */
 div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-grid__product-price,
 div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-components-product-price,
-div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wp-block-woocommerce-product-price {
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wp-block-woocommerce-product-price,
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product-price,
+.wp-block-woocommerce-empty-cart-block .woocommerce-Price-amount {
     font-family: 'Questrial', sans-serif !important;
     font-size: 14px !important;
     font-weight: 300 !important;
@@ -249,7 +287,11 @@ div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="car
 /* クロスセル「お買い物カゴに追加」ボタン - 角丸なし */
 div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-grid__product .wc-block-components-product-button button,
 div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wc-block-components-product-button .wp-element-button,
-div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wp-block-button .wp-block-button__link {
+div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) .wp-block-button .wp-block-button__link,
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product button,
+.wp-block-woocommerce-empty-cart-block .wp-element-button,
+.wp-block-woocommerce-empty-cart-block .add_to_cart_button,
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product .wp-block-button__link {
     border-radius: 0 !important;
     background-color: #333 !important;
     color: #fff !important;
@@ -561,6 +603,30 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
     .woocommerce-checkout .col2-set {
         grid-template-columns: 1fr;
         gap: 40px;
+    }
+    
+    /* カート空ページ商品 - モバイル2列表示 */
+    .wp-block-woocommerce-empty-cart-block .wc-block-grid__products {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
+    }
+    
+    .wp-block-woocommerce-empty-cart-block .wc-block-grid__product {
+        width: 100% !important;
+        max-width: none !important;
+    }
+    
+    .wp-block-woocommerce-empty-cart-block .wc-block-grid__product-image img {
+        width: 130px !important;
+        height: 130px !important;
+    }
+    
+    /* カート空ページ - Gutenbergブロック商品も2列 */
+    .wp-block-woocommerce-empty-cart-block div[data-block-name="woocommerce/product-new"] .wc-block-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px !important;
     }
 }
 
