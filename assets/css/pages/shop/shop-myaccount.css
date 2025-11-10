@@ -923,6 +923,22 @@
    ログインフォーム専用スタイル
 ========================================= */
 
+/* ログインエリアの見出し調整 */
+.u-column1.col-1 > h2 {
+    font-size: 20px !important;
+    margin-bottom: 30px !important;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    color: #333;
+    letter-spacing: 0.05em;
+}
+
+/* または、より具体的なセレクタ */
+#customer_login .u-column1 h2 {
+    font-size: 20px !important;
+    margin-bottom: 30px !important;
+}
+
 /* ログインフォーム全体 */
 .woocommerce-form-login {
     max-width: 500px;
@@ -1075,8 +1091,9 @@
    登録フォーム専用スタイル
 ========================================= */
 
-/* 登録フォーム全体 */
-.woocommerce-form-register {
+/* 登録フォーム全体のコンテナ（ログイン/登録ページのみ） */
+body.woocommerce-account.logged-out .u-column2.col-2,
+#customer_login .u-column2.col-2 {
     max-width: 500px;
     margin-top: 80px;
     padding-top: 40px;
@@ -1084,8 +1101,9 @@
     position: relative;
 }
 
-/* 登録フォームの前に説明文を追加 */
-.woocommerce-form-register::before {
+/* 登録セクションの前に説明文を追加（ログイン/登録ページのみ） */
+body.woocommerce-account.logged-out .u-column2.col-2::before,
+#customer_login .u-column2.col-2::before {
     content: 'アカウントをお持ちでないですか? 新規登録はこちらから';
     display: block;
     font-family: 'Noto Sans JP', sans-serif;
@@ -1093,12 +1111,18 @@
     font-weight: 400;
     color: #333;
     letter-spacing: 0.05em;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-/* 元の見出し「登録」を非表示 */
-.woocommerce-form-register > h2 {
-    display: none;
+/* 元の見出し「登録」を非表示（ログイン/登録ページのみ） */
+body.woocommerce-account.logged-out .u-column2.col-2 > h2,
+#customer_login .u-column2.col-2 > h2 {
+    display: none !important;
+}
+
+/* 登録フォーム本体 */
+.woocommerce-form-register {
+    max-width: 500px;
 }
 
 /* フォームフィールド */
@@ -1233,4 +1257,78 @@
 
 .woocommerce-form-register button[type="submit"]:hover {
     background-color: #555;
+}
+
+/* =========================================
+   Cloudflare Turnstile レスポンシブ対応（scale付き）
+   
+   shop-myaccount.css の最後に追加してください
+========================================= */
+
+/* Turnstileバッジのレスポンシブ対応 */
+.woocommerce-form-register iframe[src*="cloudflare"],
+.woocommerce-form-register div[class*="cf-turnstile"] {
+    max-width: 100% !important;
+    width: 300px !important;
+}
+
+/* Turnstileの親要素の調整 */
+.woocommerce-form-register > div,
+.woocommerce-form-register > p {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* モバイルでは幅を調整 + scaleで縮小 */
+@media screen and (max-width: 768px) {
+    .woocommerce-form-register iframe[src*="cloudflare"],
+    .woocommerce-form-register div[class*="cf-turnstile"] {
+        width: 300px !important;
+        max-width: 300px !important;
+        transform: scale(0.98); /* 98%に縮小 */
+        transform-origin: left center; /* 左寄せ基準で縮小 */
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    /* Turnstileを含む親要素 */
+    .woocommerce-form-register > div,
+    .woocommerce-form-register .form-row {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        max-width: 100%;
+        overflow: visible;
+    }
+}
+
+/* 小画面（480px以下）では、さらに縮小 */
+@media screen and (max-width: 480px) {
+    .woocommerce-form-register iframe[src*="cloudflare"],
+    .woocommerce-form-register div[class*="cf-turnstile"] {
+        width: 300px !important;
+        max-width: 300px !important;
+        transform: scale(0.95); /* 95%に縮小 */
+        transform-origin: left center;
+    }
+}
+
+/* さらに小さい画面（360px以下）では、もっと縮小 */
+@media screen and (max-width: 360px) {
+    .woocommerce-form-register iframe[src*="cloudflare"],
+    .woocommerce-form-register div[class*="cf-turnstile"] {
+        transform: scale(0.90); /* 90%に縮小 */
+        transform-origin: left center;
+    }
+}
+
+/* Turnstileバッジの余白調整 */
+.woocommerce-form-register iframe[src*="cloudflare"] {
+    margin: 20px 0 !important;
+    display: block;
+}
+
+/* 登録フォーム全体のはみ出し防止 */
+.woocommerce-form-register {
+    max-width: 100%;
+    overflow-x: visible;
 }
