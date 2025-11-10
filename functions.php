@@ -660,3 +660,332 @@ function cavallian_myaccount_mobile_select_script() {
     }
 }
 add_action('wp_enqueue_scripts', 'cavallian_myaccount_mobile_select_script', 20);
+
+/**
+ * WooCommerce登録フォームにユーザー名フィールドを追加（強化版）
+ * functions.phpに追加してください
+ */
+
+// 方法1: ユーザー名自動生成を無効化
+add_filter( 'woocommerce_registration_generate_username', '__return_false' );
+
+// 方法2: 登録フォームにユーザー名フィールドを強制追加
+add_action( 'woocommerce_register_form_start', 'add_username_field_to_registration' );
+function add_username_field_to_registration() {
+    ?>
+    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+        <label for="reg_username"><?php esc_html_e( 'ユーザー名', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+        <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="reg_username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" required />
+    </p>
+    <?php
+}
+
+// 方法3: ユーザー名のバリデーション
+add_filter( 'woocommerce_registration_errors', 'validate_username_field', 10, 3 );
+function validate_username_field( $errors, $username, $email ) {
+    if ( isset( $_POST['username'] ) ) {
+        $username = sanitize_user( $_POST['username'] );
+        
+        if ( empty( $username ) ) {
+            $errors->add( 'username_error', __( 'ユーザー名を入力してください。', 'woocommerce' ) );
+        } elseif ( strlen( $username ) < 3 ) {
+            $errors->add( 'username_error', __( 'ユーザー名は3文字以上で入力してください。', 'woocommerce' ) );
+        } elseif ( username_exists( $username ) ) {
+            $errors->add( 'username_error', __( 'このユーザー名は既に使用されています。', 'woocommerce' ) );
+        }
+    }
+    
+    return $errors;
+}
+
+// 方法4: 登録処理時にユーザー名を使用
+add_filter( 'woocommerce_new_customer_data', 'custom_new_customer_data' );
+function custom_new_customer_data( $data ) {
+    if ( isset( $_POST['username'] ) && ! empty( $_POST['username'] ) ) {
+        $data['user_login'] = sanitize_user( $_POST['username'] );
+    }
+    return $data;
+}
+
+/**
+ * ユーザー名のリアルタイム重複チェック機能
+ * functions.phpに追加してください
+ */
+
+// Ajax用のエンドポイントを作成（ログインしていないユーザー向け）
+add_action( 'wp_ajax_nopriv_check_username_availability', 'check_username_availability' );
+add_action( 'wp_ajax_check_username_availability', 'check_username_availability' );
+
+function check_username_availability() {
+    // セキュリティチェック
+    check_ajax_referer( 'username_check_nonce', 'nonce' );
+    
+    $username = sanitize_user( $_POST['username'] );
+    
+    if ( empty( $username ) ) {
+        wp_send_json_error( array( 'message' => 'ユーザー名を入力してください' ) );
+    }
+    
+    if ( strlen( $username ) < 3 ) {
+        wp_send_json_error( array( 'message' => 'ユーザー名は3文字以上で入力してください' ) );
+    }
+    
+    if ( ! validate_username( $username ) ) {
+        wp_send_json_error( array( 'message' => 'ユーザー名に使用できない文字が含まれています' ) );
+    }
+    
+    if ( username_exists( $username ) ) {
+        wp_send_json_error( array( 'message' => 'このユーザー名は既に使用されています' ) );
+    }
+    
+    wp_send_json_success( array( 'message' => 'このユーザー名は利用可能です' ) );
+}
+
+// JavaScriptをマイアカウントページに読み込む
+add_action( 'wp_footer', 'add_username_check_script' );
+function add_username_check_script() {
+    // マイアカウントページでのみ実行
+    if ( ! is_account_page() ) {
+        return;
+    }
+    ?>
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        var typingTimer;
+        var doneTypingInterval = 500; // 入力停止後500ms待つ
+        var $usernameInput = $('#reg_username');
+        var $feedbackDiv = $('<div class="username-feedback"></div>');
+        
+        // フィードバック表示用のdivを追加
+        $usernameInput.after($feedbackDiv);
+        
+        // 入力中
+        $usernameInput.on('keyup', function() {
+            clearTimeout(typingTimer);
+            var username = $(this).val();
+            
+            // 入力が空の場合は何も表示しない
+            if (username.length === 0) {
+                $feedbackDiv.removeClass('checking available taken error').text('');
+                return;
+            }
+            
+            // チェック中表示
+            $feedbackDiv.removeClass('available taken error').addClass('checking').text('確認中...');
+            
+            // 入力停止後にチェック実行
+            typingTimer = setTimeout(function() {
+                checkUsername(username);
+            }, doneTypingInterval);
+        });
+        
+        // 入力開始時
+        $usernameInput.on('keydown', function() {
+            clearTimeout(typingTimer);
+        });
+        
+        // Ajax通信でユーザー名をチェック
+        function checkUsername(username) {
+            $.ajax({
+                url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                type: 'POST',
+                data: {
+                    action: 'check_username_availability',
+                    username: username,
+                    nonce: '<?php echo wp_create_nonce('username_check_nonce'); ?>'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $feedbackDiv.removeClass('checking taken error').addClass('available').text('✓ ' + response.data.message);
+                    } else {
+                        $feedbackDiv.removeClass('checking available').addClass('taken').text('✗ ' + response.data.message);
+                    }
+                },
+                error: function() {
+                    $feedbackDiv.removeClass('checking available taken').addClass('error').text('エラーが発生しました');
+                }
+            });
+        }
+    });
+    </script>
+    
+    <style>
+    .username-feedback {
+        margin-top: 8px;
+        font-size: 14px;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        min-height: 20px;
+        transition: all 0.3s ease;
+    }
+    
+    .username-feedback.checking {
+        color: #666;
+    }
+    
+    .username-feedback.available {
+        color: #28a745;
+        font-weight: 500;
+    }
+    
+    .username-feedback.taken,
+    .username-feedback.error {
+        color: #c62828;
+        font-weight: 500;
+    }
+    
+    /* ユーザー名入力欄のボーダー色も変更 */
+    #reg_username.username-available {
+        border-color: #28a745 !important;
+    }
+    
+    #reg_username.username-taken {
+        border-color: #c62828 !important;
+    }
+    </style>
+    <?php
+}
+
+/**
+ * パスワード確認フィールドを追加
+ * functions.phpに追加してください
+ */
+
+// パスワード確認フィールドを登録フォームに追加
+add_action( 'woocommerce_register_form', 'add_password_confirmation_field' );
+function add_password_confirmation_field() {
+    ?>
+    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+        <label for="reg_password2"><?php esc_html_e( 'パスワード(確認)', 'woocommerce' ); ?>&nbsp;<span class="required">*</span></label>
+        <input type="password" class="woocommerce-Input woocommerce-Input--text input-text" name="password2" id="reg_password2" autocomplete="new-password" value="<?php echo ( ! empty( $_POST['password2'] ) ) ? esc_attr( wp_unslash( $_POST['password2'] ) ) : ''; ?>" required />
+        <span class="password-match-feedback"></span>
+    </p>
+    <?php
+}
+
+// パスワード一致チェックのバリデーション
+add_filter( 'woocommerce_registration_errors', 'validate_password_confirmation', 10, 3 );
+function validate_password_confirmation( $errors, $username, $email ) {
+    if ( isset( $_POST['password'] ) && isset( $_POST['password2'] ) ) {
+        $password = $_POST['password'];
+        $password2 = $_POST['password2'];
+        
+        if ( empty( $password2 ) ) {
+            $errors->add( 'password2_error', __( 'パスワード(確認)を入力してください。', 'woocommerce' ) );
+        } elseif ( $password !== $password2 ) {
+            $errors->add( 'password_mismatch', __( 'パスワードが一致しません。もう一度確認してください。', 'woocommerce' ) );
+        }
+    }
+    
+    return $errors;
+}
+
+// リアルタイムパスワード一致チェックのJavaScript
+add_action( 'wp_footer', 'add_password_match_check_script' );
+function add_password_match_check_script() {
+    if ( ! is_account_page() ) {
+        return;
+    }
+    ?>
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        var $password1 = $('#reg_password');
+        var $password2 = $('#reg_password2');
+        var $feedback = $('.password-match-feedback');
+        
+        // パスワード確認欄の入力時にチェック
+        $password2.on('keyup blur', function() {
+            checkPasswordMatch();
+        });
+        
+        // 元のパスワード欄が変更された時もチェック
+        $password1.on('keyup', function() {
+            if ($password2.val().length > 0) {
+                checkPasswordMatch();
+            }
+        });
+        
+        function checkPasswordMatch() {
+            var pass1 = $password1.val();
+            var pass2 = $password2.val();
+            
+            // パスワード確認欄が空の場合は何も表示しない
+            if (pass2.length === 0) {
+                $feedback.removeClass('match mismatch').text('');
+                $password2.removeClass('password-match password-mismatch');
+                return;
+            }
+            
+            // パスワードが一致するかチェック
+            if (pass1 === pass2) {
+                $feedback.removeClass('mismatch').addClass('match').text('✓ パスワードが一致しています');
+                $password2.removeClass('password-mismatch').addClass('password-match');
+            } else {
+                $feedback.removeClass('match').addClass('mismatch').text('✗ パスワードが一致しません');
+                $password2.removeClass('password-match').addClass('password-mismatch');
+            }
+        }
+    });
+    </script>
+    
+    <style>
+    /* パスワード確認フィールドのフィードバック */
+    .password-match-feedback {
+        display: block;
+        margin-top: 8px;
+        font-size: 14px;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        min-height: 20px;
+        transition: all 0.3s ease;
+    }
+    
+    .password-match-feedback.match {
+        color: #28a745;
+        font-weight: 500;
+    }
+    
+    .password-match-feedback.mismatch {
+        color: #c62828;
+        font-weight: 500;
+    }
+    
+    /* パスワード入力欄のボーダー色変更 */
+    #reg_password2.password-match {
+        border-color: #28a745 !important;
+    }
+    
+    #reg_password2.password-mismatch {
+        border-color: #c62828 !important;
+    }
+    </style>
+    <?php
+}
+
+/**
+ * Cloudflare Turnstileの表示位置を調整（安全版）
+ */
+add_action('wp_loaded', 'adjust_turnstile_position_safe', 999);
+function adjust_turnstile_position_safe() {
+    global $wp_filter;
+    
+    if (isset($wp_filter['woocommerce_register_form'])) {
+        $hooks = $wp_filter['woocommerce_register_form']->callbacks;
+        
+        if (isset($hooks[10])) {
+            foreach ($hooks[10] as $key => $hook) {
+                if (is_array($hook['function']) || 
+                    (is_string($hook['function']) && 
+                     (strpos($hook['function'], 'turnstile') !== false || 
+                      strpos($hook['function'], 'captcha') !== false))) {
+                    
+                    remove_action('woocommerce_register_form', $hook['function'], 10);
+                    add_action('woocommerce_register_form', $hook['function'], 20);
+                    break;
+                }
+            }
+        }
+    }
+}
