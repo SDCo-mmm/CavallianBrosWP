@@ -181,6 +181,59 @@
     margin-top: 20px !important;
 }
 
+/* カート空ページの商品グリッドのスペース調整 */
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__products {
+    display: grid !important;
+    grid-template-columns: repeat(4, 150px) !important;  /* 固定幅150pxの4列 */
+    gap: 50px !important;
+    margin: 0 auto !important;  /* 中央寄せ */
+    justify-content: center !important;
+    max-width: 800px !important;  /* 最大幅を制限 (150px × 4 + 50px × 3 = 750px) */
+}
+
+/* 個別商品のリセット */
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product {
+    flex: none !important;
+    max-width: none !important;
+    width: 150px !important;  /* 固定幅 */
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 商品画像のサイズを固定 */
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product-image {
+    width: 150px !important;
+    height: 150px !important;
+    margin: 0 auto !important;
+}
+
+/* 商品画像内のimg要素 */
+.wp-block-woocommerce-empty-cart-block .wc-block-grid__product-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/* モバイル対応（768px以下） */
+@media (max-width: 768px) {
+    .wp-block-woocommerce-empty-cart-block .wc-block-grid__products {
+        grid-template-columns: repeat(2, 150px) !important;  /* 2列 × 150px */
+        gap: 20px !important;
+        padding: 0 !important;
+        max-width: 320px !important;  /* 150px × 2 + 20px = 320px */
+    }
+}
+
+/* タブレット対応（769px〜1024px） */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .wp-block-woocommerce-empty-cart-block .wc-block-grid__products {
+        grid-template-columns: repeat(3, 150px) !important;  /* 3列 × 150px */
+        gap: 30px !important;
+        max-width: 510px !important;  /* 150px × 3 + 30px × 2 = 510px */
+    }
+}
+
 /* タイトルを「How about this?」に変更 */
 h2.wp-block-heading.has-text-align-left {
     position: relative;
