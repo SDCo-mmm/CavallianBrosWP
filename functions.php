@@ -989,3 +989,117 @@ function adjust_turnstile_position_safe() {
         }
     }
 }
+
+/**
+ * 表示名フィールドに注釈を追加
+ */
+add_action('woocommerce_edit_account_form', 'add_display_name_notice');
+function add_display_name_notice() {
+    ?>
+    <style>
+    /* 表示名の注釈スタイル */
+    .display-name-notice {
+        display: block;
+        margin-top: 8px;
+        font-size: 13px;
+        color: #999;
+        line-height: 1.6;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 300;
+    }
+    </style>
+    
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        // 表示名フィールドを探す
+        var $displayNameField = $('#account_display_name').closest('.form-row');
+        
+        // 既存の説明文の後に注釈を追加
+        if ($displayNameField.length) {
+            var $existingNote = $displayNameField.find('em');
+            if ($existingNote.length) {
+                // 既存の説明文の後に追加
+                $existingNote.after('<span class="display-name-notice">※表示名はユーザー名ではありません。こちらを変更してもユーザー名は変更されません。</span>');
+            } else {
+                // 説明文がない場合は入力欄の後に追加
+                $('#account_display_name').after('<span class="display-name-notice">※表示名はユーザー名ではありません。こちらを変更してもユーザー名は変更されません。</span>');
+            }
+        }
+    });
+    </script>
+    <?php
+}
+
+/**
+ * アカウント詳細ページにユーザー名フィールドを追加（読み取り専用）
+ * functions.phpに追加してください
+ */
+add_filter('woocommerce_save_account_details_required_fields', 'add_username_to_account_details');
+function add_username_to_account_details($required_fields) {
+    // ユーザー名は必須ではないが、フィールドとして追加
+    return $required_fields;
+}
+
+add_action('woocommerce_edit_account_form_start', 'display_username_field_readonly');
+function display_username_field_readonly() {
+    $user = wp_get_current_user();
+    ?>
+    <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide form-row-username">
+        <label for="account_username">
+            <?php esc_html_e('ユーザー名', 'woocommerce'); ?>
+            <span class="username-notice">(変更できません)</span>
+        </label>
+        <input 
+            type="text" 
+            class="woocommerce-Input woocommerce-Input--text input-text" 
+            name="account_username" 
+            id="account_username" 
+            value="<?php echo esc_attr($user->user_login); ?>" 
+            readonly 
+            disabled
+        />
+    </p>
+    
+    <style>
+    /* ユーザー名フィールドのスタイル */
+    .form-row-username {
+        margin-bottom: 20px;
+    }
+    
+    .form-row-username label {
+        font-family: 'Noto Sans JP', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        color: #333;
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
+        display: block;
+    }
+    
+    .form-row-username .username-notice {
+        color: #999;
+        font-size: 13px;
+        font-weight: 300;
+    }
+    
+    .form-row-username input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 0;
+        font-size: 16px;
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 300;
+        background-color: #f5f5f5 !important;  /* グレー背景 */
+        color: #999 !important;  /* グレーテキスト */
+        cursor: not-allowed;
+    }
+    
+    /* Flexboxで順序制御（姓名の前に配置） */
+    .form-row-username {
+        order: -2;  /* 姓名より前に */
+        flex: 0 0 100%;
+    }
+    </style>
+    <?php
+}
