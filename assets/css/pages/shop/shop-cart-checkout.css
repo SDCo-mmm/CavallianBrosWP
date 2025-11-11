@@ -18,7 +18,7 @@
     padding: 220px 20px 80px !important;  /* 140px(ヘッダー) + 80px(余白) */
 }
 
-/* 代替セレクタ（テーマによって異なる場合） */
+/* 代替セレクタ(テーマによって異なる場合) */
 .woocommerce-cart .entry-content,
 .woocommerce-checkout .entry-content {
     padding-top: 220px !important;
@@ -64,19 +64,19 @@
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 0.05em;
-    color: #333;
+    color: #666;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .woocommerce table.cart tbody td {
     padding: 20px;
-    border-bottom: 1px solid #f0f0f0;
     vertical-align: middle;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 /* 商品画像 */
-.woocommerce table.cart .product-thumbnail img {
+.woocommerce table.cart tbody td.product-thumbnail img {
     width: 80px;
     height: 80px;
     object-fit: cover;
@@ -84,17 +84,23 @@
 }
 
 /* 商品名 */
-.woocommerce table.cart .product-name a {
+.woocommerce table.cart tbody td.product-name a {
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 16px;
     font-weight: 300;
-    color: #333;
     letter-spacing: 0.05em;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.woocommerce table.cart tbody td.product-name a:hover {
+    color: #666;
 }
 
 /* 価格 */
-.woocommerce table.cart .product-price,
-.woocommerce table.cart .product-subtotal {
+.woocommerce table.cart tbody td.product-price,
+.woocommerce table.cart tbody td.product-subtotal {
     font-family: 'Questrial', sans-serif;
     font-size: 16px;
     font-weight: 300;
@@ -102,23 +108,24 @@
 }
 
 /* 数量入力 */
-.woocommerce table.cart .product-quantity .quantity input {
+.woocommerce table.cart tbody td.product-quantity .quantity input {
     width: 60px;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #ddd;
     border-radius: 0;
     text-align: center;
+    font-family: 'Questrial', sans-serif;
     font-size: 16px;
 }
 
 /* 削除ボタン */
-.woocommerce table.cart .product-remove a {
+.woocommerce table.cart tbody td.product-remove a {
     color: #999 !important;
     font-size: 20px;
-    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-.woocommerce table.cart .product-remove a:hover {
+.woocommerce table.cart tbody td.product-remove a:hover {
     color: #333 !important;
 }
 
@@ -126,19 +133,34 @@
 .woocommerce table.cart .actions {
     padding: 20px;
     background-color: #fafafa;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #f0f0f0;
+}
+
+.woocommerce table.cart .actions .coupon {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.woocommerce table.cart .actions .coupon input[type="text"] {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    width: 200px;
 }
 
 .woocommerce table.cart .actions button[name="update_cart"] {
     background-color: #333;
     color: #fff;
-    padding: 12px 30px;
+    padding: 10px 30px;
     border: none;
     border-radius: 0;
+    font-family: 'Noto Sans JP', sans-serif;
     font-size: 14px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.05em;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .woocommerce table.cart .actions button[name="update_cart"]:hover {
@@ -261,22 +283,23 @@ h2.wp-block-heading.has-text-align-left::after {
     color: #333;
 }
 
-/* クロスセル商品リスト全体をセンター揃え */
-div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) ul.wp-block-post-template {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
+/* クロスセル商品リスト全体 - デスクトップ・タブレット(カートに商品がある時) */
+.wc-block-grid__products,
+.wc-block-product-template__responsive {
+    display: grid !important;
+    grid-template-columns: repeat(4, 150px) !important;
     gap: 20px !important;
+    grid-gap: 20px !important;
+    justify-content: center !important;
+    margin: 0 auto !important;
 }
 
-/* クロスセル商品全体をセンター揃え */
-div[data-block-name="woocommerce/product-collection"]:not([data-block-name*="cart"]) li.wp-block-post {
+/* クロスセル商品の個別アイテム - デスクトップ・タブレット */
+.wc-block-grid__product {
+    width: 150px !important;
+    max-width: 150px !important;
+    flex: none !important;
     text-align: center !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    width: 100% !important;
-    max-width: 250px !important;
 }
 
 /* クロスセル商品画像コンテナ */
@@ -435,51 +458,25 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
     width: 100%;
     background-color: #333;
     color: #fff;
-    padding: 18px 40px;
+    padding: 15px 30px;
     border: none;
     border-radius: 0;
+    font-family: 'Noto Sans JP', sans-serif;
     font-size: 16px;
     letter-spacing: 0.08em;
     text-align: center;
+    text-decoration: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .wc-proceed-to-checkout .checkout-button:hover {
     background-color: #555;
-    opacity: 1;
-}
-
-/* 「購入手続きに進む」リンク - 通常のWooCommerce */
-.wc-proceed-to-checkout .wc-forward {
-    display: block;
-    width: 100%;
-    background-color: transparent;
-    color: #333;
-    padding: 14px 40px;
-    border: 2px solid #333;
-    border-radius: 5px;  /* Apple Pay/Google Payと同じ角丸 */
-    font-size: 16px;
-    letter-spacing: 0.08em;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    font-family: 'Noto Sans JP', sans-serif;
-    margin-top: 15px;
-}
-
-.wc-proceed-to-checkout .wc-forward:hover {
-    background-color: #333;
-    color: #fff;
-    opacity: 1;
 }
 
 /* =========================================
    チェックアウトページ
 ========================================= */
-
-/* 2カラムレイアウト */
 .woocommerce-checkout .col2-set {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -493,13 +490,12 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
 }
 
 .woocommerce-checkout .form-row label {
+    display: block;
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 14px;
     font-weight: 400;
     color: #333;
-    letter-spacing: 0.05em;
     margin-bottom: 8px;
-    display: block;
 }
 
 .woocommerce-checkout .form-row input[type="text"],
@@ -511,9 +507,9 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
     padding: 12px 15px;
     border: 1px solid #ddd;
     border-radius: 0;
-    font-size: 16px;
     font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 300;
+    font-size: 14px;
+    color: #333;
 }
 
 .woocommerce-checkout .form-row input:focus,
@@ -523,15 +519,14 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
     border-color: #333;
 }
 
-/* 注文概要 */
-.woocommerce-checkout-review-order {
+/* 注文確認 */
+.woocommerce-checkout #order_review {
     background-color: #fafafa;
     padding: 30px;
     border: 1px solid #f0f0f0;
-    border-radius: 0;
 }
 
-.woocommerce-checkout-review-order h3 {
+.woocommerce-checkout #order_review h3 {
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 20px;
     font-weight: 400;
@@ -540,52 +535,58 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
     margin-bottom: 20px;
 }
 
-.woocommerce-checkout-review-order table {
+/* 注文内容テーブル */
+.woocommerce-checkout-review-order-table {
     width: 100%;
+    border: 1px solid #f0f0f0;
     margin-bottom: 20px;
 }
 
-.woocommerce-checkout-review-order table th,
-.woocommerce-checkout-review-order table td {
-    padding: 12px 0;
+.woocommerce-checkout-review-order-table thead th {
+    background-color: #fff;
+    padding: 15px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.woocommerce-checkout-review-order-table tbody td,
+.woocommerce-checkout-review-order-table tfoot td,
+.woocommerce-checkout-review-order-table tfoot th {
+    padding: 15px;
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 14px;
     font-weight: 300;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #f0f0f0;
 }
 
-.woocommerce-checkout-review-order table th {
-    text-align: left;
-    color: #666;
-}
-
-.woocommerce-checkout-review-order table td {
-    text-align: right;
-    color: #333;
+.woocommerce-checkout-review-order-table tfoot .order-total th,
+.woocommerce-checkout-review-order-table tfoot .order-total td {
+    font-size: 18px;
+    font-weight: 400;
+    border-bottom: none;
 }
 
 /* 注文ボタン */
-#place_order {
+.woocommerce-checkout #place_order {
     width: 100%;
     background-color: #333;
     color: #fff;
-    padding: 18px 40px;
+    padding: 15px 30px;
     border: none;
     border-radius: 0;
+    font-family: 'Noto Sans JP', sans-serif;
     font-size: 16px;
     letter-spacing: 0.08em;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Noto Sans JP', sans-serif;
+    transition: background-color 0.3s ease;
 }
 
-#place_order:hover {
+.woocommerce-checkout #place_order:hover {
     background-color: #555;
-}
-
-/* エクスプレスチェックアウト（Apple Pay等）を非表示 */
-#wc-stripe-express-checkout-element {
-    display: none !important;
 }
 
 /* =========================================
@@ -594,25 +595,26 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
 
 /* タブレット・モバイル（768px以下） */
 @media screen and (max-width: 768px) {
+    /* カート・チェックアウト */
     .woocommerce-cart .woocommerce,
     .woocommerce-checkout .woocommerce {
-        padding: 160px 20px 60px;  /* 80px(モバイルヘッダー) + 80px(余白) */
+        padding: 140px 20px 40px;  /* 40px(モバイルヘッダー) + 40px(余白) */
     }
     
-    /* モバイルではデスクトップ用のpadding-topをリセット */
+    /* 代替セレクタ - モバイル用padding-top */
     .woocommerce-cart .entry-content,
     .woocommerce-checkout .entry-content {
-        padding-top: 120px !important;  /* モバイルヘッダー80px + 余白40px */
+        padding-top: 140px !important;  /* モバイルヘッダー80px + パンくずリスト40px + 余白20px */
     }
     
     .woocommerce-cart article,
     .woocommerce-checkout article {
-        padding-top: 0 !important;  /* モバイルではリセット */
+        padding-top: 0 !important;
     }
     
     .woocommerce-cart .entry-header,
     .woocommerce-checkout .entry-header {
-        margin-bottom: 30px;  /* モバイルでは余白を減らす */
+        margin-bottom: 30px;
     }
     
     .woocommerce-cart .entry-title,
@@ -620,12 +622,49 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
         font-size: 24px;
     }
     
-    /* カートテーブル - スマホ対応 */
-    .woocommerce table.cart {
-        font-size: 14px;
+    /* カートテーブル - モバイル対応 */
+    .woocommerce table.cart thead {
+        display: none;  /* ヘッダー非表示 */
     }
     
-    .woocommerce table.cart .product-thumbnail img {
+    .woocommerce table.cart tbody tr {
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        grid-template-areas:
+            "image info"
+            "image quantity"
+            "image remove";
+        gap: 10px;
+        padding: 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .woocommerce table.cart tbody td.product-thumbnail {
+        grid-area: image;
+    }
+    
+    .woocommerce table.cart tbody td.product-name {
+        grid-area: info;
+    }
+    
+    .woocommerce table.cart tbody td.product-price {
+        display: none;  /* 価格列を非表示 */
+    }
+    
+    .woocommerce table.cart tbody td.product-quantity {
+        grid-area: quantity;
+    }
+    
+    .woocommerce table.cart tbody td.product-subtotal {
+        grid-area: info;
+        align-self: end;
+    }
+    
+    .woocommerce table.cart tbody td.product-remove {
+        grid-area: remove;
+    }
+    
+    .woocommerce table.cart tbody td.product-thumbnail img {
         width: 60px;
         height: 60px;
     }
@@ -650,6 +689,31 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
     .cart-collaterals .cross-sells ul.products li.product img {
         width: 130px !important;
         height: 130px !important;
+    }
+    
+    /* 【修正】カート内に商品があるときの「How about this?」も2列表示に */
+    .wc-block-grid__products,
+    .wc-block-product-template__responsive {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-gap: 15px !important;
+        max-width: 100% !important;
+    }
+    
+    .wc-block-grid__product,
+    .wc-block-product-template {
+        width: 100% !important;
+        max-width: none !important;
+    }
+    
+    /* 画像を正方形に */
+    .wc-block-grid__product img,
+    .wc-block-components-product-image img,
+    .wc-block-grid__product-image img {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        object-fit: cover !important;
     }
     
     /* チェックアウト - 1カラムに */
@@ -683,7 +747,7 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button:hove
     }
 }
 
-/* 小画面（480px以下） */
+/* 小画面(480px以下) */
 @media screen and (max-width: 480px) {
     .woocommerce-cart .woocommerce,
     .woocommerce-checkout .woocommerce {
