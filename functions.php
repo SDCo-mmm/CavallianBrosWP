@@ -1103,3 +1103,16 @@ function display_username_field_readonly() {
     </style>
     <?php
 }
+
+/**
+ * パンくずリスト用CSSの読み込み
+ */
+function cavallian_enqueue_breadcrumbs_css() {
+    wp_enqueue_style(
+        'cavallian-breadcrumbs',
+        get_template_directory_uri() . '/assets/css/layout/breadcrumbs.css',
+        array(),
+        '1.0.2'
+    );
+}
+add_action('wp_enqueue_scripts', 'cavallian_enqueue_breadcrumbs_css');

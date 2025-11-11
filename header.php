@@ -265,3 +265,10 @@ $home_url = home_url('/');
 
 <!-- ここに main タグを追加 -->
 <main id="main" class="site-main">
+
+<!-- パンくずリスト（トップページ以外で表示） -->
+<?php
+if ( function_exists('yoast_breadcrumb') && !is_front_page() ) {
+    yoast_breadcrumb('<div class="breadcrumbs-wrapper"><div class="breadcrumbs">','</div></div>');
+}
+?>
