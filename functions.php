@@ -1116,3 +1116,12 @@ function cavallian_enqueue_breadcrumbs_css() {
     );
 }
 add_action('wp_enqueue_scripts', 'cavallian_enqueue_breadcrumbs_css');
+
+/**
+ * 「お買い物かごに追加」を「ADD TO CART」に変更
+ */
+add_filter('woocommerce_product_add_to_cart_text', 'custom_add_to_cart_text');
+add_filter('woocommerce_product_single_add_to_cart_text', 'custom_add_to_cart_text');
+function custom_add_to_cart_text() {
+    return 'ADD TO CART';
+}
