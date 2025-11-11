@@ -12,7 +12,7 @@
 .woocommerce div.product {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 200px 20px 80px;  /* 140px(ヘッダー) + 40px(余白) */
+    padding: 250px 20px 80px;  /* 140px(ヘッダー) + 40px(余白) */
     display: grid;
     grid-template-columns: 700px 1fr;  /* 画像を700pxに固定 */
     gap: 60px;
@@ -576,7 +576,7 @@
     .woocommerce div.product {
         grid-template-columns: 1fr;
         gap: 40px;
-        padding: 80px 0px 60px;  /* 40px(モバイルヘッダー) + 40px(余白) */
+        padding: 130px 0px 60px;  /* 40px(モバイルヘッダー) + 40px(余白) */
     }
     
     .woocommerce div.product .woocommerce-product-gallery {

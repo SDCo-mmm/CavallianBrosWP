@@ -27,7 +27,7 @@
 /* article要素への適用 */
 .woocommerce-cart article,
 .woocommerce-checkout article {
-    padding-top: 60px !important;
+    padding-top: 110px !important;
 }
 
 /* ページタイトル */
