@@ -280,8 +280,7 @@
 }
 
 .woocommerce-EditAccountForm .form-row input[type="text"],
-.woocommerce-EditAccountForm .form-row input[type="email"],
-.woocommerce-EditAccountForm .form-row input[type="password"] {
+.woocommerce-EditAccountForm .form-row input[type="email"] {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid #ddd;
@@ -289,6 +288,74 @@
     font-size: 16px;
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 300;
+}
+
+/* マイアカウント編集フォーム — 姓→名 の表示順に変更 */
+.woocommerce-EditAccountForm .form-row-first {
+    float: right !important; 
+    margin-right: 0 !important;
+}
+
+.woocommerce-EditAccountForm .form-row-last {
+    float: left !important;
+    margin-right: 20px !important;
+}
+
+/* パスワード入力エリア全体 */
+.woocommerce-EditAccountForm .form-row .password-input {
+    position: relative;
+    display: block;
+}
+
+/* パスワード入力欄 */
+.woocommerce-EditAccountForm .form-row input[type="password"] {
+    width: 100%;
+    padding: 12px 50px 12px 15px;  /* 右側にアイコン用スペース */
+    border: 1px solid #ddd;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+}
+
+/* パスワード表示ボタン */
+.woocommerce-EditAccountForm .show-password-input {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    font-size: 0;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+/* シンプルなSVGアイコン（ログインフォームと同じ） */
+.woocommerce-EditAccountForm .show-password-input::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.woocommerce-EditAccountForm .show-password-input:hover::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+}
+
+/* WooCommerceデフォルトの目アイコンテキスト「。」を非表示 */
+.woocommerce-EditAccountForm .show-password-input .show-password-input-text {
+    display: none !important;
 }
 
 .woocommerce-EditAccountForm .form-row input:focus {
@@ -345,95 +412,49 @@
     max-width: 600px;
 }
 
-/* フォームのタイトル */
-.woocommerce-account .woocommerce-address-fields h3 {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    color: #333;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-/* フォームフィールド全体 */
-.woocommerce-account .woocommerce-address-fields__field-wrapper {
-    display: grid;
-    gap: 20px;
-}
-
-/* 各フォーム行 */
+/* フォームフィールド */
 .woocommerce-account .form-row {
-    margin-bottom: 0;  /* gridのgapで制御 */
+    margin-bottom: 20px;
 }
 
-/* ラベル */
 .woocommerce-account .form-row label {
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 400;
-    color: #666;
+    color: #333;
     letter-spacing: 0.05em;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     display: block;
 }
 
-/* 必須マーク */
-.woocommerce-account .form-row .required {
-    color: #c62828;
-    margin-left: 2px;
-}
-
-/* 入力フィールド */
 .woocommerce-account .form-row input[type="text"],
+.woocommerce-account .form-row input[type="tel"],
 .woocommerce-account .form-row input[type="email"],
-.woocommerce-account .form-row input[type="tel"] {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ddd;
-    border-radius: 0;
-    font-size: 15px;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 300;
-    color: #333;
-    transition: border-color 0.3s ease;
-    background-color: #fff;
-}
-
-/* セレクトボックス */
 .woocommerce-account .form-row select {
     width: 100%;
-    padding: 10px 12px;  /* 他の入力欄と同じpadding */
+    padding: 12px 15px;
     border: 1px solid #ddd;
-    border-radius: 0 !important;  /* 角丸を強制的に削除 */
-    font-size: 15px;  /* 他の入力欄と同じサイズ */
+    border-radius: 0;
+    font-size: 16px;
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 300;
-    color: #333 !important;  /* 他の入力欄と同じ色 */
-    background-color: #fff;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
-    line-height: 1.5;  /* 行の高さを指定 */
-    height: auto;  /* 自動調整 */
-    appearance: none;  /* ブラウザデフォルトのスタイルを削除 */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;  /* 矢印を右側に配置 */
-    padding-right: 32px;  /* 矢印のスペースを確保 */
 }
 
-/* Select2プラグインが使われている場合の対応 */
+/* Select2のカスタマイズ（都道府県セレクトなど） */
+.woocommerce-account .select2-container {
+    width: 100% !important;
+}
+
 .woocommerce-account .select2-container--default .select2-selection--single {
     border: 1px solid #ddd !important;
-    border-radius: 0 !important;  /* 角丸を削除 */
-    height: auto !important;  /* 高さを自動調整 */
-    padding: 10px 12px !important;  /* 他の入力欄と同じpadding */
+    border-radius: 0 !important;
+    height: auto !important;
+    padding: 12px 15px !important;
+    background-color: transparent !important;
 }
 
 .woocommerce-account .select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-family: 'Noto Sans JP', sans-serif !important;
     color: #333 !important;  /* テキスト色を他と統一 */
     font-size: 15px !important;  /* フォントサイズを統一 */
     line-height: 1.5 !important;
@@ -874,6 +895,24 @@
         padding: 15px;
         font-size: 15px;
         color: #333;
+    }
+    
+    /* モバイルでは姓→名の順序を維持（floatを解除） */
+    .woocommerce-EditAccountForm .form-row-first,
+    .woocommerce-EditAccountForm .form-row-last {
+        float: none !important;
+        width: 100% !important;
+        margin-right: 0 !important;
+    }
+    
+    /* 親要素にFlexboxを適用してorder制御 */
+    .woocommerce-EditAccountForm {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .woocommerce-EditAccountForm .form-row-last {
+        order: -1;  /* 姓を先に */
     }
 }
 
@@ -1331,4 +1370,133 @@ body.woocommerce-account.logged-out .u-column2.col-2 > h2,
 .woocommerce-form-register {
     max-width: 100%;
     overflow-x: visible;
+}
+
+/* =========================================
+   パスワードリセットフォーム専用スタイル【NEW】
+========================================= */
+
+/* パスワードリセットフォーム全体 */
+.woocommerce-ResetPassword {
+    max-width: 500px;
+}
+
+/* フォームフィールド */
+.woocommerce-ResetPassword .form-row {
+    margin-bottom: 20px;
+    width: 100% !important;  /* 親要素の幅制限を解除 */
+    max-width: 500px !important;  /* 最大幅を設定 */
+}
+
+/* WooCommerceのform-row系クラスの幅制限を上書き */
+.woocommerce-ResetPassword .form-row-first,
+.woocommerce-ResetPassword .form-row-last,
+.woocommerce-ResetPassword .form-row-wide {
+    width: 100% !important;
+    max-width: 500px !important;
+    float: none !important;
+    margin-right: 0 !important;
+}
+
+/* ラベル */
+.woocommerce-ResetPassword .form-row label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* ユーザー名またはメールアドレス入力欄 */
+.woocommerce-ResetPassword input[type="text"] {
+    width: 100% !important;
+    max-width: 500px !important;  /* ログインフォームと同じ幅に統一 */
+    padding: 12px 15px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 0 !important;
+    font-size: 16px !important;
+    font-family: 'Noto Sans JP', sans-serif !important;
+    font-weight: 300 !important;
+    color: #333 !important;
+    transition: border-color 0.3s ease;
+    background-color: #f8f9fa !important;
+}
+
+/* フォーカス時 */
+.woocommerce-ResetPassword input:focus {
+    outline: none;
+    border-color: #333;
+    background-color: #fff;
+}
+
+/* Cloudflare Turnstileバッジをフォームの下に配置 */
+.woocommerce-ResetPassword iframe[src*="cloudflare"],
+.woocommerce-ResetPassword div[class*="cf-turnstile"] {
+    display: block !important;
+    margin: 20px 0 !important;
+    width: 300px !important;
+    max-width: 100% !important;
+}
+
+/* Turnstileの親要素の調整 */
+.woocommerce-ResetPassword > div,
+.woocommerce-ResetPassword > p {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* パスワードをリセットボタン */
+.woocommerce-ResetPassword button[type="submit"] {
+    width: 100%;
+    max-width: 300px;  /* 幅を広げて1行で表示 */
+    padding: 15px 40px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 0;  /* 角丸を削除 */
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+    margin-top: 10px;
+    white-space: nowrap;  /* テキストを1行に強制 */
+}
+
+/* ホバー時（ログインボタンと同じ仕様） */
+.woocommerce-ResetPassword button[type="submit"]:hover {
+    background-color: #555;
+}
+
+/* =========================================
+   パスワードリセット - レスポンシブ対応
+========================================= */
+
+/* モバイル（768px以下） */
+@media screen and (max-width: 768px) {
+    .woocommerce-ResetPassword iframe[src*="cloudflare"],
+    .woocommerce-ResetPassword div[class*="cf-turnstile"] {
+        transform: scale(0.98);
+        transform-origin: left center;
+    }
+}
+
+/* 小画面（480px以下） */
+@media screen and (max-width: 480px) {
+    .woocommerce-ResetPassword iframe[src*="cloudflare"],
+    .woocommerce-ResetPassword div[class*="cf-turnstile"] {
+        transform: scale(0.95);
+        transform-origin: left center;
+    }
+}
+
+/* さらに小さい画面（360px以下） */
+@media screen and (max-width: 360px) {
+    .woocommerce-ResetPassword iframe[src*="cloudflare"],
+    .woocommerce-ResetPassword div[class*="cf-turnstile"] {
+        transform: scale(0.90);
+        transform-origin: left center;
+    }
 }
