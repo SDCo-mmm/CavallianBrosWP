@@ -77,7 +77,15 @@
     border: none;
 }
 
-/* 成功メッセージ（カート追加等） */
+/* 商品詳細ページでのメッセージ表示位置調整 */
+.single-product .woocommerce-message,
+.single-product .woocommerce-info,
+.single-product .woocommerce-error {
+    margin-top: 220px;  /* ヘッダー140px + パンくずリスト40px */
+    margin-bottom: -220px;
+}
+
+/* 成功メッセージ(カート追加等) */
 .woocommerce-message {
     background-color: #e8f5e9;
     color: #2e7d32;
@@ -122,60 +130,36 @@
 /* ページ番号のリンク・テキスト */
 .woocommerce nav.woocommerce-pagination ul li a,
 .woocommerce nav.woocommerce-pagination ul li span {
-    padding: 8px 15px;
+    padding: 10px 15px;
     color: #333;
-    font-size: 14px;
-    letter-spacing: 0.05em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s ease;
 }
 
-/* ホバー時・現在のページ */
-.woocommerce nav.woocommerce-pagination ul li a:hover,
+/* ホバー時 */
+.woocommerce nav.woocommerce-pagination ul li a:hover {
+    background-color: #f5f5f5;
+}
+
+/* 現在のページ */
 .woocommerce nav.woocommerce-pagination ul li span.current {
     background-color: #333;
     color: #fff;
+    border-color: #333;
 }
 
 /* =========================================
-   会員限定バッジ
+   レスポンシブ対応
 ========================================= */
 
-.premium-badge {
-    display: inline-block;
-    padding: 5px 15px;
-    background: linear-gradient(135deg, #8f601e 0%, #b8873e 100%);
-    color: #fff;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    border-radius: 20px;
-    margin-bottom: 15px;
-}
-
-/* =========================================
-   テーブル共通スタイル
-========================================= */
-
-/* テーブルの基本スタイル */
-.woocommerce table.shop_table {
-    border: 1px solid #f0f0f0;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-/* テーブルヘッダー */
-.woocommerce table.shop_table th {
-    background-color: #f5f5f5;
-    padding: 20px;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-}
-
-/* テーブルセル */
-.woocommerce table.shop_table td {
-    padding: 20px;
-    border-bottom: 1px solid #eee;
+/* モバイル(768px以下) */
+@media screen and (max-width: 768px) {
+    /* モバイルでのメッセージ表示位置調整 */
+    .single-product .woocommerce-message,
+    .single-product .woocommerce-info,
+    .single-product .woocommerce-error {
+        margin-top: 120px;  /* モバイルヘッダー80px + パンくずリスト40px */
+        margin-bottom: -110px;
+    }
 }
