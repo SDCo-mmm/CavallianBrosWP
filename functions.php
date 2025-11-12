@@ -538,7 +538,7 @@ function cavallian_get_child_categories() {
     $child_categories = get_terms(array(
         'taxonomy' => 'product_cat',
         'parent' => $parent_cat->term_id,
-        'hide_empty' => true,
+        'hide_empty' => false, // 商品がなくても表示
     ));
     
     $categories = array();

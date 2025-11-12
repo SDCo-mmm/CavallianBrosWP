@@ -36,6 +36,21 @@ if ($debug_mode && current_user_can('administrator')) {
             for ($i = 1; $i <= 5; $i++) {
                 $slide_field = pods_field('page', $settings_page_id, "slider_image_$i", true);
                 
+                // キャプション情報を取得(短縮版フィールド名)
+                $caption_text = pods_field('page', $settings_page_id, "s{$i}_caption", true);
+                $link_url = pods_field('page', $settings_page_id, "s{$i}_url", true);
+                $link_text = pods_field('page', $settings_page_id, "s{$i}_text", true);
+                $link_target = pods_field('page', $settings_page_id, "s{$i}_target", true); // 別ウィンドウで開くか
+                
+                // デバッグ出力(管理者のみ表示)
+                if (current_user_can('administrator')) {
+                    echo "<!-- Slider $i Debug: -->";
+                    echo "<!-- Caption: " . esc_html($caption_text) . " -->";
+                    echo "<!-- URL: " . esc_html($link_url) . " -->";
+                    echo "<!-- Text: " . esc_html($link_text) . " -->";
+                    echo "<!-- Target: " . ($link_target ? '_blank' : '_self') . " -->";
+                }
+                
                 if (!empty($slide_field)) {
                     $has_slides = true;
                     $slide_url = '';
@@ -62,6 +77,26 @@ if ($debug_mode && current_user_can('administrator')) {
                     ?>
                         <div class="slide <?php echo $i === 1 ? 'active' : ''; ?>">
                             <img src="<?php echo esc_url($slide_url); ?>" alt="スライド<?php echo $i; ?>">
+                            
+                            <?php if ($caption_text || ($link_url && $link_text)) : ?>
+                            <div class="slide-caption">
+                                <?php if ($caption_text) : ?>
+                                    <p class="caption-text"><?php echo esc_html($caption_text); ?></p>
+                                <?php endif; ?>
+                                
+                                <?php if ($link_url && $link_text) : ?>
+                                    <a href="<?php echo esc_url($link_url); ?>" 
+                                       class="caption-link"
+                                       <?php if ($link_target) : ?>
+                                       target="_blank" 
+                                       rel="noopener noreferrer"
+                                       <?php endif; ?>
+                                    >
+                                        <?php echo esc_html($link_text); ?>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                            <?php endif; ?>
                         </div>
                     <?php
                     endif;
