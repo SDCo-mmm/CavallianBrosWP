@@ -1,0 +1,112 @@
+/* =========================================
+   Hero Sliderキャプション専用スタイル
+   
+   トップページのスライダー画像左下に表示される
+   キャプションとリンクのスタイル
+========================================= */
+
+/* =========================================
+   スライダーキャプション全体
+========================================= */
+.slide-caption {
+    position: absolute;
+    bottom: 60px;
+    left: 60px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px; /* テキストとリンクの間隔 */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+}
+
+/* アクティブなスライドのキャプションを表示 */
+.slide.active .slide-caption {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* キャプションテキスト */
+.caption-text {
+    background-color: rgba(255, 255, 255, 0.7); /* 白背景70%透明 */
+    color: #333; /* 濃いグレー文字 */
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    margin: 0;
+    padding: 10px 20px; /* 上下10px、左右20px */
+    display: inline-block; /* テキスト幅に合わせる */
+}
+
+/* キャプションリンク */
+.caption-link {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.7); /* 白背景70%透明 */
+    color: #333; /* 濃いグレー文字 */
+    font-family: 'Questrial', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 10px 20px; /* 上下10px、左右20px */
+    border-radius: 0;
+    transition: all 0.3s ease;
+}
+
+.caption-link:hover {
+    background-color: #333; /* ホバー時は#333背景 */
+    color: #fff; /* 白文字 */
+    border-color: #333;
+}
+
+/* =========================================
+   レスポンシブ対応
+========================================= */
+
+/* タブレット(768px以下) */
+@media screen and (max-width: 768px) {
+    .slide-caption {
+        bottom: 40px;
+        left: 40px;
+        right: 40px;
+        gap: 15px;
+    }
+    
+    .caption-text {
+        font-size: 16px;
+        padding: 8px 16px;
+    }
+    
+    .caption-link {
+        font-size: 13px;
+        padding: 8px 16px;
+    }
+}
+
+/* モバイル(480px以下) */
+@media screen and (max-width: 480px) {
+    .slide-caption {
+        bottom: 30px;
+        left: 20px;
+        right: 20px;
+        gap: 12px;
+    }
+    
+    .caption-text {
+        font-size: 14px;
+        line-height: 1.6;
+        padding: 8px 16px;
+    }
+    
+    .caption-link {
+        font-size: 12px;
+        padding: 8px 16px;
+        text-align: center;
+        width: auto; /* モバイルでも幅を自動調整 */
+    }
+}

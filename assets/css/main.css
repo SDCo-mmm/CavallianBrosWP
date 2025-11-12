@@ -20,6 +20,7 @@
    ページ（Phase 3で分離）
 ========================================= */
 @import url('pages/home.css');
+@import url('pages/hero-slider-caption.css');
 
 /* ========== Shop（WooCommerce） - Phase 3完了 ========== */
 @import url('pages/shop/shop-woo-overrides.css');  /* 共通スタイル */
