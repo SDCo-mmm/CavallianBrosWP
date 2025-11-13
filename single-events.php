@@ -8,26 +8,43 @@
 get_header();
 ?>
 
-<?php while (have_posts()) : the_post(); ?>
-    <article class="event-single">
+<?php while (have_posts()) : the_post(); 
+    // 終了判定
+    $event_date_start = get_post_meta(get_the_ID(), 'event_date_start', true);
+    $event_date_end = get_post_meta(get_the_ID(), 'event_date_end', true);
+    $event_date = get_post_meta(get_the_ID(), 'event_date', true);
+    
+    $is_valid_date = function($date) {
+        return !empty($date) && $date !== '0000-00-00' && $date !== '0000-00-00 00:00:00';
+    };
+    
+    $is_finished = false;
+    $today = date('Y-m-d');
+    
+    // 終了日がある場合は終了日で判定
+    if ($is_valid_date($event_date_end)) {
+        $is_finished = ($event_date_end < $today);
+    }
+    // 終了日がない場合は開始日で判定
+    elseif ($is_valid_date($event_date_start)) {
+        $is_finished = ($event_date_start < $today);
+    }
+    // 単日イベント
+    elseif ($is_valid_date($event_date)) {
+        $is_finished = ($event_date < $today);
+    }
+?>
+    <article class="event-single <?php echo $is_finished ? 'event-finished' : ''; ?>">
         <div class="container">
             <!-- イベントヘッダー -->
             <header class="entry-header">
+                <?php if ($is_finished) : ?>
+                    <div class="event-finished-badge-single">終了</div>
+                <?php endif; ?>
+                
                 <div class="event-meta-top">
                     <div class="event-date-large">
                         <?php
-                        /* ===== 修正: ヘッダー日付表示（範囲表示対応） ===== */
-                        
-                        // Podsフィールドを取得
-                        $event_date_start = get_post_meta(get_the_ID(), 'event_date_start', true);
-                        $event_date_end = get_post_meta(get_the_ID(), 'event_date_end', true);
-                        $event_date = get_post_meta(get_the_ID(), 'event_date', true);
-                        
-                        // 無効な日付をチェックする関数
-                        $is_valid_date = function($date) {
-                            return !empty($date) && $date !== '0000-00-00' && $date !== '0000-00-00 00:00:00';
-                        };
-                        
                         // 複数日イベント（範囲表示）
                         if ($is_valid_date($event_date_start)) {
                             $date_timestamp = strtotime($event_date_start);
@@ -67,9 +84,6 @@ get_header();
             <div class="event-details">
                 <?php
                 // Podsからイベント情報を取得
-                $event_date = get_post_meta(get_the_ID(), 'event_date', true);
-                $event_date_start = get_post_meta(get_the_ID(), 'event_date_start', true);
-                $event_date_end = get_post_meta(get_the_ID(), 'event_date_end', true);
                 $event_time = get_post_meta(get_the_ID(), 'event_time', true);
                 $event_location = get_post_meta(get_the_ID(), 'event_location', true);
                 $event_price = get_post_meta(get_the_ID(), 'event_price', true);
@@ -82,13 +96,6 @@ get_header();
                             <div class="event-info-item">
                                 <strong>開催日:</strong>
                                 <?php 
-                                /* ===== 修正: 詳細日付表示ロジック（0000-00-00対応） ===== */
-                                
-                                // 無効な日付をチェックする関数
-                                $is_valid_date = function($date) {
-                                    return !empty($date) && $date !== '0000-00-00' && $date !== '0000-00-00 00:00:00';
-                                };
-                                
                                 // 複数日イベント（event_date_start + event_date_end）
                                 if ($is_valid_date($event_date_start)) {
                                     $start_timestamp = strtotime($event_date_start);

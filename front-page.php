@@ -321,41 +321,108 @@ if ($debug_mode && current_user_can('administrator')) {
         
         <!-- イベント情報 -->
         <?php
+        global $wpdb;
+        $today = date('Y-m-d');
+        
         $events = new WP_Query(array(
             'post_type'      => 'events',
-            'posts_per_page' => 3,
+            'posts_per_page' => -1, // 全件取得してPHPでソート
             'meta_query'     => array(
                 'relation' => 'OR',
-                'event_date_start_clause' => array(
-                    'key'     => 'event_date_start',
-                    'value'   => date('Y-m-d'),
-                    'compare' => '>=',
-                    'type'    => 'DATE'
+                // パターン1: 終了日があるイベント → 終了日が今日以降
+                array(
+                    'relation' => 'AND',
+                    array(
+                        'key'     => 'event_date_end',
+                        'value'   => array('', '0000-00-00', '0000-00-00 00:00:00'),
+                        'compare' => 'NOT IN',
+                    ),
+                    array(
+                        'key'     => 'event_date_end',
+                        'value'   => $today,
+                        'compare' => '>=',
+                        'type'    => 'DATE'
+                    ),
                 ),
-                'event_date_clause' => array(
-                    'key'     => 'event_date',
-                    'value'   => date('Y-m-d'),
-                    'compare' => '>=',
-                    'type'    => 'DATE'
-                )
-            ),
-            // 並び替え: event_date_startを優先、なければevent_date
-            'orderby' => array(
-                'event_date_start_clause' => 'ASC',
-                'event_date_clause'       => 'ASC',
+                // パターン2: 終了日がないイベント → 開始日が今日以降
+                array(
+                    'relation' => 'AND',
+                    array(
+                        'key'     => 'event_date_end',
+                        'value'   => array('', '0000-00-00', '0000-00-00 00:00:00'),
+                        'compare' => 'IN',
+                    ),
+                    array(
+                        'key'     => 'event_date_start',
+                        'value'   => $today,
+                        'compare' => '>=',
+                        'type'    => 'DATE'
+                    ),
+                ),
+                // パターン3: 単日イベント → 開催日が今日以降
+                array(
+                    'relation' => 'AND',
+                    array(
+                        'key'     => 'event_date_start',
+                        'value'   => array('', '0000-00-00', '0000-00-00 00:00:00'),
+                        'compare' => 'IN',
+                    ),
+                    array(
+                        'key'     => 'event_date',
+                        'value'   => $today,
+                        'compare' => '>=',
+                        'type'    => 'DATE'
+                    ),
+                ),
             ),
         ));
         
-        if ($events->have_posts()) : ?>
+        // 並び替え用にカスタムソート
+        if ($events->have_posts()) {
+            $sorted_events = array();
+            while ($events->have_posts()) {
+                $events->the_post();
+                $event_date_start = get_post_meta(get_the_ID(), 'event_date_start', true);
+                $event_date = get_post_meta(get_the_ID(), 'event_date', true);
+                
+                $is_valid_date = function($date) {
+                    return !empty($date) && $date !== '0000-00-00' && $date !== '0000-00-00 00:00:00';
+                };
+                
+                $sort_date = '';
+                if ($is_valid_date($event_date_start)) {
+                    $sort_date = $event_date_start;
+                } elseif ($is_valid_date($event_date)) {
+                    $sort_date = $event_date;
+                }
+                
+                $sorted_events[] = array(
+                    'post' => get_post(),
+                    'sort_date' => $sort_date
+                );
+            }
+            wp_reset_postdata();
+            
+            // 日付順にソート
+            usort($sorted_events, function($a, $b) {
+                return strcmp($a['sort_date'], $b['sort_date']);
+            });
+            
+            // 最初の3件のみ
+            $sorted_events = array_slice($sorted_events, 0, 3);
+        ?>
             <div class="upcoming-events">
                 <h4 class="events-title">UPCOMING EVENTS!</h4>
                 <div class="events-grid">
-                    <?php while ($events->have_posts()) : $events->the_post(); ?>
+                    <?php foreach ($sorted_events as $event_data) : 
+                        $event_post = $event_data['post'];
+                        setup_postdata($event_post);
+                    ?>
                         <div class="event-item">
-                            <?php if (has_post_thumbnail()) : ?>
+                            <?php if (has_post_thumbnail($event_post->ID)) : ?>
                                 <div class="event-item-image">
-                                    <a href="<?php the_permalink(); ?>">
-                                        <?php the_post_thumbnail('medium'); ?>
+                                    <a href="<?php echo get_permalink($event_post->ID); ?>">
+                                        <?php echo get_the_post_thumbnail($event_post->ID, 'medium'); ?>
                                     </a>
                                 </div>
                             <?php endif; ?>
@@ -363,29 +430,22 @@ if ($debug_mode && current_user_can('administrator')) {
                             <div class="event-item-content">
                                 <div class="event-date">
                                     <?php
-                                    /* ===== 修正: トップページの日付表示（0000-00-00対応） ===== */
+                                    $event_date_start = get_post_meta($event_post->ID, 'event_date_start', true);
+                                    $event_date_end = get_post_meta($event_post->ID, 'event_date_end', true);
+                                    $event_date = get_post_meta($event_post->ID, 'event_date', true);
                                     
-                                    // Podsフィールドを取得
-                                    $event_date_start = get_post_meta(get_the_ID(), 'event_date_start', true);
-                                    $event_date_end = get_post_meta(get_the_ID(), 'event_date_end', true);
-                                    $event_date = get_post_meta(get_the_ID(), 'event_date', true);
-                                    
-                                    // 無効な日付をチェックする関数
                                     $is_valid_date = function($date) {
                                         return !empty($date) && $date !== '0000-00-00' && $date !== '0000-00-00 00:00:00';
                                     };
                                     
-                                    // 「開催日:」ラベルを追加
                                     echo '<strong>開催日: </strong>';
                                     
-                                    // 複数日イベント（event_date_start + event_date_end）
                                     if ($is_valid_date($event_date_start)) {
                                         $start_timestamp = strtotime($event_date_start);
                                         
                                         if ($start_timestamp !== false) {
                                             echo date_i18n('Y.m.d', $start_timestamp);
                                             
-                                            // 終了日がある場合は範囲表示
                                             if ($is_valid_date($event_date_end)) {
                                                 $end_timestamp = strtotime($event_date_end);
                                                 if ($end_timestamp !== false) {
@@ -393,9 +453,7 @@ if ($debug_mode && current_user_can('administrator')) {
                                                 }
                                             }
                                         }
-                                    }
-                                    // 単日イベント（event_dateのみ）
-                                    elseif ($is_valid_date($event_date)) {
+                                    } elseif ($is_valid_date($event_date)) {
                                         $date_timestamp = strtotime($event_date);
                                         if ($date_timestamp !== false) {
                                             echo date_i18n('Y.m.d', $date_timestamp);
@@ -404,15 +462,17 @@ if ($debug_mode && current_user_can('administrator')) {
                                     ?>
                                 </div>
                                 <h5 class="event-title">
-                                    <?php the_title(); ?>
+                                    <?php echo get_the_title($event_post->ID); ?>
                                 </h5>
                                 <div class="event-excerpt">
-                                    <?php the_excerpt(); ?>
+                                    <?php echo get_the_excerpt($event_post->ID); ?>
                                 </div>
-                                <a href="<?php the_permalink(); ?>" class="event-item-link">詳細はこちら</a>
+                                <a href="<?php echo get_permalink($event_post->ID); ?>" class="event-item-link">詳細はこちら</a>
                             </div>
                         </div>
-                    <?php endwhile; ?>
+                    <?php endforeach; 
+                    wp_reset_postdata();
+                    ?>
                 </div>
                 <div class="events-more">
                     <a href="<?php echo get_post_type_archive_link('events'); ?>" class="btn-more">
@@ -420,8 +480,11 @@ if ($debug_mode && current_user_can('administrator')) {
                     </a>
                 </div>
             </div>
-            <?php wp_reset_postdata(); ?>
-        <?php endif; ?>
+        <?php } else { ?>
+            <div class="no-upcoming-events">
+                <p>現在、予定されているイベントはありません。</p>
+            </div>
+        <?php } ?>
     </div>
 </section>
 

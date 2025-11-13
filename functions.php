@@ -1125,3 +1125,84 @@ add_filter('woocommerce_product_single_add_to_cart_text', 'custom_add_to_cart_te
 function custom_add_to_cart_text() {
     return 'ADD TO CART';
 }
+
+// ========================================
+// 過去のイベント用エンドポイント
+// ========================================
+function cavallian_past_events_endpoint() {
+    add_rewrite_endpoint('year', EP_PAGES);
+}
+add_action('init', 'cavallian_past_events_endpoint');
+
+function cavallian_past_events_template($template) {
+    global $wp_query;
+    
+    if (is_page('events-past')) {
+        $new_template = locate_template(array('archive-events-past.php'));
+        if ($new_template) {
+            return $new_template;
+        }
+    }
+    
+    return $template;
+}
+add_filter('template_include', 'cavallian_past_events_template');
+
+// ========================================
+// イベント一覧ページで終了イベントを除外
+// ========================================
+function cavallian_exclude_past_events($query) {
+    if (!is_admin() && $query->is_main_query() && is_post_type_archive('events') && !get_query_var('past_events')) {
+        $today = date('Y-m-d');
+        
+        $query->set('meta_query', array(
+            'relation' => 'OR',
+            // パターン1: 終了日があるイベント → 終了日が今日以降
+            array(
+                'relation' => 'AND',
+                array(
+                    'key'     => 'event_date_end',
+                    'value'   => array('', '0000-00-00', '0000-00-00 00:00:00'),
+                    'compare' => 'NOT IN',
+                ),
+                array(
+                    'key'     => 'event_date_end',
+                    'value'   => $today,
+                    'compare' => '>=',
+                    'type'    => 'DATE'
+                ),
+            ),
+            // パターン2: 終了日がないイベント → 開始日が今日以降
+            array(
+                'relation' => 'AND',
+                array(
+                    'key'     => 'event_date_end',
+                    'value'   => array('', '0000-00-00', '0000-00-00 00:00:00'),
+                    'compare' => 'IN',
+                ),
+                array(
+                    'key'     => 'event_date_start',
+                    'value'   => $today,
+                    'compare' => '>=',
+                    'type'    => 'DATE'
+                ),
+            ),
+            // パターン3: 単日イベント → 開催日が今日以降
+            array(
+                'relation' => 'AND',
+                array(
+                    'key'     => 'event_date_start',
+                    'value'   => array('', '0000-00-00', '0000-00-00 00:00:00'),
+                    'compare' => 'IN',
+                ),
+                array(
+                    'key'     => 'event_date',
+                    'value'   => $today,
+                    'compare' => '>=',
+                    'type'    => 'DATE'
+                ),
+            ),
+        ));
+    }
+}
+add_action('pre_get_posts', 'cavallian_exclude_past_events');

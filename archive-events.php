@@ -31,8 +31,6 @@ get_header();
                         <div class="event-card-content">
                             <div class="event-card-date">
                                 <?php
-                                /* ===== 修正: 一覧ページの日付表示（0000-00-00対応） ===== */
-                                
                                 // Podsフィールドを取得
                                 $event_date_start = get_post_meta(get_the_ID(), 'event_date_start', true);
                                 $event_date_end = get_post_meta(get_the_ID(), 'event_date_end', true);
@@ -93,6 +91,13 @@ get_header();
                 'next_text' => __('次へ', 'cavallian-bros'),
             ));
             ?>
+            
+            <!-- 過去のイベントボタン -->
+            <div class="past-events-button">
+                <a href="<?php echo home_url('/events-past/'); ?>" class="btn-past-events">
+                    過去のイベント
+                </a>
+            </div>
             
         <?php else : ?>
             <div class="no-events">
