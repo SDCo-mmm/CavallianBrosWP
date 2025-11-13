@@ -59,6 +59,7 @@
     height: 240px;
     overflow: hidden;
     background-color: #f5f5f5;
+    position: relative;
 }
 
 .event-card-image img {
@@ -114,6 +115,131 @@
 .event-card-link:hover {
     color: #8f601e;
     opacity: 1;
+}
+
+/* =========================================
+   終了イベントのスタイル
+========================================= */
+
+/* 終了バッジ（一覧ページ） */
+.event-finished-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: #333;
+    color: #fff;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    z-index: 10;
+    border-radius: 0;
+}
+
+/* 終了バッジ（詳細ページ） */
+.event-finished-badge-single {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+    border-radius: 0;
+}
+
+/* =========================================
+   過去のイベントボタン
+========================================= */
+.past-events-button {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid #eee;
+}
+
+.btn-past-events {
+    display: inline-block;
+    padding: 15px 50px;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #333;
+    border-radius: 0;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-past-events:hover {
+    background-color: #333;
+    color: #fff;
+    opacity: 1;
+}
+
+/* =========================================
+   過去のイベント一覧ページ
+========================================= */
+.past-events-archive {
+    padding: 60px 0;
+}
+
+/* 年度フィルター */
+.year-filter {
+    text-align: center;
+    margin-bottom: 50px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.year-filter label {
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: #333;
+    margin-right: 15px;
+}
+
+.year-filter select {
+    padding: 10px 40px 10px 20px;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+    border: 1px solid #333;
+    border-radius: 0;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    transition: all 0.3s ease;
+}
+
+.year-filter select:hover {
+    border-color: #8f601e;
+}
+
+.year-filter select:focus {
+    outline: none;
+    border-color: #8f601e;
+}
+
+.events-year-section {
+    margin-bottom: 80px;
+}
+
+.events-year-title {
+    font-family: 'Questrial', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: #333;
+    margin-bottom: 40px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #333;
 }
 
 /* =========================================
@@ -340,6 +466,11 @@
     .event-info-box {
         padding: 25px 0;
     }
+    
+    /* 過去のイベント */
+    .events-year-title {
+        font-size: 28px;
+    }
 }
 
 /* 小画面（480px以下） */
@@ -366,5 +497,10 @@
     
     .event-featured-image img {
         max-height: 250px;
+    }
+    
+    /* 過去のイベント */
+    .events-year-title {
+        font-size: 24px;
     }
 }
