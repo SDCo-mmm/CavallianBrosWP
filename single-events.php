@@ -169,6 +169,95 @@ get_header();
                 <?php the_content(); ?>
             </div>
             
+            <!-- 関連商品セクション -->
+            <?php
+            // Pods関数を使って正しく取得
+            $event_pod = pods('events', get_the_ID());
+            $related_events = $event_pod->field('related_events');
+            
+            // デバッグ用（管理者のみ）
+            if (current_user_can('administrator')) {
+                echo '<!-- Related Events Debug (Pods) -->';
+                echo '<!-- Raw data: ' . print_r($related_events, true) . ' -->';
+                echo '<!-- Is array: ' . (is_array($related_events) ? 'Yes' : 'No') . ' -->';
+                if (is_array($related_events)) {
+                    echo '<!-- Count: ' . count($related_events) . ' -->';
+                }
+            }
+            
+            if (!empty($related_events)) :
+                // 商品IDの配列を作成
+                $product_ids = array();
+                
+                if (is_array($related_events)) {
+                    foreach ($related_events as $product) {
+                        if (isset($product['ID'])) {
+                            $product_ids[] = $product['ID'];
+                        } elseif (is_numeric($product)) {
+                            $product_ids[] = $product;
+                        }
+                    }
+                } elseif (is_numeric($related_events)) {
+                    $product_ids[] = $related_events;
+                }
+                
+                // デバッグ用
+                if (current_user_can('administrator')) {
+                    echo '<!-- Product IDs: ' . implode(', ', $product_ids) . ' -->';
+                }
+                
+                if (!empty($product_ids)) :
+                    // 商品クエリ
+                    $related_products_query = new WP_Query(array(
+                        'post_type' => 'product',
+                        'post__in' => $product_ids,
+                        'posts_per_page' => -1,
+                        'orderby' => 'post__in', // 選択した順番を維持
+                    ));
+                    
+                    // デバッグ用
+                    if (current_user_can('administrator')) {
+                        echo '<!-- Query found: ' . $related_products_query->found_posts . ' posts -->';
+                    }
+                    
+                    if ($related_products_query->have_posts()) :
+            ?>
+                <div class="related-events-section">
+                    <h2 class="related-events-title">RELATED EVENTS</h2>
+                    
+                    <div class="related-events-grid">
+                        <?php while ($related_products_query->have_posts()) : $related_products_query->the_post(); 
+                            global $product;
+                        ?>
+                            <div class="related-event-item">
+                                <a href="<?php echo get_permalink(); ?>" class="related-event-link">
+                                    <div class="related-event-image">
+                                        <?php if (has_post_thumbnail()) : ?>
+                                            <?php the_post_thumbnail('woocommerce_thumbnail'); ?>
+                                        <?php else : ?>
+                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/placeholder.png" alt="<?php the_title(); ?>">
+                                        <?php endif; ?>
+                                    </div>
+                                    
+                                    <div class="related-event-info">
+                                        <h3 class="related-event-name"><?php the_title(); ?></h3>
+                                        <div class="related-event-price">
+                                            <?php echo $product->get_price_html(); ?>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        <?php endwhile; 
+                        wp_reset_postdata();
+                        ?>
+                    </div>
+                </div>
+            <?php 
+                    endif; // $related_products_query->have_posts()
+                endif; // !empty($product_ids)
+            endif; // !empty($related_events)
+            ?>
+            
             <!-- イベント一覧に戻るリンク -->
             <div class="event-navigation">
                 <a href="<?php echo get_post_type_archive_link('events'); ?>" class="btn-back">

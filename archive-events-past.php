@@ -15,11 +15,19 @@ $wp_query->is_404 = false;
 
 $today = date('Y-m-d');
 $current_year = isset($_GET['event_year']) ? intval($_GET['event_year']) : '';
-$paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
+
+// WordPress標準のページ番号取得（重要！）
+$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+// クエリパラメータからも取得を試みる
+if (!$paged || $paged == 1) {
+    $paged = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
+}
 
 // デバッグ用
 if (current_user_can('administrator')) {
     echo '<!-- GET event_year: ' . (isset($_GET['event_year']) ? $_GET['event_year'] : 'なし') . ' -->';
+    echo '<!-- GET paged: ' . (isset($_GET['paged']) ? $_GET['paged'] : 'なし') . ' -->';
+    echo '<!-- get_query_var paged: ' . get_query_var('paged') . ' -->';
     echo '<!-- current_year: ' . $current_year . ' -->';
     echo '<!-- paged: ' . $paged . ' -->';
 }
@@ -116,6 +124,9 @@ if (current_user_can('administrator')) {
     echo '<!-- 現在の年度: ' . $current_year . ' -->';
     echo '<!-- 利用可能な年度: ' . implode(', ', array_keys($events_by_year)) . ' -->';
     echo '<!-- 該当イベント数: ' . count($filtered_events) . ' -->';
+    echo '<!-- 合計イベント数: ' . $total_events . ' -->';
+    echo '<!-- 合計ページ数: ' . $total_pages . ' -->';
+    echo '<!-- 現在のページ: ' . $paged . ' -->';
     if (!empty($events_by_year)) {
         foreach ($events_by_year as $year => $events) {
             echo '<!-- ' . $year . '年: ' . count($events) . '件 -->';
@@ -136,9 +147,9 @@ if (current_user_can('administrator')) {
         <!-- 年度セレクトボックス -->
         <?php if (!empty($available_years)) : ?>
             <div class="year-filter">
-                <form method="get" action="<?php echo home_url('/events-past/'); ?>">
+                <form method="get" action="<?php echo home_url('/events-past/'); ?>" id="year-filter-form">
                     <label for="year-select">年度を選択:</label>
-                    <select id="year-select" name="event_year" onchange="this.form.submit();">
+                    <select id="year-select" name="event_year">
                         <?php foreach ($available_years as $year) : 
                             $selected = ($year == $current_year) ? 'selected' : '';
                         ?>
@@ -229,13 +240,14 @@ if (current_user_can('administrator')) {
                 <?php if ($total_pages > 1) : ?>
                     <div class="pagination">
                         <?php
-                        $base_url = add_query_arg('event_year', $current_year, home_url('/events-past/'));
-                        
                         echo '<div class="nav-links">';
                         
                         // 前へ
                         if ($paged > 1) {
-                            $prev_url = add_query_arg('paged', ($paged - 1), $base_url);
+                            $prev_url = add_query_arg(array(
+                                'event_year' => $current_year,
+                                'paged' => ($paged - 1)
+                            ), home_url('/events-past/'));
                             echo '<a href="' . esc_url($prev_url) . '" class="page-numbers">前へ</a>';
                         }
                         
@@ -244,14 +256,20 @@ if (current_user_can('administrator')) {
                             if ($i == $paged) {
                                 echo '<span class="page-numbers current">' . $i . '</span>';
                             } else {
-                                $page_url = add_query_arg('paged', $i, $base_url);
+                                $page_url = add_query_arg(array(
+                                    'event_year' => $current_year,
+                                    'paged' => $i
+                                ), home_url('/events-past/'));
                                 echo '<a href="' . esc_url($page_url) . '" class="page-numbers">' . $i . '</a>';
                             }
                         }
                         
                         // 次へ
                         if ($paged < $total_pages) {
-                            $next_url = add_query_arg('paged', ($paged + 1), $base_url);
+                            $next_url = add_query_arg(array(
+                                'event_year' => $current_year,
+                                'paged' => ($paged + 1)
+                            ), home_url('/events-past/'));
                             echo '<a href="' . esc_url($next_url) . '" class="page-numbers">次へ</a>';
                         }
                         
@@ -277,5 +295,19 @@ if (current_user_can('administrator')) {
         <?php endif; ?>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var yearSelect = document.getElementById('year-select');
+    var form = document.getElementById('year-filter-form');
+    
+    if (yearSelect && form) {
+        yearSelect.addEventListener('change', function() {
+            // 年度変更時はpaged=1にリセット
+            form.submit();
+        });
+    }
+});
+</script>
 
 <?php get_footer(); ?>
