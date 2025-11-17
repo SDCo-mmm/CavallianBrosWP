@@ -23,6 +23,19 @@ $twitter = pods_field('page', $home_page_id, 'twitter_url', true);
                 </a>
             </div>
             
+            <!-- フッターナビゲーション -->
+            <nav class="footer-nav">
+                <ul class="footer-nav-list">
+                    <li><a href="<?php echo esc_url(home_url('/shipping')); ?>">配送・送料について</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/returns')); ?>">返品について</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/payment')); ?>">支払い方法について</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/contact')); ?>">お問い合わせ</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/size-guide')); ?>">サイズについて</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/tokutei')); ?>">特定商取引法に基づく表記</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/privacy-policy')); ?>">プライバシーポリシー</a></li>
+                </ul>
+            </nav>
+            
             <div class="footer-social">
                 <?php if ($instagram) : ?>
                     <a href="<?php echo esc_url($instagram); ?>" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
@@ -41,29 +54,6 @@ $twitter = pods_field('page', $home_page_id, 'twitter_url', true);
                         </svg>
                     </a>
                 <?php endif; ?>
-            </div>
-            
-            <div class="footer-nav">
-                <?php
-                wp_nav_menu(array(
-                    'theme_location' => 'footer',
-                    'menu_class'     => 'footer-nav-list',
-                    'container'      => false,
-                    'fallback_cb'    => function() {
-                        ?>
-                        <ul class="footer-nav-list">
-                            <li><a href="<?php echo esc_url(home_url('/company')); ?>">運営者情報</a></li>
-                            <li><a href="<?php echo esc_url(home_url('/privacy-policy')); ?>">プライバシーポリシー</a></li>
-                            <li><a href="<?php echo esc_url(home_url('/terms')); ?>">利用規約</a></li>
-                            <?php if (class_exists('WooCommerce')) : ?>
-                                <li><a href="<?php echo esc_url(home_url('/shipping-info')); ?>">配送について</a></li>
-                                <li><a href="<?php echo esc_url(home_url('/returns')); ?>">返品・交換について</a></li>
-                            <?php endif; ?>
-                        </ul>
-                        <?php
-                    }
-                ));
-                ?>
             </div>
         </div>
         

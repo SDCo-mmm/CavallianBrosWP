@@ -1206,3 +1206,52 @@ function cavallian_exclude_past_events($query) {
     }
 }
 add_action('pre_get_posts', 'cavallian_exclude_past_events');
+
+/**
+ * Contact Form 7 送信後のリダイレクト
+ */
+add_action('wp_footer', 'cavallian_contact_redirect_script');
+function cavallian_contact_redirect_script() {
+    // お問い合わせページのみで実行
+    if (is_page('contact')) {
+        ?>
+        <script type="text/javascript">
+        document.addEventListener('wpcf7mailsent', function(event) {
+            // 送信完了ページへリダイレクト
+            location = '<?php echo esc_url(home_url('/contact-thanks/')); ?>';
+        }, false);
+        </script>
+        <?php
+    }
+}
+
+/**
+ * Contact Form 7 - ユーザーネーム表示のカスタマイズ
+ */
+// 管理者用: 空の場合は【ゲスト】を表示
+add_filter('wpcf7_special_mail_tags', 'custom_username_admin_tag', 10, 3);
+function custom_username_admin_tag($output, $name, $html) {
+    if ($name == 'username-admin') {
+        $submission = WPCF7_Submission::get_instance();
+        if ($submission) {
+            $posted_data = $submission->get_posted_data();
+            $username = isset($posted_data['username']) ? $posted_data['username'] : '';
+            $output = !empty($username) ? $username : '【ゲスト】';
+        }
+    }
+    return $output;
+}
+
+// 顧客用: 空の場合は何も表示しない（改行も含めて）
+add_filter('wpcf7_special_mail_tags', 'custom_username_customer_tag', 10, 3);
+function custom_username_customer_tag($output, $name, $html) {
+    if ($name == 'username-customer') {
+        $submission = WPCF7_Submission::get_instance();
+        if ($submission) {
+            $posted_data = $submission->get_posted_data();
+            $username = isset($posted_data['username']) ? $posted_data['username'] : '';
+            $output = !empty($username) ? "ユーザーネーム: " . $username . " さま\n" : '';
+        }
+    }
+    return $output;
+}
