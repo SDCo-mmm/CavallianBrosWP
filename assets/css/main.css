@@ -34,6 +34,9 @@
 
 @import url('pages/events.css');
 @import url('pages/company.css');
+@import url('pages/contact.css');  /* 問い合わせフォーム */
+@import url('pages/contact-thanks.css');  /* 問い合わせサンキューページ */
+
 
 /* =========================================
    CSS分離プロジェクト完了 + マイページ追加

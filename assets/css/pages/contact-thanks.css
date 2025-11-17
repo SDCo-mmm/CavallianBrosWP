@@ -1,0 +1,228 @@
+/* =========================================
+   Contact Thanks（送信完了）専用スタイル
+========================================= */
+
+/* =========================================
+   ヒーローセクション
+========================================= */
+.contact-thanks-hero {
+    min-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 140px;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    position: relative;
+}
+
+.contact-thanks-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #ddd, transparent);
+}
+
+/* チェックアイコン */
+.thanks-icon {
+    margin-bottom: 30px;
+    animation: scaleIn 0.5s ease-out;
+}
+
+.thanks-icon svg {
+    stroke: #28a745;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* タイトル */
+.contact-thanks-hero h1 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: #333;
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================
+   コンテンツエリア
+========================================= */
+.contact-thanks-content {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 80px 50px 120px;
+    text-align: center;
+}
+
+/* メッセージエリア */
+.thanks-message {
+    margin-bottom: 60px;
+}
+
+.thanks-message p {
+    font-size: 1rem;
+    line-height: 2;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.thanks-message p:last-child {
+    margin-bottom: 0;
+}
+
+/* メインメッセージ */
+.main-message {
+    font-size: 1.3rem !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+    margin-bottom: 40px !important;
+    letter-spacing: 0.05em;
+}
+
+/* ボタンエリア */
+.thanks-actions {
+    margin-top: 50px;
+}
+
+.btn-home {
+    display: inline-block;
+    padding: 18px 60px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans JP', sans-serif;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-home:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    opacity: 1;
+}
+
+.btn-home:active {
+    transform: translateY(0);
+}
+
+/* =========================================
+   レスポンシブデザイン
+========================================= */
+
+/* タブレット（768px以下） */
+@media screen and (max-width: 768px) {
+    .contact-thanks-hero {
+        min-height: 30vh;
+        margin-top: 80px;
+        padding: 40px 20px;
+    }
+
+    .thanks-icon svg {
+        width: 60px;
+        height: 60px;
+    }
+
+    .contact-thanks-hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .contact-thanks-content {
+        padding: 60px 30px 100px;
+    }
+
+    .main-message {
+        font-size: 1.2rem !important;
+    }
+
+    .btn-home {
+        width: 100%;
+        max-width: 300px;
+        padding: 16px 40px;
+    }
+}
+
+/* 小画面（480px以下） */
+@media screen and (max-width: 480px) {
+    .contact-thanks-hero {
+        min-height: 25vh;
+        padding: 30px 20px;
+    }
+
+    .thanks-icon {
+        margin-bottom: 20px;
+    }
+
+    .thanks-icon svg {
+        width: 50px;
+        height: 50px;
+    }
+
+    .contact-thanks-hero h1 {
+        font-size: 1.5rem;
+        letter-spacing: 0.1em;
+    }
+
+    .contact-thanks-content {
+        padding: 40px 20px 80px;
+    }
+
+    .thanks-message p {
+        font-size: 0.95rem;
+        line-height: 1.9;
+    }
+
+    .main-message {
+        font-size: 1.1rem !important;
+        margin-bottom: 30px !important;
+    }
+
+    .btn-home {
+        width: 100%;
+        max-width: 100%;
+        font-size: 1rem;
+    }
+
+    /* 改行表示クラス */
+    .sp-only {
+        display: inline;
+    }
+}
+
+/* PC表示時は改行を無効化 */
+@media screen and (min-width: 481px) {
+    .sp-only {
+        display: none;
+    }
+}
