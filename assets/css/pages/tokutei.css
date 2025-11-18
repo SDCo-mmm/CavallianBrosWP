@@ -1,0 +1,384 @@
+/* =========================================
+   特定商取引法ページ
+========================================= */
+
+.tokutei-page {
+    padding: 220px 0 60px;
+    background-color: #fff;
+}
+
+/* ページヘッダー */
+.tokutei-page .page-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.tokutei-page .page-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.tokutei-page .page-description {
+    font-family: 'Questrial', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: #666;
+}
+
+/* コンテンツエリア */
+.tokutei-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 目次ナビゲーション */
+.tokutei-nav {
+    max-width: 800px;
+    margin: 0 auto 60px;
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.tokutei-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.tokutei-nav ul li {
+    margin: 0;
+}
+
+.tokutei-nav ul li a {
+    display: inline-block;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    color: #333;
+    text-decoration: none;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    transition: color 0.3s ease;
+}
+
+.tokutei-nav ul li a:hover {
+    color: #8f601e;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+/* セクション */
+.tokutei-section {
+    margin-bottom: 80px;
+    scroll-margin-top: 200px; /* アンカーリンクのオフセット */
+}
+
+.tokutei-section:last-child {
+    margin-bottom: 0;
+}
+
+/* 見出し */
+.tokutei-section h2 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #333;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #333;
+}
+
+.tokutei-section h3 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #333;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.tokutei-section h4 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #333;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* 本文 */
+.tokutei-section p {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.tokutei-section p:last-child {
+    margin-bottom: 0;
+}
+
+/* リスト */
+.tokutei-section ul,
+.tokutei-section ol {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
+.tokutei-section ul li {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+    color: #333;
+    padding-left: 1.5em;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.tokutei-section ul li:before {
+    content: "・";
+    position: absolute;
+    left: 0;
+    color: #333;
+}
+
+.tokutei-section ol {
+    counter-reset: list-counter;
+}
+
+.tokutei-section ol li {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+    color: #333;
+    padding-left: 2em;
+    position: relative;
+    margin-bottom: 10px;
+    counter-increment: list-counter;
+}
+
+.tokutei-section ol li:before {
+    content: counter(list-counter) ". ";
+    position: absolute;
+    left: 0;
+    color: #333;
+    font-family: 'Questrial', sans-serif;
+}
+
+/* 定義リスト（特定商取引法情報用） */
+.info-list {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.info-list dt {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #333;
+    margin-bottom: 8px;
+    margin-top: 25px;
+}
+
+.info-list dt:first-child {
+    margin-top: 0;
+}
+
+.info-list dd {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+    color: #333;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+/* 注意ボックス */
+.notice-box {
+    padding: 0;
+    margin: 30px 0;
+    background-color: transparent;
+    border: none;
+}
+
+.notice-box p {
+    margin-bottom: 15px;
+}
+
+.notice-box p:last-child {
+    margin-bottom: 0;
+}
+
+.notice-box h4 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.notice-box ul {
+    margin-bottom: 15px;
+}
+
+.notice-box ul:last-child {
+    margin-bottom: 0;
+}
+
+/* 支払い方法セクション */
+.payment-method {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.payment-method:last-of-type {
+    border-bottom: none;
+}
+
+/* リンク */
+.tokutei-section a {
+    color: #333;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.tokutei-section a:hover {
+    color: #8f601e;
+}
+
+/* =========================================
+   レスポンシブ対応
+========================================= */
+
+/* タブレット（768px以下） */
+@media screen and (max-width: 768px) {
+    .tokutei-page {
+        padding: 120px 0 40px;
+    }
+
+    .tokutei-page .page-header {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+    }
+
+    .tokutei-page .page-title {
+        font-size: 26px;
+    }
+
+    .tokutei-page .page-description {
+        font-size: 13px;
+    }
+
+    .tokutei-nav {
+        padding: 20px;
+        margin-bottom: 40px;
+    }
+
+    .tokutei-nav ul {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .tokutei-nav ul li a {
+        font-size: 14px;
+        padding: 0;
+    }
+
+    .tokutei-section {
+        margin-bottom: 60px;
+        scroll-margin-top: 100px;
+    }
+
+    .tokutei-section h2 {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+
+    .tokutei-section h3 {
+        font-size: 17px;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+
+    .tokutei-section h4 {
+        font-size: 15px;
+    }
+
+    .tokutei-section p,
+    .tokutei-section ul li,
+    .tokutei-section ol li,
+    .info-list dd {
+        font-size: 14px;
+    }
+
+    .notice-box {
+        padding: 0;
+        margin: 25px 0;
+    }
+}
+
+/* 小画面（480px以下） */
+@media screen and (max-width: 480px) {
+    .tokutei-page {
+        padding: 120px 0 30px;
+    }
+
+    .tokutei-page .page-header {
+        margin-bottom: 25px;
+    }
+
+    .tokutei-page .page-title {
+        font-size: 22px;
+    }
+
+    .tokutei-nav {
+        padding: 15px;
+    }
+
+    .tokutei-section {
+        margin-bottom: 50px;
+    }
+
+    .tokutei-section h2 {
+        font-size: 20px;
+    }
+
+    .tokutei-section h3 {
+        font-size: 16px;
+    }
+
+    .notice-box {
+        padding: 0;
+    }
+}

@@ -36,6 +36,9 @@
 @import url('pages/company.css');
 @import url('pages/contact.css');  /* 問い合わせフォーム */
 @import url('pages/contact-thanks.css');  /* 問い合わせサンキューページ */
+@import url('pages/privacy-policy.css');  /* プライバシーポリシー */
+@import url('pages/tokutei.css');  /* 特定商取引法 */
+@import url('pages/size-guide.css');  /* サイズガイド */
 
 
 /* =========================================

@@ -1,5 +1,5 @@
 /* =========================================
-   フッター（更新版）
+   フッター（横一列4列レイアウト版）
 ========================================= */
 .footer {
     background-color: #222;
@@ -8,35 +8,32 @@
 }
 
 .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 160px auto auto auto;
+    align-items: start;
     margin-bottom: 40px;
-    gap: 40px;
+    gap: 60px;
 }
 
-.footer-logo {
-    width: 160px;
-    flex-shrink: 0;
+/* ロゴ */
+.footer-logo a {
+    display: block;
 }
 
 .footer-logo img {
     width: 100%;
     height: auto;
+    display: block;
 }
 
 /* フッターナビゲーション */
-.footer-nav {
-    flex: 1;
-}
-
 .footer-nav-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px 30px;
     list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .footer-nav-list li {
@@ -50,8 +47,8 @@
     transition: color 0.3s ease;
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 300;
-    display: block;
-    padding: 5px 0;
+    display: inline-block;
+    padding: 2px 0;
 }
 
 .footer-nav-list a:hover {
@@ -62,8 +59,9 @@
 /* SNSアイコン */
 .footer-social {
     display: flex;
+    flex-direction: column;
     gap: 20px;
-    flex-shrink: 0;
+    justify-self: end;
 }
 
 .footer-social a {
@@ -104,8 +102,8 @@
 /* タブレット（768px以下） */
 @media screen and (max-width: 768px) {
     .footer-content {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: 1fr;
+        justify-items: center;
         gap: 40px;
     }
 
@@ -113,18 +111,15 @@
         width: 140px;
     }
 
-    .footer-nav {
-        width: 100%;
-    }
-
     .footer-nav-list {
-        grid-template-columns: 1fr;
+        align-items: center;
         text-align: center;
-        gap: 12px;
+        gap: 10px;
     }
 
     .footer-social {
-        justify-content: center;
+        flex-direction: row;
+        justify-self: center;
     }
 }
 
@@ -140,6 +135,10 @@
 
     .footer-logo {
         width: 120px;
+    }
+
+    .footer-nav-list {
+        gap: 8px;
     }
 
     .footer-nav-list a {

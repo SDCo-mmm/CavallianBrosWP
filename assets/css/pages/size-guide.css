@@ -1,0 +1,301 @@
+/* =========================================
+   サイズガイドページ
+========================================= */
+
+.size-guide-page {
+    padding: 220px 0 60px;
+    background-color: #fff;
+}
+
+/* ページヘッダー */
+.size-guide-page .page-header {
+    text-align: center;
+    margin-bottom: 60px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.size-guide-page .page-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.size-guide-page .page-description {
+    font-family: 'Questrial', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: #666;
+}
+
+/* コンテンツエリア */
+.size-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* セクション */
+.size-section {
+    margin-bottom: 60px;
+}
+
+.size-section:last-child {
+    margin-bottom: 0;
+}
+
+/* 見出し */
+.size-section h2 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #333;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #333;
+}
+
+/* 注意テキスト */
+.notice-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* サイズイラスト */
+.size-illustration {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.size-illustration img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* サイズリスト */
+.size-list {
+    margin: 40px 0;
+}
+
+.size-list dt {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: #333;
+    margin-bottom: 10px;
+    margin-top: 25px;
+}
+
+.size-list dt:first-child {
+    margin-top: 0;
+}
+
+.size-list .size-label {
+    font-family: 'Questrial', sans-serif;
+    font-weight: 600;
+    color: #333;
+}
+
+.size-list dd {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+    color: #666;
+    margin-left: 0;
+    margin-bottom: 0;
+    padding-left: 20px;
+}
+
+/* 注意事項リスト */
+.caution-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.caution-list li {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+    color: #333;
+    padding-left: 1.5em;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.caution-list li:before {
+    content: "・";
+    position: absolute;
+    left: 0;
+    color: #333;
+}
+
+.caution-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* 情報ボックス */
+.info-box {
+    padding: 0;
+    margin-top: 40px;
+    background-color: transparent;
+    border: none;
+}
+
+.info-box p {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+    color: #333;
+    margin-bottom: 0;
+}
+
+.info-box strong {
+    font-weight: 500;
+}
+
+/* リンク */
+.size-section a {
+    color: #333;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.size-section a:hover {
+    color: #8f601e;
+}
+
+/* =========================================
+   レスポンシブ対応
+========================================= */
+
+/* タブレット（768px以下） */
+@media screen and (max-width: 768px) {
+    .size-guide-page {
+        padding: 120px 0 40px;
+    }
+
+    .size-guide-page .page-header {
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+    }
+
+    .size-guide-page .page-title {
+        font-size: 26px;
+    }
+
+    .size-guide-page .page-description {
+        font-size: 13px;
+    }
+
+    .size-section {
+        margin-bottom: 50px;
+    }
+
+    .size-section h2 {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+
+    .notice-text {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .size-illustration {
+        margin: 30px 0;
+    }
+
+    .size-list {
+        margin: 30px 0;
+    }
+
+    .size-list dt {
+        font-size: 15px;
+        margin-top: 20px;
+    }
+
+    .size-list dd {
+        font-size: 14px;
+        padding-left: 15px;
+    }
+
+    .caution-list li {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .info-box {
+        padding: 0;
+        margin-top: 30px;
+    }
+
+    .info-box p {
+        font-size: 14px;
+    }
+}
+
+/* 小画面（480px以下） */
+@media screen and (max-width: 480px) {
+    .size-guide-page {
+        padding: 120px 0 30px;
+    }
+
+    .size-guide-page .page-header {
+        margin-bottom: 30px;
+    }
+
+    .size-guide-page .page-title {
+        font-size: 22px;
+    }
+
+    .size-section {
+        margin-bottom: 40px;
+    }
+
+    .size-section h2 {
+        font-size: 20px;
+    }
+
+    .notice-text {
+        font-size: 13px;
+    }
+
+    .size-list dt {
+        font-size: 14px;
+    }
+
+    .size-list dd {
+        font-size: 13px;
+    }
+
+    .caution-list li {
+        font-size: 13px;
+    }
+
+    .info-box {
+        padding: 0;
+    }
+
+    .info-box p {
+        font-size: 13px;
+    }
+}
