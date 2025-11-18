@@ -17,25 +17,33 @@ $twitter = pods_field('page', $home_page_id, 'twitter_url', true);
 <footer class="footer">
     <div class="container">
         <div class="footer-content">
+            <!-- ロゴ -->
             <div class="footer-logo">
                 <a href="<?php echo esc_url(home_url('/')); ?>">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-white.svg" alt="<?php bloginfo('name'); ?>">
                 </a>
             </div>
             
-            <!-- フッターナビゲーション -->
-            <nav class="footer-nav">
+            <!-- ナビゲーション1 -->
+            <nav class="footer-nav footer-nav-1">
                 <ul class="footer-nav-list">
-                    <li><a href="<?php echo esc_url(home_url('/shipping')); ?>">配送・送料について</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/returns')); ?>">返品について</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/payment')); ?>">支払い方法について</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/contact')); ?>">お問い合わせ</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/tokutei#shipping')); ?>">配送・送料について</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/tokutei#returns')); ?>">返品について</a></li>
+                    <li><a href="<?php echo esc_url(home_url('/tokutei#payment')); ?>">支払い方法について</a></li>
                     <li><a href="<?php echo esc_url(home_url('/size-guide')); ?>">サイズについて</a></li>
+                </ul>
+            </nav>
+            
+            <!-- ナビゲーション2 -->
+            <nav class="footer-nav footer-nav-2">
+                <ul class="footer-nav-list">
+                    <li><a href="<?php echo esc_url(home_url('/contact')); ?>">お問い合わせ</a></li>
                     <li><a href="<?php echo esc_url(home_url('/tokutei')); ?>">特定商取引法に基づく表記</a></li>
                     <li><a href="<?php echo esc_url(home_url('/privacy-policy')); ?>">プライバシーポリシー</a></li>
                 </ul>
             </nav>
             
+            <!-- SNSアイコン -->
             <div class="footer-social">
                 <?php if ($instagram) : ?>
                     <a href="<?php echo esc_url($instagram); ?>" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
