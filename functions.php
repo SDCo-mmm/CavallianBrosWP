@@ -1297,3 +1297,18 @@ function custom_auto_hyphen_postal_code_script() {
     </script>
     <?php
 }
+
+// メールに追加CSSを挿入して2つ目以降の銀行口座詳細を非表示
+add_filter('woocommerce_email_styles', 'hide_duplicate_bank_details_css');
+function hide_duplicate_bank_details_css($css) {
+    $css .= '
+        /* 2つ目以降の銀行口座詳細を非表示 */
+        .order_details.bankjp_details ~ .order_details.bankjp_details {
+            display: none !important;
+        }
+        h2 + .order_details.bankjp_details ~ h2 {
+            display: none !important;
+        }
+    ';
+    return $css;
+}
