@@ -1,0 +1,517 @@
+/* =========================================
+   注文完了ページ（Order Received）
+========================================= */
+
+/* ページ全体 */
+.woocommerce-order-received {
+    padding: 0;
+}
+
+/* コンテンツエリアのpadding調整 */
+.woocommerce-order-received .entry-content {
+    padding: 50px 20px 80px !important;
+}
+
+/* タイトル */
+.woocommerce-order-received .entry-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #333;
+    margin-bottom: 30px;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+/* サンクスメッセージ */
+.woocommerce-order-received .woocommerce-notice--success {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin-bottom: 40px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #666;
+}
+
+.woocommerce-order-received .woocommerce-notice--success::before {
+    display: none;
+}
+
+/* 注文情報ブロック */
+.woocommerce-order-overview {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin-bottom: 60px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.woocommerce-order-overview li {
+    padding: 20px 0;
+    border-right: 1px solid #e5e5e5;
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.woocommerce-order-overview li:last-child {
+    border-right: none;
+}
+
+.woocommerce-order-overview li strong {
+    display: block;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: #999;
+    margin-bottom: 8px;
+}
+
+/* 値のフォントサイズ */
+.woocommerce-order-overview li span,
+.woocommerce-order-overview li time {
+    display: block;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: #333;
+}
+
+/* 通貨記号と数字を同じ行に */
+.woocommerce-order-overview li bdi {
+    display: inline !important;
+    white-space: nowrap;
+    font-size: 15px !important;
+}
+
+.woocommerce-order-overview li .woocommerce-Price-amount {
+    display: inline !important;
+    white-space: nowrap;
+    font-size: 15px !important;
+}
+
+.woocommerce-order-overview li .woocommerce-Price-currencySymbol {
+    display: inline !important;
+    font-size: 15px !important;
+}
+
+/* 銀行口座詳細 */
+.woocommerce-order-received .woocommerce-bacs-bank-details,
+.woocommerce-order-received .order_details.bankjp_details {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin-bottom: 60px !important;
+}
+
+/* タイトル */
+.woocommerce-order-received .woocommerce-bacs-bank-details h2,
+.woocommerce-order-received h2 + .order_details.bankjp_details {
+    margin-top: 0;
+}
+
+/* h2の前の兄弟要素を探して、h2自体のスタイルを設定 */
+.woocommerce-order-received .woocommerce-order + h2,
+.woocommerce-order-received h2:has(+ .order_details.bankjp_details) {
+    font-family: 'Noto Sans JP', sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.08em !important;
+    color: #333 !important;
+    margin-bottom: 20px !important;
+}
+
+/* ulのスタイル */
+.woocommerce-order-received .woocommerce-bacs-bank-details ul,
+.woocommerce-order-received .order_details.bankjp_details {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 0 60px 0 !important;
+    border-top: 1px solid #e5e5e5 !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+}
+
+/* li全体 */
+.woocommerce-order-received .woocommerce-bacs-bank-details li,
+.woocommerce-order-received .order_details.bankjp_details li {
+    font-family: 'Noto Sans JP', sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 300 !important;
+    line-height: 1.8 !important;
+    color: #333 !important;
+    padding: 15px 0 !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    display: block !important;
+}
+
+.woocommerce-order-received .woocommerce-bacs-bank-details li:last-child,
+.woocommerce-order-received .order_details.bankjp_details li:last-child {
+    border-bottom: none !important;
+}
+
+/* li内のstrongタグ - 15pxに統一 */
+.woocommerce-order-received .woocommerce-bacs-bank-details li strong,
+.woocommerce-order-received .order_details.bankjp_details li strong,
+.woocommerce-order-received .order_details.bankjp_details strong {
+    display: inline !important;
+    color: #333 !important;
+    font-weight: 300 !important;
+    font-size: 15px !important;
+    margin: 0 !important;
+    letter-spacing: 0 !important;
+    line-height: 1.8 !important;
+}
+
+/* 最初のstrong（銀行名）の前に「銀行名：」を追加 */
+.woocommerce-order-received .order_details.bankjp_details li:first-child strong:first-of-type::before {
+    content: "銀行名：";
+    display: inline;
+    color: #666;
+    font-weight: 300;
+}
+
+/* brタグの後の余白調整 */
+.woocommerce-order-received .order_details.bankjp_details li br {
+    display: block;
+    content: "";
+    margin: 4px 0;
+}
+
+/* 「口座番号: 」「口座名義: 」のテキスト */
+.woocommerce-order-received .order_details.bankjp_details li {
+    font-size: 15px !important;
+    font-weight: 300 !important;
+}
+
+/* インラインstyle属性を上書き */
+.woocommerce-order-received .order_details.bankjp_details[style] {
+    margin-bottom: 60px !important;
+}
+
+/* 注文詳細セクション */
+.woocommerce-order-details {
+    margin-bottom: 60px;
+}
+
+.woocommerce-order-details h2 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 注文詳細テーブル */
+.woocommerce-table--order-details {
+    width: 100%;
+    border: none;
+    margin-bottom: 0;
+}
+
+/* 商品セクション（thead + tbody） */
+.woocommerce-table--order-details thead {
+    border: 1px solid #333;
+}
+
+.woocommerce-table--order-details thead th {
+    background-color: transparent;
+    padding: 15px 20px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: #333;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+/* 「合計」を「金額」に変更 */
+.woocommerce-table--order-details thead th:last-child {
+    text-align: right;
+    font-size: 0;
+}
+
+.woocommerce-table--order-details thead th:last-child::after {
+    content: "金額";
+    font-size: 15px;
+}
+
+/* 商品行（tbody） */
+.woocommerce-table--order-details tbody {
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.woocommerce-table--order-details tbody td {
+    padding: 20px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: #333;
+    border: none;
+    vertical-align: middle;
+}
+
+.woocommerce-table--order-details tbody td.product-name {
+    text-align: left;
+}
+
+.woocommerce-table--order-details tbody td.product-total {
+    text-align: right;
+    font-size: 15px;
+}
+
+/* tbody と tfoot の間に余白 */
+.woocommerce-table--order-details tfoot {
+    display: table-footer-group;
+    width: 100%;
+}
+
+/* 小計・送料・合計行（tfoot） */
+.woocommerce-table--order-details tfoot tr {
+    display: table-row;
+}
+
+.woocommerce-table--order-details tfoot th,
+.woocommerce-table--order-details tfoot td {
+    padding: 15px 20px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: #333;
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.woocommerce-table--order-details tfoot th {
+    text-align: left;
+}
+
+.woocommerce-table--order-details tfoot td {
+    text-align: right;
+}
+
+.woocommerce-table--order-details tfoot tr:last-child th,
+.woocommerce-table--order-details tfoot tr:last-child td {
+    border-bottom: none;
+}
+
+/* 合計金額行 */
+.woocommerce-table--order-details tfoot .order-total th,
+.woocommerce-table--order-details tfoot .order-total td {
+    font-size: 15px;
+    font-weight: 400;
+    color: #333;
+}
+
+/* 商品名リンク */
+.woocommerce-table--order-details .product-name a {
+    color: #333;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.woocommerce-table--order-details .product-name a:hover {
+    opacity: 0.7;
+}
+
+/* 顧客情報セクション */
+.woocommerce-customer-details {
+    margin-top: 60px;
+}
+
+.woocommerce-customer-details h2 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 請求先・お届け先 */
+.woocommerce-columns--addresses {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.woocommerce-column--billing-address,
+.woocommerce-column--shipping-address {
+    padding: 0;
+}
+
+.woocommerce-column--billing-address h2,
+.woocommerce-column--shipping-address h2 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.woocommerce-column--billing-address address,
+.woocommerce-column--shipping-address address {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 2;
+    color: #666;
+    font-style: normal;
+}
+
+/* =========================================
+   レスポンシブ対応
+========================================= */
+
+@media (max-width: 768px) {
+    .woocommerce-order-received {
+        padding: 40px 0;
+    }
+
+    .woocommerce-order-received .entry-title {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    /* 注文情報ブロック：縦並び */
+    .woocommerce-order-overview {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .woocommerce-order-overview li {
+        border-right: none;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 15px;
+    }
+
+    .woocommerce-order-overview li:last-child {
+        border-bottom: none;
+    }
+
+    /* 銀行口座詳細 */
+    .woocommerce-order-received .woocommerce-bacs-bank-details {
+        padding: 0;
+        margin-bottom: 40px;
+    }
+
+    .woocommerce-order-received .woocommerce-bacs-bank-details h2 {
+        font-size: 18px;
+    }
+
+    /* テーブル - モバイル対応 */
+    .woocommerce-table--order-details {
+        border: none;
+    }
+    
+    .woocommerce-table--order-details thead {
+        display: none;
+    }
+
+    /* 商品行 */
+    .woocommerce-table--order-details tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        padding: 15px;
+        border: 1px solid #f0f0f0;
+        background-color: #fff;
+    }
+
+    .woocommerce-table--order-details tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left !important;
+        padding: 8px 0;
+        border-bottom: 1px solid #f5f5f5;
+    }
+
+    .woocommerce-table--order-details tbody td:last-child {
+        border-bottom: none;
+    }
+
+    .woocommerce-table--order-details tbody td::before {
+        content: attr(data-title);
+        font-weight: 400;
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .woocommerce-table--order-details tbody td.product-name::before {
+        content: "商品";
+    }
+    
+    .woocommerce-table--order-details tbody td.product-total::before {
+        content: "金額";
+    }
+
+    /* 小計・送料・合計金額 */
+    .woocommerce-table--order-details tfoot {
+        display: block;
+        border-top: 2px solid #e5e5e5;
+        padding-top: 15px;
+    }
+    
+    .woocommerce-table--order-details tfoot tr {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f5f5f5;
+    }
+    
+    .woocommerce-table--order-details tfoot tr:last-child {
+        border-bottom: none;
+        padding-top: 15px;
+        border-top: 1px solid #e5e5e5;
+    }
+    
+    .woocommerce-table--order-details tfoot th,
+    .woocommerce-table--order-details tfoot td {
+        display: block;
+        padding: 0;
+        border: none;
+        text-align: left;
+    }
+    
+    .woocommerce-table--order-details tfoot th {
+        font-size: 14px;
+        color: #666;
+    }
+    
+    .woocommerce-table--order-details tfoot td {
+        font-size: 15px;
+        color: #333;
+        text-align: right;
+    }
+    
+    .woocommerce-table--order-details tfoot .order-total th {
+        font-size: 16px;
+        font-weight: 400;
+        color: #333;
+    }
+    
+    .woocommerce-table--order-details tfoot .order-total td {
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    /* 請求先・お届け先：縦並び */
+    .woocommerce-columns--addresses {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}

@@ -18,6 +18,15 @@
     padding: 220px 20px 80px !important;  /* 140px(ヘッダー) + 80px(余白) */
 }
 
+/* 注文完了ページのpadding設定を追加 */
+.woocommerce-order-received .woocommerce {
+    padding: 50px 20px 80px !important;
+}
+
+.woocommerce-order-received .entry-content {
+    padding-top: 50px !important;
+}
+
 /* 代替セレクタ(テーマによって異なる場合) */
 .woocommerce-cart .entry-content,
 .woocommerce-checkout .entry-content {

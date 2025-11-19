@@ -29,6 +29,7 @@
 @import url('pages/shop/shop-single.css');          /* 商品詳細ページ */
 @import url('pages/shop/shop-cart-checkout.css');   /* カート・チェックアウト */
 @import url('pages/shop/shop-myaccount.css');       /* マイページ */
+@import url('pages/shop/shop-order-received.css');  /* 注文完了ページ */
 
 /* 注意: shop.css は読み込み不要になりました（全て分離済み） */
 
