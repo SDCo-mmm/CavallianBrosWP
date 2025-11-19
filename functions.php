@@ -1255,3 +1255,45 @@ function custom_username_customer_tag($output, $name, $html) {
     }
     return $output;
 }
+
+// Checkout Blocksの読み込み完了後にスクリプトを出力
+add_action( 'wp_footer', 'custom_auto_hyphen_postal_code_script' );
+
+function custom_auto_hyphen_postal_code_script() {
+    // チェックアウトページ以外では読み込まないようにする
+    if ( ! is_checkout() ) {
+        return;
+    }
+    ?>
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // イベント委譲を使って動的に生成されるCheckout Blocksの要素を監視
+        document.body.addEventListener('input', function(e) {
+            
+            // ターゲットが郵便番号の入力フィールドか判定
+            // Checkout Blocksの仕様変更に対応するため、IDの一部一致やautocomplete属性で判定
+            if (e.target.id && (e.target.id.includes('postal_code') || e.target.autocomplete === 'postal-code')) {
+                
+                let input = e.target;
+                let val = input.value;
+
+                // 1. 数字以外を削除
+                let numbers = val.replace(/[^0-9]/g, '');
+
+                // 2. 7桁以上入力できないように制限（日本の郵便番号の場合）
+                if (numbers.length > 7) {
+                    numbers = numbers.substring(0, 7);
+                }
+
+                // 3. 3桁を超えたらハイフンを挿入
+                if (numbers.length > 3) {
+                    input.value = numbers.substring(0, 3) + '-' + numbers.substring(3);
+                } else {
+                    input.value = numbers;
+                }
+            }
+        });
+    });
+    </script>
+    <?php
+}
