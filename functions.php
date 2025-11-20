@@ -1312,3 +1312,15 @@ function hide_duplicate_bank_details_css($css) {
     ';
     return $css;
 }
+
+/**
+ * PDF請求書のカスタムテンプレートを指定
+ */
+add_filter(
+    'invoice_japan_order_generate_template_file',
+    function () {
+        return get_template_directory() . '/invoice-template/pdf-invoice-japan-template.php';
+    },
+    10,
+    1
+);
