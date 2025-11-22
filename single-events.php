@@ -88,8 +88,9 @@ get_header();
                 $event_location = get_post_meta(get_the_ID(), 'event_location', true);
                 $event_price = get_post_meta(get_the_ID(), 'event_price', true);
                 $event_capacity = get_post_meta(get_the_ID(), 'event_capacity', true);
+                $event_notes = get_post_meta(get_the_ID(), 'event_notes', true);
                 
-                if ($event_date || $event_date_start || $event_time || $event_location || $event_price || $event_capacity) :
+                if ($event_date || $event_date_start || $event_time || $event_location || $event_price || $event_capacity || $event_notes) :
                 ?>
                     <div class="event-info-box">
                         <?php if ($event_date || $event_date_start) : ?>
@@ -142,6 +143,12 @@ get_header();
                             </div>
                         <?php endif; ?>
                         
+                        <?php if ($event_capacity) : ?>
+                            <div class="event-info-item">
+                                <strong>定員:</strong> <?php echo esc_html($event_capacity); ?>名
+                            </div>
+                        <?php endif; ?>
+                        
                         <?php if ($event_price !== '' && $event_price !== null) : ?>
                             <div class="event-info-item">
                                 <strong>参加費:</strong> 
@@ -155,9 +162,13 @@ get_header();
                             </div>
                         <?php endif; ?>
                         
-                        <?php if ($event_capacity) : ?>
+                        <?php 
+                        // 備考フィールドを追加
+                        $event_notes = get_post_meta(get_the_ID(), 'event_notes', true);
+                        if ($event_notes) : 
+                        ?>
                             <div class="event-info-item">
-                                <strong>定員:</strong> <?php echo esc_html($event_capacity); ?>名
+                                <strong>備考:</strong> <?php echo nl2br(esc_html($event_notes)); ?>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -224,6 +235,7 @@ get_header();
             ?>
                 <div class="related-events-section">
                     <h2 class="related-events-title">RELATED EVENTS</h2>
+                    <p class="related-events-description">このイベントのお申し込みはこちらから</p>
                     
                     <div class="related-events-grid">
                         <?php while ($related_products_query->have_posts()) : $related_products_query->the_post(); 
