@@ -1324,3 +1324,255 @@ add_filter(
     10,
     1
 );
+
+/**
+ * チェックアウトページ - ユーザー名機能（シンプル版）
+ * WooCommerce Blocksエラーを回避した実装
+ */
+
+// ========================================
+// 1. Ajax用のユーザー名保存機能
+// ========================================
+add_action('wp_ajax_save_checkout_username', 'ajax_save_checkout_username');
+add_action('wp_ajax_nopriv_save_checkout_username', 'ajax_save_checkout_username');
+function ajax_save_checkout_username() {
+    if (isset($_POST['username'])) {
+        $username = sanitize_user($_POST['username']);
+        
+        // セッションに保存
+        if (!session_id()) {
+            session_start();
+        }
+        $_SESSION['checkout_username'] = $username;
+        
+        // WooCommerceセッションにも保存
+        if (WC()->session) {
+            WC()->session->set('checkout_username', $username);
+        }
+        
+        wp_send_json_success(array('username' => $username, 'saved' => true));
+    }
+    wp_send_json_error('No username provided');
+}
+
+// ========================================
+// 2. ユーザー作成時の処理（最重要）
+// ========================================
+
+// WooCommerceがユーザー名を生成する前に介入
+add_filter('woocommerce_new_customer_username', 'force_custom_username_checkout', 1, 3);
+function force_custom_username_checkout($username, $email, $new_customer_data) {
+    // セッションから取得を試みる
+    if (!session_id()) {
+        session_start();
+    }
+    
+    // PHPセッションから取得
+    if (isset($_SESSION['checkout_username']) && !empty($_SESSION['checkout_username'])) {
+        $custom_username = sanitize_user($_SESSION['checkout_username']);
+        if (!username_exists($custom_username)) {
+            // セッションから削除
+            unset($_SESSION['checkout_username']);
+            return $custom_username;
+        }
+    }
+    
+    // WooCommerceセッションから取得
+    if (WC()->session && WC()->session->get('checkout_username')) {
+        $custom_username = sanitize_user(WC()->session->get('checkout_username'));
+        if (!username_exists($custom_username)) {
+            WC()->session->set('checkout_username', null);
+            return $custom_username;
+        }
+    }
+    
+    // POSTデータから取得（フォールバック）
+    if (isset($_POST['username']) && !empty($_POST['username'])) {
+        $custom_username = sanitize_user($_POST['username']);
+        if (!username_exists($custom_username)) {
+            return $custom_username;
+        }
+    }
+    
+    return $username;
+}
+
+// 別のフィルターでも試行
+add_filter('woocommerce_new_customer_data', 'override_username_in_customer_data', 1);
+function override_username_in_customer_data($customer_data) {
+    if (!session_id()) {
+        session_start();
+    }
+    
+    // PHPセッションから取得
+    if (isset($_SESSION['checkout_username']) && !empty($_SESSION['checkout_username'])) {
+        $custom_username = sanitize_user($_SESSION['checkout_username']);
+        if (!username_exists($custom_username)) {
+            $customer_data['user_login'] = $custom_username;
+        }
+    }
+    // WooCommerceセッションから取得
+    elseif (WC()->session && WC()->session->get('checkout_username')) {
+        $custom_username = sanitize_user(WC()->session->get('checkout_username'));
+        if (!username_exists($custom_username)) {
+            $customer_data['user_login'] = $custom_username;
+        }
+    }
+    
+    return $customer_data;
+}
+
+// ========================================
+// 3. チェックアウトプロセスでのバリデーション
+// ========================================
+add_action('woocommerce_after_checkout_validation', 'validate_checkout_username', 10, 2);
+function validate_checkout_username($data, $errors) {
+    // アカウント作成がチェックされている場合
+    if (isset($data['createaccount']) && $data['createaccount']) {
+        if (!session_id()) {
+            session_start();
+        }
+        
+        $username = null;
+        
+        // セッションから取得
+        if (isset($_SESSION['checkout_username'])) {
+            $username = $_SESSION['checkout_username'];
+        } elseif (WC()->session && WC()->session->get('checkout_username')) {
+            $username = WC()->session->get('checkout_username');
+        }
+        
+        if ($username) {
+            $username = sanitize_user($username);
+            
+            if (strlen($username) < 3) {
+                $errors->add('username_error', __('ユーザー名は3文字以上で入力してください。', 'woocommerce'));
+            } elseif (username_exists($username)) {
+                $errors->add('username_error', __('このユーザー名は既に使用されています。', 'woocommerce'));
+            }
+        } else {
+            $errors->add('username_error', __('ユーザー名を入力してください。', 'woocommerce'));
+        }
+    }
+}
+
+// ========================================
+// 4. JavaScriptの読み込み
+// ========================================
+add_action('wp_enqueue_scripts', 'enqueue_checkout_username_assets', 100);
+function enqueue_checkout_username_assets() {
+    if (!is_checkout()) return;
+    
+    // メインスクリプト
+    wp_enqueue_script(
+        'checkout-account-registration',
+        get_template_directory_uri() . '/assets/js/checkout-account-registration.js',
+        array('jquery'),
+        '3.1.0',
+        true
+    );
+    
+    // Ajax用パラメータ
+    wp_localize_script('checkout-account-registration', 'checkout_account_params', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('username_check_nonce')
+    ));
+    
+    // インラインCSS
+    $custom_css = '
+        .checkout-username-field .username-feedback {
+            display: block;
+            margin-top: 8px;
+            font-size: 13px;
+            font-family: "Noto Sans JP", sans-serif;
+            letter-spacing: 0.05em;
+            min-height: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .checkout-username-field .username-feedback.checking {
+            color: #666;
+        }
+        
+        .checkout-username-field .username-feedback.available {
+            color: #28a745;
+            font-weight: 500;
+        }
+        
+        .checkout-username-field .username-feedback.taken,
+        .checkout-username-field .username-feedback.error {
+            color: #c62828;
+            font-weight: 500;
+        }
+        
+        .checkout-password-confirm-field .password-match-feedback {
+            display: block;
+            margin-top: 8px;
+            font-size: 13px;
+            font-family: "Noto Sans JP", sans-serif;
+            letter-spacing: 0.05em;
+            min-height: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .show-password-original:hover svg,
+        .show-password-confirm:hover svg {
+            stroke: #333;
+        }
+        
+        #checkout_username:focus,
+        #checkout_password_confirm:focus {
+            outline: none;
+            border-color: #333 !important;
+        }
+    ';
+    
+    wp_add_inline_style('wc-blocks-style', $custom_css);
+}
+
+// ========================================
+// 5. 既存のAjax機能（ユーザー名チェック）
+// ========================================
+if (!has_action('wp_ajax_nopriv_check_username_availability')) {
+    add_action('wp_ajax_nopriv_check_username_availability', 'check_username_availability');
+}
+if (!has_action('wp_ajax_check_username_availability')) {
+    add_action('wp_ajax_check_username_availability', 'check_username_availability');
+}
+
+if (!function_exists('check_username_availability')) {
+    function check_username_availability() {
+        check_ajax_referer('username_check_nonce', 'nonce');
+        
+        $username = sanitize_user($_POST['username']);
+        
+        if (empty($username)) {
+            wp_send_json_error(array('message' => 'ユーザー名を入力してください'));
+        }
+        
+        if (strlen($username) < 3) {
+            wp_send_json_error(array('message' => 'ユーザー名は3文字以上で入力してください'));
+        }
+        
+        if (!validate_username($username)) {
+            wp_send_json_error(array('message' => 'ユーザー名に使用できない文字が含まれています'));
+        }
+        
+        if (username_exists($username)) {
+            wp_send_json_error(array('message' => 'このユーザー名は既に使用されています'));
+        }
+        
+        wp_send_json_success(array('message' => 'このユーザー名は利用可能です'));
+    }
+}
+
+// ========================================
+// 6. デバッグ用（本番環境では削除）
+// ========================================
+add_action('woocommerce_created_customer', 'log_created_customer_username', 10, 3);
+function log_created_customer_username($customer_id, $new_customer_data, $password_generated) {
+    $user = get_user_by('id', $customer_id);
+    if ($user) {
+        error_log('Created customer - ID: ' . $customer_id . ', Username: ' . $user->user_login);
+    }
+}
