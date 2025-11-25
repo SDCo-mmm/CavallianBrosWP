@@ -76,12 +76,12 @@ $home_url = home_url('/');
             
             <!-- 下段: メニュー行（メガメニュー対応） -->
             <ul class="nav-list">
-                <li><a href="<?php echo esc_url(home_url('/')); ?>">Home</a></li>
-                <li><a href="<?php echo $is_home ? '#about' : $home_url . '#about'; ?>">About</a></li>
+                <li><a href="<?php echo esc_url(home_url('/')); ?>">HOME</a></li>
+                <li><a href="<?php echo $is_home ? '#about' : $home_url . '#about'; ?>">ABOUT</a></li>
                 
                 <!-- Shopメニュー（メガメニュー） -->
                 <li class="menu-item-has-children">
-                    <a href="<?php echo esc_url(get_post_type_archive_link('product')); ?>">Shop</a>
+                    <a href="<?php echo esc_url(get_post_type_archive_link('product')); ?>">SHOP</a>
                     
                     <!-- メガメニュー -->
                     <div class="mega-menu">
@@ -140,8 +140,8 @@ $home_url = home_url('/');
                     </div>
                 </li>
                 
-                <li><a href="<?php echo esc_url(get_post_type_archive_link('events')); ?>">Events</a></li>
-                <li><a href="<?php echo esc_url(home_url('/company')); ?>">Company</a></li>
+                <li><a href="<?php echo esc_url(get_post_type_archive_link('events')); ?>">EVENTS</a></li>
+                <li><a href="<?php echo esc_url(home_url('/company')); ?>">COMPANY</a></li>
             </ul>
         </nav>
         
@@ -175,12 +175,12 @@ $home_url = home_url('/');
 <!-- モバイルスライドメニュー（全画面 + アコーディオン対応） -->
 <nav class="mobile-slide-menu" id="mobile-menu">
     <ul class="mobile-menu-list">
-        <li><a href="<?php echo esc_url(home_url('/')); ?>">Home</a></li>
-        <li><a href="<?php echo $is_home ? '#about' : $home_url . '#about'; ?>">About</a></li>
+        <li><a href="<?php echo esc_url(home_url('/')); ?>">HOME</a></li>
+        <li><a href="<?php echo $is_home ? '#about' : $home_url . '#about'; ?>">ABOUT</a></li>
         
         <!-- Shopメニュー（アコーディオン） -->
         <li class="menu-item-has-children">
-            <a href="#" class="accordion-trigger">Shop</a>
+            <a href="#" class="accordion-trigger">SHOP</a>
             
             <!-- サブメニュー -->
             <ul class="mobile-sub-menu">
@@ -237,8 +237,8 @@ $home_url = home_url('/');
             </ul>
         </li>
         
-        <li><a href="<?php echo esc_url(get_post_type_archive_link('events')); ?>">Events</a></li>
-        <li><a href="<?php echo esc_url(home_url('/company')); ?>">Company</a></li>
+        <li><a href="<?php echo esc_url(get_post_type_archive_link('events')); ?>">EVENTS</a></li>
+        <li><a href="<?php echo esc_url(home_url('/company')); ?>">COMPANY</a></li>
     </ul>
     
     <!-- SNSリンク -->

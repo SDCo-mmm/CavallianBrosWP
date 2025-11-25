@@ -23,7 +23,100 @@ if ($debug_mode && current_user_can('administrator')) {
     }
 }
 
+// 背景色から適切な文字色を判定する関数
+function get_text_color_from_bg($hex_color) {
+    // カラーコードが空または無効な場合はデフォルト（白背景用の黒文字）
+    if (empty($hex_color) || $hex_color === 'transparent') {
+        return '#333';
+    }
+    
+    // #を除去
+    $hex_color = ltrim($hex_color, '#');
+    
+    // 短縮形（#FFF）を完全形（#FFFFFF）に変換
+    if (strlen($hex_color) === 3) {
+        $hex_color = $hex_color[0] . $hex_color[0] . $hex_color[1] . $hex_color[1] . $hex_color[2] . $hex_color[2];
+    }
+    
+    // RGBに変換
+    $r = hexdec(substr($hex_color, 0, 2));
+    $g = hexdec(substr($hex_color, 2, 2));
+    $b = hexdec(substr($hex_color, 4, 2));
+    
+    // 輝度を計算（YIQ方式）
+    $brightness = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+    
+    // 輝度が128以上（明るい）なら黒文字、それ以下（暗い）なら白文字
+    return ($brightness >= 128) ? '#333' : '#fff';
+}
+
+// ホバー時の色を生成する関数
+function get_hover_colors($bg_color) {
+    $text_color = get_text_color_from_bg($bg_color);
+    
+    // 通常時が黒文字（明るい背景）なら、ホバー時は暗い背景に白文字
+    if ($text_color === '#333') {
+        return array(
+            'bg' => '#333',
+            'text' => '#fff'
+        );
+    } else {
+        // 通常時が白文字（暗い背景）なら、ホバー時は明るい背景に黒文字
+        return array(
+            'bg' => 'rgba(255, 255, 255, 0.9)',
+            'text' => '#333'
+        );
+    }
+}
+
 ?>
+
+<!-- カスタムスタイルを出力 -->
+<style>
+<?php
+if ($settings && $settings->exists()) {
+    for ($i = 1; $i <= 5; $i++) {
+        $bg_color = pods_field('page', $settings_page_id, "s{$i}_bg_color", true);
+        
+        // デフォルトは白背景（70%透明）
+        if (empty($bg_color)) {
+            $bg_color = '#ffffff';
+        }
+        
+        // 文字色を自動判定
+        $text_color = get_text_color_from_bg($bg_color);
+        
+        // ホバー時の色を取得
+        $hover_colors = get_hover_colors($bg_color);
+        
+        // カラーコードをRGBAに変換（透明度70%）
+        $hex_color = ltrim($bg_color, '#');
+        if (strlen($hex_color) === 3) {
+            $hex_color = $hex_color[0] . $hex_color[0] . $hex_color[1] . $hex_color[1] . $hex_color[2] . $hex_color[2];
+        }
+        $r = hexdec(substr($hex_color, 0, 2));
+        $g = hexdec(substr($hex_color, 2, 2));
+        $b = hexdec(substr($hex_color, 4, 2));
+        $rgba_bg = "rgba($r, $g, $b, 0.7)";
+        
+        // スライダーごとのスタイルを出力
+        ?>
+.slide-caption-<?php echo $i; ?> .caption-text,
+.slide-caption-<?php echo $i; ?> .caption-link {
+    background-color: <?php echo $rgba_bg; ?>;
+    color: <?php echo $text_color; ?>;
+}
+
+.slide-caption-<?php echo $i; ?> .caption-link:hover {
+    background-color: <?php echo $hover_colors['bg']; ?>;
+    color: <?php echo $hover_colors['text']; ?>;
+}
+
+<?php
+    }
+}
+?>
+</style>
 
 <!-- ヒーローセクション / スライダー -->
 <section class="hero">
@@ -42,6 +135,9 @@ if ($debug_mode && current_user_can('administrator')) {
                 $link_text = pods_field('page', $settings_page_id, "s{$i}_text", true);
                 $link_target = pods_field('page', $settings_page_id, "s{$i}_target", true); // 別ウィンドウで開くか
                 
+                // 背景色を取得
+                $bg_color = pods_field('page', $settings_page_id, "s{$i}_bg_color", true);
+                
                 // デバッグ出力(管理者のみ表示)
                 if (current_user_can('administrator')) {
                     echo "<!-- Slider $i Debug: -->";
@@ -49,6 +145,7 @@ if ($debug_mode && current_user_can('administrator')) {
                     echo "<!-- URL: " . esc_html($link_url) . " -->";
                     echo "<!-- Text: " . esc_html($link_text) . " -->";
                     echo "<!-- Target: " . ($link_target ? '_blank' : '_self') . " -->";
+                    echo "<!-- BG Color: " . esc_html($bg_color ?: 'default') . " -->";
                 }
                 
                 if (!empty($slide_field)) {
@@ -79,7 +176,7 @@ if ($debug_mode && current_user_can('administrator')) {
                             <img src="<?php echo esc_url($slide_url); ?>" alt="スライド<?php echo $i; ?>">
                             
                             <?php if ($caption_text || ($link_url && $link_text)) : ?>
-                            <div class="slide-caption">
+                            <div class="slide-caption slide-caption-<?php echo $i; ?>">
                                 <?php if ($caption_text) : ?>
                                     <p class="caption-text"><?php echo esc_html($caption_text); ?></p>
                                 <?php endif; ?>
@@ -253,72 +350,39 @@ if ($debug_mode && current_user_can('administrator')) {
 </section>
 
 <!-- Coming Soon セクション -->
+<?php
+// Podsからタイトルと本文を取得
+$coming_soon_title = pods_field('page', $settings_page_id, 'coming_soon_title', true);
+$coming_soon_text = pods_field('page', $settings_page_id, 'coming_soon_text', true);
+
+// タイトルまたは本文のどちらかが入力されている場合のみセクションを表示
+if (!empty($coming_soon_title) || !empty($coming_soon_text)) :
+?>
 <section class="section coming-soon">
     <div class="container">
-        <h3 class="section-title">Coming Soon</h3>
-        <div class="coming-soon-content">
-            <?php if (class_exists('WooCommerce')) : ?>
-                <?php
-                $args = array(
-                    'post_type'      => 'product',
-                    'posts_per_page' => 6,
-                    'meta_query'     => array(
-                        'relation' => 'OR',
-                        array(
-                            'key'     => '_stock_status',
-                            'value'   => 'onbackorder',
-                            'compare' => '='
-                        ),
-                        array(
-                            'key'     => '_coming_soon',
-                            'value'   => 'yes',
-                            'compare' => '='
-                        )
-                    ),
-                    'orderby'        => 'date',
-                    'order'          => 'DESC'
-                );
-                
-                $products = new WP_Query($args);
-                
-                if ($products->have_posts()) : ?>
-                    <div class="products-grid coming-soon-products">
-                        <?php while ($products->have_posts()) : $products->the_post(); ?>
-                            <div class="product-item">
-                                <a href="<?php the_permalink(); ?>">
-                                    <?php if (has_post_thumbnail()) : ?>
-                                        <?php the_post_thumbnail('medium'); ?>
-                                    <?php else : ?>
-                                        <div class="no-image">Coming Soon</div>
-                                    <?php endif; ?>
-                                    <h4><?php the_title(); ?></h4>
-                                </a>
-                            </div>
-                        <?php endwhile; ?>
-                    </div>
-                    <?php wp_reset_postdata(); ?>
-                <?php else : ?>
-                    <p class="coming-soon-text">
-                        Cavallian Bros.では、愛犬との暮らしをより豊かにするオリジナルアイテムと<br>
-                        厳選したセレクトブランドの展開を準備中です。<br>
-                        <br>
-                        また、キャバリアオーナーの集いや他犬種との交流イベント、<br>
-                        アットホームなオフ会、愛犬の誕生日会など、<br>
-                        みんなで楽しめる特別な時間もご用意してまいります。
-                    </p>
-                <?php endif; ?>
-            <?php else : ?>
-                <p class="coming-soon-text">
-                    Cavallian Bros.では、愛犬との暮らしをより豊かにするオリジナルアイテムと<br>
-                    厳選したセレクトブランドの展開を準備中です。<br>
-                    <br>
-                    また、キャバリアオーナーの集いや他犬種との交流イベント、<br>
-                    アットホームなオフ会、愛犬の誕生日会など、<br>
-                    みんなで楽しめる特別な時間もご用意してまいります。
-                </p>
-            <?php endif; ?>
-        </div>
+        <?php if (!empty($coming_soon_title)) : ?>
+            <h3 class="section-title"><?php echo esc_html($coming_soon_title); ?></h3>
+        <?php endif; ?>
         
+        <?php if (!empty($coming_soon_text)) : ?>
+            <div class="coming-soon-content">
+                <p class="coming-soon-text">
+                    <?php 
+                    // 改行を<br>タグに変換
+                    echo nl2br(esc_html($coming_soon_text)); 
+                    ?>
+                </p>
+            </div>
+        <?php endif; ?>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- Coming Soon セクション終了 -->
+
+<!-- イベント情報セクション -->
+<section class="section coming-soon">
+    <div class="container">
         <!-- イベント情報 -->
         <?php
         global $wpdb;
@@ -410,8 +474,11 @@ if ($debug_mode && current_user_can('administrator')) {
             
             // 最初の3件のみ
             $sorted_events = array_slice($sorted_events, 0, 3);
+            
+            // COMING SOONセクションが表示されているかチェック
+            $has_coming_soon = (!empty($coming_soon_title) || !empty($coming_soon_text));
         ?>
-            <div class="upcoming-events">
+            <div class="upcoming-events<?php echo $has_coming_soon ? ' has-coming-soon' : ''; ?>">
                 <h4 class="events-title">UPCOMING EVENTS!</h4>
                 <div class="events-grid">
                     <?php foreach ($sorted_events as $event_data) : 
