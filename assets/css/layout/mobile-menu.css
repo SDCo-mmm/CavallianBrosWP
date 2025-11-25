@@ -104,6 +104,7 @@
 }
 
 .mobile-menu-list a {
+    font-family: 'Questrial', 'Noto Sans JP', sans-serif;
     font-size: 18px;
     display: block;
     padding: 12px 20px;  /* 左右にパディングを追加 */
@@ -203,6 +204,7 @@
 }
 
 .mobile-sub-menu a {
+    font-family: 'Questrial', 'Noto Sans JP', sans-serif;
     font-size: 12px;  /* サイズを12pxに統一 */
     padding: 10px 15px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -216,7 +218,7 @@
 
 /* 親カテゴリー */
 .mobile-sub-menu .parent-category > a {
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Questrial', 'Noto Sans JP', sans-serif;
     font-weight: 400;  /* ウェイト400 */
     font-size: 12px;   /* サイズ12px */
     color: #333;
@@ -228,7 +230,7 @@
 }
 
 .mobile-sub-menu .child-category a {
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Questrial', 'Noto Sans JP', sans-serif;
     font-weight: 300;  /* ウェイト300 */
     font-size: 12px;   /* サイズ12px */
     color: #666;

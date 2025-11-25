@@ -3,6 +3,8 @@
    
    トップページのスライダー画像左下に表示される
    キャプションとリンクのスタイル
+   
+   ※背景色と文字色はfront-page.phpで動的に生成されます
 ========================================= */
 
 /* =========================================
@@ -28,11 +30,11 @@
     transform: translateY(0);
 }
 
-/* キャプションテキスト */
+/* =========================================
+   共通スタイル: キャプションテキスト
+========================================= */
 .caption-text {
-    background-color: rgba(255, 255, 255, 0.7); /* 白背景70%透明 */
-    color: #333; /* 濃いグレー文字 */
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Questrial', 'Noto Sans JP', sans-serif;
     font-size: 18px;
     font-weight: 400;
     line-height: 1.8;
@@ -40,13 +42,14 @@
     margin: 0;
     padding: 0px 10px; /* 上下0px、左右10px */
     display: inline-block; /* テキスト幅に合わせる */
+    /* 背景色と文字色はfront-page.phpで動的に設定 */
 }
 
-/* キャプションリンク */
+/* =========================================
+   共通スタイル: キャプションリンク
+========================================= */
 .caption-link {
     display: inline-block;
-    background-color: rgba(255, 255, 255, 0.7); /* 白背景70%透明 */
-    color: #333; /* 濃いグレー文字 */
     font-family: 'Questrial', sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -56,12 +59,7 @@
     padding: 0px 10px; /* 上下0px、左右10px */
     border-radius: 0;
     transition: all 0.3s ease;
-}
-
-.caption-link:hover {
-    background-color: #333; /* ホバー時は#333背景 */
-    color: #fff; /* 白文字 */
-    border-color: #333;
+    /* 背景色と文字色はfront-page.phpで動的に設定 */
 }
 
 /* =========================================
@@ -104,7 +102,7 @@
     }
     
     .caption-link {
-        font-size: 12px;
+        font-size: 10px;
         padding: 8px 16px;
         text-align: center;
         width: auto; /* モバイルでも幅を自動調整 */
